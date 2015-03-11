@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectGuid>{88D4E55C-3335-46FA-9033-6AF6B6491E96}</ProjectGuid>
+    <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Supremes</RootNamespace>
+    <AssemblyName>Supremes</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <NoWin32Manifest>False</NoWin32Manifest>
+    <SignAssembly>False</SignAssembly>
+    <DelaySign>False</DelaySign>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <NoStdLib>False</NoStdLib>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>False</RunCodeAnalysis>
+    <SourceAnalysisOverrideSettingsFile>C:\Users\kinomata1\Desktop\SharpDevelop\NsoupLib\NsoupLib\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <BaseAddress>4194304</BaseAddress>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <FileAlignment>4096</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Helper\CharsetEncoder.cs" />
+    <Compile Include="Helper\DescendableLinkedList.cs" />
+    <Compile Include="Helper\Entities.cs" />
+    <Compile Include="Helper\LinkedHashMap.cs" />
+    <Compile Include="Helper\LinkedHashSet.cs" />
+    <Compile Include="Helper\StringUtil.cs" />
+    <Compile Include="Helper\TokenQueue.cs" />
+    <Compile Include="Helper\Validate.cs" />
+    <Compile Include="Dcsoup.cs" />
+    <Compile Include="Nodes\Attribute.cs" />
+    <Compile Include="Nodes\Attributes.cs" />
+    <Compile Include="Nodes\Comment.cs" />
+    <Compile Include="Nodes\DataNode.cs" />
+    <Compile Include="Nodes\Document.cs" />
+    <Compile Include="Nodes\DocumentType.cs" />
+    <Compile Include="Nodes\Element.cs" />
+    <Compile Include="Nodes\Elements.cs" />
+    <Compile Include="Nodes\FormElement.cs" />
+    <Compile Include="Nodes\Node.cs" />
+    <Compile Include="Nodes\Tag.cs" />
+    <Compile Include="Nodes\TextNode.cs" />
+    <Compile Include="Nodes\XmlDeclaration.cs" />
+    <Compile Include="Parsers\CharacterReader.cs" />
+    <Compile Include="Parsers\DataUtil.cs" />
+    <Compile Include="Parsers\HtmlTreeBuilder.cs" />
+    <Compile Include="Parsers\HtmlTreeBuilderState.cs" />
+    <Compile Include="Parsers\ParseError.cs" />
+    <Compile Include="Parsers\ParseErrorList.cs" />
+    <Compile Include="Parsers\Parser.cs" />
+    <Compile Include="Parsers\Token.cs" />
+    <Compile Include="Parsers\Tokeniser.cs" />
+    <Compile Include="Parsers\TokeniserState.cs" />
+    <Compile Include="Parsers\TokenType.cs" />
+    <Compile Include="Parsers\TreeBuilder.cs" />
+    <Compile Include="Parsers\XmlTreeBuilder.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Safety\Cleaner.cs" />
+    <Compile Include="Safety\Whitelist.cs" />
+    <Compile Include="Select\Collector.cs" />
+    <Compile Include="Select\CombiningEvaluator.cs" />
+    <Compile Include="Select\Evaluator.cs" />
+    <Compile Include="Select\INodeVisitor.cs" />
+    <Compile Include="Select\NodeTraversor.cs" />
+    <Compile Include="Select\QueryParser.cs" />
+    <Compile Include="Select\Selector.cs" />
+    <Compile Include="Select\StructuralEvaluator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Helper" />
+    <Folder Include="Nodes" />
+    <Folder Include="Parsers" />
+    <Folder Include="Safety" />
+    <Folder Include="Select" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Helper\entities-base.properties" />
+    <EmbeddedResource Include="Helper\entities-full.properties" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

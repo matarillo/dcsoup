@@ -1,0 +1,49 @@
+/*
+ * This code is derived from MyJavaLibrary (http://somelinktomycoollibrary)
+ * 
+ * If this is an open source Java library, include the proper license and copyright attributions here!
+ */
+
+using Supremes.Nodes;
+
+namespace Supremes.Select
+{
+    /// <summary>
+    /// Node visitor interface.
+    /// </summary>
+    /// <remarks>
+    /// Provide an implementing class to
+    /// <see cref="NodeTraversor">NodeTraversor</see>
+    /// to iterate through nodes.
+    /// <p/>
+    /// This interface provides two methods,
+    /// <code>head</code>
+    /// and
+    /// <code>tail</code>
+    /// . The head method is called when the node is first
+    /// seen, and the tail method when all of the node's children have been visited. As an example, head can be used to
+    /// create a start tag for a node, and tail to create the end tag.
+    /// </remarks>
+    internal interface INodeVisitor
+    {
+        /// <summary>
+        /// Callback for when a node is first visited.
+        /// </summary>
+        /// <param name="node">the node being visited.</param>
+        /// <param name="depth">
+        /// the depth of the node, relative to the root node. E.g., the root node has depth 0, and a child node
+        /// of that will have depth 1.
+        /// </param>
+        void Head(Node node, int depth);
+
+        /// <summary>
+        /// Callback for when a node is last visited, after all of its descendants have been visited.
+        /// </summary>
+        /// <param name="node">the node being visited.</param>
+        /// <param name="depth">
+        /// the depth of the node, relative to the root node. E.g., the root node has depth 0, and a child node
+        /// of that will have depth 1.
+        /// </param>
+        void Tail(Node node, int depth);
+    }
+}
