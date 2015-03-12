@@ -20,12 +20,12 @@ namespace Supremes
     /// <author>Jonathan Hedley</author>
     public static class Dcsoup
     {
-        public static Document Parse(this HttpContent self)
+        public static Document Parse(this HttpResponseMessage self)
         {
-            HttpContentHeaders headers = self.Headers;
-            string charsetName = (headers.ContentType != null) ? headers.ContentType.CharSet : null;
-            string baseUri = (headers.ContentLocation != null) ? headers.ContentLocation.ToString() : null;
-            byte[] byteData = self.ReadAsByteArrayAsync().Result;
+            MediaTypeHeaderValue contentType = self.Content.Headers.ContentType;
+            string charsetName = (contentType != null) ? contentType.CharSet : null;
+            string baseUri = self.RequestMessage.RequestUri.ToString();
+            byte[] byteData = self.Content.ReadAsByteArrayAsync().Result;
             Parser parser = Parser.HtmlParser();
             return DataUtil.ParseByteData(byteData, charsetName, baseUri, parser);
         }
@@ -264,7 +264,7 @@ namespace Supremes
         {
             var client = new HttpClient { Timeout = TimeSpan.FromMilliseconds(timeoutMillis) };
             var message = client.GetAsync(url).Result;
-            return message.Content.Parse();
+            return message.Parse();
         }
 
         /// <summary>
