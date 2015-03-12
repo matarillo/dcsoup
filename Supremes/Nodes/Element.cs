@@ -1606,7 +1606,10 @@ namespace Supremes.Nodes
         {
             // todo: fixup, not very useful
             int result = base.GetHashCode();
-            result = 31 * result + (tag != null ? tag.GetHashCode() : 0);
+            unchecked
+            {
+                result = 31 * result + (tag != null ? tag.GetHashCode() : 0);
+            }
             return result;
         }
 

@@ -271,15 +271,18 @@ namespace Supremes.Nodes
         public override int GetHashCode()
         {
             int result = tagName.GetHashCode();
-            result = 31 * result + (isBlock ? 1 : 0);
-            result = 31 * result + (formatAsBlock ? 1 : 0);
-            result = 31 * result + (canContainBlock ? 1 : 0);
-            result = 31 * result + (canContainInline ? 1 : 0);
-            result = 31 * result + (empty ? 1 : 0);
-            result = 31 * result + (selfClosing ? 1 : 0);
-            result = 31 * result + (preserveWhitespace ? 1 : 0);
-            result = 31 * result + (formList ? 1 : 0);
-            result = 31 * result + (formSubmit ? 1 : 0);
+            unchecked
+            {
+                result = 31 * result + (isBlock ? 1 : 0);
+                result = 31 * result + (formatAsBlock ? 1 : 0);
+                result = 31 * result + (canContainBlock ? 1 : 0);
+                result = 31 * result + (canContainInline ? 1 : 0);
+                result = 31 * result + (empty ? 1 : 0);
+                result = 31 * result + (selfClosing ? 1 : 0);
+                result = 31 * result + (preserveWhitespace ? 1 : 0);
+                result = 31 * result + (formList ? 1 : 0);
+                result = 31 * result + (formSubmit ? 1 : 0);
+            }
             return result;
         }
 

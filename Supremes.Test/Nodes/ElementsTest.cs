@@ -71,6 +71,11 @@ namespace Supremes.Test.Nodes
             Assert.AreEqual("foo", classVal);
         }
         
+        /// <summary>
+        /// </summary>
+        /// <remarks>
+        /// different behavior from jsoup: trailing slash to domain name
+        /// </remarks>
         [Test]
         public void AbsAttr()
         {
@@ -80,8 +85,8 @@ namespace Supremes.Test.Nodes
             Elements both = doc.Select("a");
 
             Assert.AreEqual("", one.Attr("abs:href"));
-            Assert.AreEqual("http://jsoup.org", two.Attr("abs:href"));
-            Assert.AreEqual("http://jsoup.org", both.Attr("abs:href"));
+            Assert.AreEqual("http://jsoup.org/", two.Attr("abs:href")); // trailing slash
+            Assert.AreEqual("http://jsoup.org/", both.Attr("abs:href")); // trailing slash
         }
         
         [Test]
@@ -160,32 +165,7 @@ namespace Supremes.Test.Nodes
             Assert.AreEqual("three", els.Last().Val());
             Assert.AreEqual("<textarea>three</textarea>", els.Last().OuterHtml());
         }
-        
-        
 
-    
-   
-
-    
-    
-    
-
-    
-
-    
-    
-   
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
         [Test]
         public void Before()
         {

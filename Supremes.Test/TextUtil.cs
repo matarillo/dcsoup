@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Text.RegularExpressions;
 
 namespace Supremes.Test
 {
@@ -9,7 +10,7 @@ namespace Supremes.Test
     {
         public static string StripNewlines(string text)
         {
-            text = text.Replace("\\r?\\n\\s*", "");
+            text = Regex.Replace(text, "\\r?\\n\\s*", "");
             return text;
         }
     }

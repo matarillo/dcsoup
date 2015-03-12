@@ -203,19 +203,28 @@ namespace Supremes.Nodes
         /// (i.e. an <code>&lt;a href&gt;</code> or <code>&lt;img src&gt;</code>).
         /// </summary>
         /// <remarks>
-        /// E.g.: <code>String absUrl = linkEl.absUrl("href");</code>
-        /// <p/>
+        /// <para>
+        /// E.g.: <c>string absUrl = linkEl.AbsUrl("href");</c>
+        /// </para>
+        /// <para>
         /// If the attribute value is already absolute (i.e. it starts with a protocol, like
-        /// <code>http://</code> or <code>https://</code> etc), and it successfully parses as a URL, the attribute is
+        /// <c>http://</c> or <c>https://</c> etc), and it successfully parses as a URL, the attribute is
         /// returned directly. Otherwise, it is treated as a URL relative to the element's
         /// <see cref="baseUri">baseUri</see>
         /// , and made
         /// absolute using that.
-        /// <p/>
+        /// </para>
+        /// <para>
         /// As an alternate, you can use the
         /// <see cref="Attr(string)">Attr(string)</see>
         /// method with the <code>abs:</code> prefix, e.g.:
-        /// <code>String absUrl = linkEl.attr("abs:href");</code>
+        /// <c>string absUrl = linkEl.Attr("abs:href");</c>
+        /// </para>
+        /// <para>
+        /// This method add trailing slash to domain name: i.e.
+        /// from <c>&lt;a id=2 href='http://jsoup.org'&gt;</c>
+        /// to <c>"http://jsoup.org/"</c>
+        /// </para>
         /// </remarks>
         /// <param name="attributeKey">The attribute key</param>
         /// <returns>
@@ -774,7 +783,10 @@ namespace Supremes.Nodes
         {
             int result = parentNode != null ? parentNode.GetHashCode() : 0;
             // not children, or will block stack as they go back up to parent)
-            result = 31 * result + (attributes != null ? attributes.GetHashCode() : 0);
+            unchecked
+            {
+                result = 31 * result + (attributes != null ? attributes.GetHashCode() : 0);
+            }
             return result;
         }
 
