@@ -19,7 +19,7 @@ namespace Supremes.Select
         /// </summary>
         /// <param name="visitor">
         /// a class implementing the
-        /// <see cref="NodeVisitor">NodeVisitor</see>
+        /// <see cref="INodeVisitor">INodeVisitor</see>
         /// interface, to be called when visiting each node.
         /// </param>
         public NodeTraversor(INodeVisitor visitor)

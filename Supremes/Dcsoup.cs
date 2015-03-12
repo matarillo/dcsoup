@@ -14,6 +14,11 @@ namespace Supremes
     /// <author>Jonathan Hedley</author>
     public static class Dcsoup
     {
+        /// <summary>
+        /// Parse HTML into a Document.
+        /// </summary>
+        /// <param name="self"></param>
+        /// <returns></returns>
         public static Document Parse(this HttpResponseMessage self)
         {
             MediaTypeHeaderValue contentType = self.Content.Headers.ContentType;
@@ -129,7 +134,7 @@ namespace Supremes
         /// <exception cref="System.IO.IOException">
         /// if the file could not be found, or read, or if the charsetName is invalid.
         /// </exception>
-        /// <seealso cref="Parse(Sharpen.FilePath, string, string)">Parse(Sharpen.FilePath, string, string)</seealso>
+        /// <seealso cref="ParseFile(string, string, string)">ParseFile(string, string, string)</seealso>
         public static Document ParseFile(/*FilePath*/string @in, string charsetName)
         {
             return DataUtil.Load(@in, charsetName, Path.GetFullPath(@in));
@@ -270,7 +275,7 @@ namespace Supremes
         /// <param name="baseUri">URL to resolve relative URLs against</param>
         /// <param name="whitelist">white-list of permitted HTML elements</param>
         /// <returns>safe HTML (body fragment)</returns>
-        /// <seealso cref="Supremes.Safety.Cleaner.Clean(Supremes.Nodes.IDocument)">
+        /// <seealso cref="Supremes.Safety.Cleaner.Clean(Supremes.Nodes.Document)">
         /// Supremes.Safety.Cleaner.Clean(Supremes.Nodes.Document)
         /// </seealso>
         public static string Clean(string bodyHtml, string baseUri, Whitelist whitelist)
@@ -288,7 +293,7 @@ namespace Supremes
         /// <param name="bodyHtml">input untrusted HTML (body fragment)</param>
         /// <param name="whitelist">white-list of permitted HTML elements</param>
         /// <returns>safe HTML (body fragment)</returns>
-        /// <seealso cref="Supremes.Safety.Cleaner.Clean(Supremes.Nodes.IDocument)">
+        /// <seealso cref="Supremes.Safety.Cleaner.Clean(Supremes.Nodes.Document)">
         /// Supremes.Safety.Cleaner.Clean(Supremes.Nodes.Document)
         /// </seealso>
         public static string Clean(string bodyHtml, Whitelist whitelist)
@@ -305,7 +310,7 @@ namespace Supremes
         /// <param name="whitelist">white-list of permitted HTML elements</param>
         /// <param name="outputSettings">document output settings; use to control pretty-printing and entity escape modes</param>
         /// <returns>safe HTML (body fragment)</returns>
-        /// <seealso cref="Supremes.Safety.Cleaner.Clean(Supremes.Nodes.IDocument)">Supremes.Safety.Cleaner.Clean(Supremes.Nodes.Document)</seealso>
+        /// <seealso cref="Supremes.Safety.Cleaner.Clean(Supremes.Nodes.Document)">Supremes.Safety.Cleaner.Clean(Supremes.Nodes.Document)</seealso>
         public static string Clean(string bodyHtml, string baseUri, Whitelist whitelist, DocumentOutputSettings outputSettings)
         {
             Document dirty = ParseBodyFragment(bodyHtml, baseUri);

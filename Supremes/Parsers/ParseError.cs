@@ -41,6 +41,10 @@ namespace Supremes.Parsers
             return pos;
         }
 
+        /// <summary>
+        /// Converts the value of this instance to a string.
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return pos + ": " + errorMsg;

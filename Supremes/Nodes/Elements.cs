@@ -715,6 +715,10 @@ namespace Supremes.Nodes
             return contents.Contains(o);
         }
 
+        /// <summary>
+        /// Returns the hash code for this instance.
+        /// </summary>
+        /// <returns></returns>
         public IEnumerator<Element> GetEnumerator()
         {
             return contents.GetEnumerator();
@@ -740,11 +744,20 @@ namespace Supremes.Nodes
             contents.Clear();
         }
 
+        /// <summary>
+        /// Compares two <see cref="Elements"/> instances for equality.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public override bool Equals(object obj)
         {
             return contents.Equals(obj);
         }
 
+        /// <summary>
+        /// Returns the hash code for this instance.
+        /// </summary>
+        /// <returns></returns>
         public override int GetHashCode()
         {
             return contents.GetHashCode();

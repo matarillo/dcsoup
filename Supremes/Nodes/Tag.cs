@@ -205,6 +205,11 @@ namespace Supremes.Nodes
             return this;
         }
 
+        /// <summary>
+        /// Compares two <see cref="Tag"/> instances for equality.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public override bool Equals(object obj)
         {
             if (this == obj)
@@ -259,6 +264,10 @@ namespace Supremes.Nodes
             return true;
         }
 
+        /// <summary>
+        /// Returns the hash code for this instance.
+        /// </summary>
+        /// <returns></returns>
         public override int GetHashCode()
         {
             int result = tagName.GetHashCode();
@@ -274,6 +283,10 @@ namespace Supremes.Nodes
             return result;
         }
 
+        /// <summary>
+        /// Converts the value of this instance to a string.
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return tagName;

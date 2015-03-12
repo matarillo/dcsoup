@@ -10,7 +10,7 @@ namespace Supremes.Parsers
     /// <see cref="Supremes.Nodes.Document">Supremes.Nodes.Document</see>
     /// . Generally best to use one of the  more convenient parse methods
     /// in
-    /// <see cref="Supremes.Nsoup">Supremes.Nsoup</see>
+    /// <see cref="Supremes.Dcsoup">Supremes.Dcsoup</see>
     /// .
     /// </summary>
     public class Parser
@@ -33,6 +33,12 @@ namespace Supremes.Parsers
             this.treeBuilder = treeBuilder;
         }
 
+        /// <summary>
+        /// Parse HTML into a Document
+        /// </summary>
+        /// <param name="html"></param>
+        /// <param name="baseUri"></param>
+        /// <returns></returns>
         public Document ParseInput(string html, string baseUri)
         {
             errors = IsTrackErrors() ? ParseErrorList.Tracking(maxErrors) : ParseErrorList.NoTracking();

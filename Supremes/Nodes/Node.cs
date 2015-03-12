@@ -223,7 +223,7 @@ namespace Supremes.Nodes
         /// could not be made successfully into a URL.
         /// </returns>
         /// <seealso cref="Attr(string)">Attr(string)</seealso>
-        /// <seealso cref="System.Uri.TryCreate()">System.Uri.TryCreate()</seealso>
+        /// <seealso cref="System.Uri.TryCreate(string,UriKind,out Uri)">System.Uri.TryCreate(string,UriKind,out Uri)</seealso>
         public virtual string AbsUrl(string attributeKey)
         {
             Validate.NotEmpty(attributeKey);
@@ -737,6 +737,10 @@ namespace Supremes.Nodes
 
         internal abstract void OuterHtmlTail(StringBuilder accum, int depth, DocumentOutputSettings @out);
 
+        /// <summary>
+        /// Converts the value of this instance to a string.
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return OuterHtml();
@@ -747,9 +751,14 @@ namespace Supremes.Nodes
             accum.Append("\n").Append(StringUtil.Padding(depth * @out.IndentAmount()));
         }
 
-        public override bool Equals(object o)
+        /// <summary>
+        /// Compares two <see cref="Node"/> instances for equality.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Equals(object obj)
         {
-            if (this == o)
+            if (this == obj)
             {
                 return true;
             }
@@ -757,6 +766,10 @@ namespace Supremes.Nodes
             return false;
         }
 
+        /// <summary>
+        /// Returns the hash code for this instance.
+        /// </summary>
+        /// <returns></returns>
         public override int GetHashCode()
         {
             int result = parentNode != null ? parentNode.GetHashCode() : 0;

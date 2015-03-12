@@ -1,6 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
+# Visual Studio 2012
+# SharpDevelop 5.1
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Supremes", "Supremes\Supremes.csproj", "{88D4E55C-3335-46FA-9033-6AF6B6491E96}"
@@ -9,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		LICENSE = LICENSE
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Supremes.Test", "Supremes.Test\Supremes.Test.csproj", "{32530C75-8A5D-4912-84F8-24EC2C68F389}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,6 +23,10 @@ Global
 		{88D4E55C-3335-46FA-9033-6AF6B6491E96}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88D4E55C-3335-46FA-9033-6AF6B6491E96}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88D4E55C-3335-46FA-9033-6AF6B6491E96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32530C75-8A5D-4912-84F8-24EC2C68F389}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32530C75-8A5D-4912-84F8-24EC2C68F389}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32530C75-8A5D-4912-84F8-24EC2C68F389}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32530C75-8A5D-4912-84F8-24EC2C68F389}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

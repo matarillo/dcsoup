@@ -49,7 +49,7 @@ namespace Supremes.Nodes
         /// the base URI of this element. It is acceptable for the base URI to be an empty
         /// string, but not null.
         /// </param>
-        /// <seealso cref="Tag.ValueOf(String)">Tag.ValueOf(String)</seealso>
+        /// <seealso cref="Supremes.Nodes.Tag.ValueOf(string)">Tag.ValueOf(string)</seealso>
         internal Element(Tag tag, string baseUri)
             : this(tag, baseUri, new Attributes())
         {
@@ -1333,7 +1333,7 @@ namespace Supremes.Nodes
         /// the backing
         /// <code>class</code>
         /// attribute; use the
-        /// <see cref="ClassNames(System.Collections.Generic.ICollection{E})">ClassNames(System.Collections.Generic.ICollection&lt;E&gt;)
+        /// <see cref="ClassNames(System.Collections.Generic.ICollection{string})">ClassNames(System.Collections.Generic.ICollection&lt;string&gt;)
         /// </see>
         /// method to persist them.
         /// </remarks>
@@ -1571,16 +1571,29 @@ namespace Supremes.Nodes
             return this;
         }
 
+        /// <summary>
+        /// Converts the value of this instance to a string.
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return OuterHtml();
         }
 
+        /// <summary>
+        /// Compares two <see cref="Element"/> instances for equality.
+        /// </summary>
+        /// <param name="o"></param>
+        /// <returns></returns>
         public override bool Equals(object o)
         {
             return this == o;
         }
 
+        /// <summary>
+        /// Returns the hash code for this instance.
+        /// </summary>
+        /// <returns></returns>
         public override int GetHashCode()
         {
             // todo: fixup, not very useful

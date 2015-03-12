@@ -18,9 +18,9 @@ namespace Supremes.Safety
     /// canned white-lists only allow body contained tags.
     /// <p/>
     /// Rather than interacting directly with a Cleaner object, generally see the
-    /// <code>clean</code>
+    /// <code>Clean</code>
     /// methods in
-    /// <see cref="Supremes.Factory">Supremes.Factory</see>
+    /// <see cref="Supremes.Dcsoup">Supremes.Dcsoup</see>
     /// .
     /// </remarks>
     public sealed class Cleaner
@@ -69,7 +69,7 @@ namespace Supremes.Safety
         /// This method can be used as a validator for user input forms.
         /// An invalid document will still be cleaned successfully
         /// using the
-        /// <see cref="Clean(Supremes.Nodes.IDocument)">Clean(Supremes.Nodes.Document)</see>
+        /// <see cref="Clean(Supremes.Nodes.Document)">Clean(Supremes.Nodes.Document)</see>
         /// document. If using as a validator, it is recommended to still clean the document
         /// to ensure enforced attributes are set correctly, and that the output is tidied.
         /// </remarks>

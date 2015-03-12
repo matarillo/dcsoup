@@ -128,6 +128,10 @@ namespace Supremes.Nodes
             }
         }
 
+        /// <summary>
+        /// Returns an enumerator that iterates through the <see cref="Attributes"/>.
+        /// </summary>
+        /// <returns></returns>
         public IEnumerator<Attribute> GetEnumerator()
         {
             if (attributes != null)
@@ -191,11 +195,20 @@ namespace Supremes.Nodes
             }
         }
 
+        /// <summary>
+        /// Converts the value of this instance to a string.
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return Html();
         }
 
+        /// <summary>
+        /// Compares two <see cref="Attributes"/> instances for equality.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public override bool Equals(object obj)
         {
             if (this == obj)
@@ -214,6 +227,10 @@ namespace Supremes.Nodes
             return Enumerable.SequenceEqual(attributes, that.attributes);
         }
 
+        /// <summary>
+        /// Returns the hash code for this instance.
+        /// </summary>
+        /// <returns></returns>
         public override int GetHashCode()
         {
             return attributes != null ? attributes.GetHashCode() : 0;

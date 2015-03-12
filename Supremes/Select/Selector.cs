@@ -126,9 +126,15 @@ namespace Supremes.Select
             return Collector.Collect(evaluator, root);
         }
 
+        /// <summary>
+        /// </summary>
         [Serializable]
         public class SelectorParseException : InvalidOperationException
         {
+            /// <summary>
+            /// </summary>
+            /// <param name="msg"></param>
+            /// <param name="params"></param>
             public SelectorParseException(string msg, params object[] @params)
                 : base(string.Format(msg, @params))
             {

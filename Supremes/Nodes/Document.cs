@@ -237,7 +237,7 @@ namespace Supremes.Nodes
         /// Create a new, empty Document.
         /// </summary>
         /// <param name="baseUri">base URI of document</param>
-        /// <seealso cref="Supremes.Nsoup.Parse(string)">Supremes.Nsoup.Parse(string)</seealso>
+        /// <seealso cref="Supremes.Dcsoup.Parse(string)">Supremes.Dcsoup.Parse(string)</seealso>
         /// <seealso cref="CreateShell(string)">CreateShell(string)</seealso>
         internal Document(string baseUri) : base(Supremes.Nodes.Tag.ValueOf("#root"), baseUri)
         {

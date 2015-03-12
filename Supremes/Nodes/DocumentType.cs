@@ -4,7 +4,7 @@ namespace Supremes.Nodes
 {
     /// <summary>
     /// A
-    /// <code><!DOCTYPE></code>
+    /// <code>&lt;!DOCTYPE&gt;</code>
     /// node.
     /// </summary>
     internal sealed class DocumentType : Node

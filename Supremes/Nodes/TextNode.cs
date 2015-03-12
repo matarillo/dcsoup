@@ -138,6 +138,10 @@ namespace Supremes.Nodes
         {
         }
 
+        /// <summary>
+        /// Converts the value of this instance to a string.
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return OuterHtml();
@@ -181,36 +185,66 @@ namespace Supremes.Nodes
             }
         }
 
+        /// <summary>
+        /// Get an attribute's value by its key.
+        /// </summary>
+        /// <param name="attributeKey"></param>
+        /// <returns></returns>
         public override string Attr(string attributeKey)
         {
             EnsureAttributes();
             return base.Attr(attributeKey);
         }
 
+        /// <summary>
+        /// Get all of the element's attributes.
+        /// </summary>
+        /// <returns></returns>
         public override Supremes.Nodes.Attributes Attributes()
         {
             EnsureAttributes();
             return base.Attributes();
         }
 
+        /// <summary>
+        /// Set an attribute (key=value).
+        /// </summary>
+        /// <param name="attributeKey"></param>
+        /// <param name="attributeValue"></param>
+        /// <returns></returns>
         public override Node Attr(string attributeKey, string attributeValue)
         {
             EnsureAttributes();
             return base.Attr(attributeKey, attributeValue);
         }
 
+        /// <summary>
+        /// Test if this element has an attribute.
+        /// </summary>
+        /// <param name="attributeKey"></param>
+        /// <returns></returns>
         public override bool HasAttr(string attributeKey)
         {
             EnsureAttributes();
             return base.HasAttr(attributeKey);
         }
 
+        /// <summary>
+        /// Remove an attribute from this element.
+        /// </summary>
+        /// <param name="attributeKey"></param>
+        /// <returns></returns>
         public override Node RemoveAttr(string attributeKey)
         {
             EnsureAttributes();
             return base.RemoveAttr(attributeKey);
         }
 
+        /// <summary>
+        /// Get an absolute URL from a URL attribute that may be relative.
+        /// </summary>
+        /// <param name="attributeKey">The attribute key</param>
+        /// <returns></returns>
         public override string AbsUrl(string attributeKey)
         {
             EnsureAttributes();

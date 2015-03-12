@@ -152,6 +152,11 @@ namespace Supremes.Nodes
                 && Array.BinarySearch(booleanAttributes, key) >= 0;
         }
 
+        /// <summary>
+        /// Compares two <see cref="Attribute"/> instances for equality.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public override bool Equals(object obj)
         {
             if (this == obj)
@@ -174,6 +179,10 @@ namespace Supremes.Nodes
             return true;
         }
 
+        /// <summary>
+        /// Returns the hash code for this instance.
+        /// </summary>
+        /// <returns></returns>
         public override int GetHashCode()
         {
             int result = key != null ? key.GetHashCode() : 0;
