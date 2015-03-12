@@ -87,7 +87,7 @@ namespace Supremes.Helper
         public bool Matches(string seq)
         {
             //return queue.RegionMatches(ignoreCase: true, toffset: pos, other:seq, ooffset:0, len:seq.Length);
-            return queue.IndexOf(seq, pos, StringComparison.OrdinalIgnoreCase) == 0;
+            return queue.IndexOf(seq, pos, StringComparison.OrdinalIgnoreCase) == pos;
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Supremes.Helper
         public bool MatchesCS(string seq)
         {
             //return queue.StartsWith(seq, pos);
-            return queue.IndexOf(seq, pos, StringComparison.Ordinal) == 0;
+            return queue.IndexOf(seq, pos, StringComparison.Ordinal) == pos;
         }
 
         /// <summary>
@@ -269,17 +269,14 @@ namespace Supremes.Helper
                         // this char is the skip char, but not match, so force advance of pos
                         pos++;
                     }
+                    else if (skip < 0)
+                    {
+                        // no chance of finding, grab to end
+                        pos = queue.Length;
+                    }
                     else
                     {
-                        if (skip < 0)
-                        {
-                            // no chance of finding, grab to end
-                            pos = queue.Length;
-                        }
-                        else
-                        {
-                            pos += skip;
-                        }
+                        pos += skip;
                     }
                 }
                 else

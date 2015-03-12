@@ -92,14 +92,10 @@ namespace Supremes.Select
         private void Combinator(char combinator)
         {
             tq.ConsumeWhitespace();
-            string subQuery = ConsumeSubQuery();
-            // support multi > childs
-            Evaluator rootEval;
-            // the new topmost evaluator
-            Evaluator currentEval;
-            // the evaluator the new eval will be combined to. could be root, or rightmost or.
-            Evaluator newEval = Parse(subQuery);
-            // the evaluator to add into target evaluator
+            string subQuery = ConsumeSubQuery(); // support multi > childs
+            Evaluator rootEval; // the new topmost evaluator
+            Evaluator currentEval; // the evaluator the new eval will be combined to. could be root, or rightmost or.
+            Evaluator newEval = Parse(subQuery); // the evaluator to add into target evaluator
             bool replaceRightMost = false;
             if (evals.Count == 1)
             {
@@ -116,59 +112,44 @@ namespace Supremes.Select
                 rootEval = currentEval = new CombiningEvaluator.And(evals);
             }
             evals.Clear();
+            
             // for most combinators: change the current eval into an AND of the current eval and the new eval
             if (combinator == '>')
             {
-                currentEval = new CombiningEvaluator.And(newEval, new StructuralEvaluator.ImmediateParent
-                    (currentEval));
+                currentEval = new CombiningEvaluator.And(newEval, new StructuralEvaluator.ImmediateParent(currentEval));
             }
-            else
+            else if (combinator == ' ')
             {
-                if (combinator == ' ')
+                currentEval = new CombiningEvaluator.And(newEval, new StructuralEvaluator.Parent(currentEval));
+            }
+            else if (combinator == '+')
+            {
+                currentEval = new CombiningEvaluator.And(newEval, new StructuralEvaluator.ImmediatePreviousSibling(currentEval));
+            }
+            else if (combinator == '~')
+            {
+                currentEval = new CombiningEvaluator.And(newEval, new StructuralEvaluator.PreviousSibling(currentEval));
+            }
+            else if (combinator == ',')
+            {
+                // group or.
+                CombiningEvaluator.OR or;
+                if (currentEval is CombiningEvaluator.OR)
                 {
-                    currentEval = new CombiningEvaluator.And(newEval, new StructuralEvaluator.Parent(
-                        currentEval));
+                    or = (CombiningEvaluator.OR)currentEval;
+                    or.Add(newEval);
                 }
                 else
                 {
-                    if (combinator == '+')
-                    {
-                        currentEval = new CombiningEvaluator.And(newEval, new StructuralEvaluator.ImmediatePreviousSibling
-                            (currentEval));
-                    }
-                    else
-                    {
-                        if (combinator == '~')
-                        {
-                            currentEval = new CombiningEvaluator.And(newEval, new StructuralEvaluator.PreviousSibling
-                                (currentEval));
-                        }
-                        else
-                        {
-                            if (combinator == ',')
-                            {
-                                // group or.
-                                CombiningEvaluator.OR or;
-                                if (currentEval is CombiningEvaluator.OR)
-                                {
-                                    or = (CombiningEvaluator.OR)currentEval;
-                                    or.Add(newEval);
-                                }
-                                else
-                                {
-                                    or = new CombiningEvaluator.OR();
-                                    or.Add(currentEval);
-                                    or.Add(newEval);
-                                }
-                                currentEval = or;
-                            }
-                            else
-                            {
-                                throw new Selector.SelectorParseException("Unknown combinator: " + combinator);
-                            }
-                        }
-                    }
+                    or = new CombiningEvaluator.OR();
+                    or.Add(currentEval);
+                    or.Add(newEval);
                 }
+                currentEval = or;
+            }
+            else
+            {
+                throw new Selector.SelectorParseException("Unknown combinator: " + combinator);
             }
             if (replaceRightMost)
             {
@@ -190,23 +171,17 @@ namespace Supremes.Select
                 {
                     sq.Append("(").Append(tq.ChompBalanced('(', ')')).Append(")");
                 }
+                else if (tq.Matches("["))
+                {
+                    sq.Append("[").Append(tq.ChompBalanced('[', ']')).Append("]");
+                }
+                else if (tq.MatchesAny(combinators))
+                {
+                    break;
+                }
                 else
                 {
-                    if (tq.Matches("["))
-                    {
-                        sq.Append("[").Append(tq.ChompBalanced('[', ']')).Append("]");
-                    }
-                    else
-                    {
-                        if (tq.MatchesAny(combinators))
-                        {
-                            break;
-                        }
-                        else
-                        {
-                            sq.Append(tq.Consume());
-                        }
-                    }
+                    sq.Append(tq.Consume());
                 }
             }
             return sq.ToString();
@@ -218,185 +193,110 @@ namespace Supremes.Select
             {
                 ById();
             }
+            else if (tq.MatchChomp("."))
+            {
+                ByClass();
+            }
+            else if (tq.MatchesWord())
+            {
+                ByTag();
+            }
+            else if (tq.Matches("["))
+            {
+                ByAttribute();
+            }
+            else if (tq.MatchChomp("*"))
+            {
+                AllElements();
+            }
+            else if (tq.MatchChomp(":lt("))
+            {
+                IndexLessThan();
+            }
+            else if (tq.MatchChomp(":gt("))
+            {
+                IndexGreaterThan();
+            }
+            else if (tq.MatchChomp(":eq("))
+            {
+                IndexEquals();
+            }
+            else if (tq.Matches(":has("))
+            {
+                Has();
+            }
+            else if (tq.Matches(":contains("))
+            {
+                Contains(false);
+            }
+            else if (tq.Matches(":containsOwn("))
+            {
+                Contains(true);
+            }
+            else if (tq.Matches(":matches("))
+            {
+                Matches(false);
+            }
+            else if (tq.Matches(":matchesOwn("))
+            {
+                Matches(true);
+            }
+            else if (tq.Matches(":not("))
+            {
+                Not();
+            }
+            else if (tq.MatchChomp(":nth-child("))
+            {
+                CssNthChild(false, false);
+            }
+            else if (tq.MatchChomp(":nth-last-child("))
+            {
+                CssNthChild(true, false);
+            }
+            else if (tq.MatchChomp(":nth-of-type("))
+            {
+                CssNthChild(false, true);
+            }
+            else if (tq.MatchChomp(":nth-last-of-type("))
+            {
+                CssNthChild(true, true);
+            }
+            else if (tq.MatchChomp(":first-child"))
+            {
+                evals.Add(new Evaluator.IsFirstChild());
+            }
+            else if (tq.MatchChomp(":last-child"))
+            {
+                evals.Add(new Evaluator.IsLastChild());
+            }
+            else if (tq.MatchChomp(":first-of-type"))
+            {
+                evals.Add(new Evaluator.IsFirstOfType());
+            }
+            else if (tq.MatchChomp(":last-of-type"))
+            {
+                evals.Add(new Evaluator.IsLastOfType());
+            }
+            else if (tq.MatchChomp(":only-child"))
+            {
+                evals.Add(new Evaluator.IsOnlyChild());
+            }
+            else if (tq.MatchChomp(":only-of-type"))
+            {
+                evals.Add(new Evaluator.IsOnlyOfType());
+            }
+            else if (tq.MatchChomp(":empty"))
+            {
+                evals.Add(new Evaluator.IsEmpty());
+            }
+            else if (tq.MatchChomp(":root"))
+            {
+                evals.Add(new Evaluator.IsRoot());
+            }
             else
             {
-                if (tq.MatchChomp("."))
-                {
-                    ByClass();
-                }
-                else
-                {
-                    if (tq.MatchesWord())
-                    {
-                        ByTag();
-                    }
-                    else
-                    {
-                        if (tq.Matches("["))
-                        {
-                            ByAttribute();
-                        }
-                        else
-                        {
-                            if (tq.MatchChomp("*"))
-                            {
-                                AllElements();
-                            }
-                            else
-                            {
-                                if (tq.MatchChomp(":lt("))
-                                {
-                                    IndexLessThan();
-                                }
-                                else
-                                {
-                                    if (tq.MatchChomp(":gt("))
-                                    {
-                                        IndexGreaterThan();
-                                    }
-                                    else
-                                    {
-                                        if (tq.MatchChomp(":eq("))
-                                        {
-                                            IndexEquals();
-                                        }
-                                        else
-                                        {
-                                            if (tq.Matches(":has("))
-                                            {
-                                                Has();
-                                            }
-                                            else
-                                            {
-                                                if (tq.Matches(":contains("))
-                                                {
-                                                    Contains(false);
-                                                }
-                                                else
-                                                {
-                                                    if (tq.Matches(":containsOwn("))
-                                                    {
-                                                        Contains(true);
-                                                    }
-                                                    else
-                                                    {
-                                                        if (tq.Matches(":matches("))
-                                                        {
-                                                            Matches(false);
-                                                        }
-                                                        else
-                                                        {
-                                                            if (tq.Matches(":matchesOwn("))
-                                                            {
-                                                                Matches(true);
-                                                            }
-                                                            else
-                                                            {
-                                                                if (tq.Matches(":not("))
-                                                                {
-                                                                    Not();
-                                                                }
-                                                                else
-                                                                {
-                                                                    if (tq.MatchChomp(":nth-child("))
-                                                                    {
-                                                                        CssNthChild(false, false);
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        if (tq.MatchChomp(":nth-last-child("))
-                                                                        {
-                                                                            CssNthChild(true, false);
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            if (tq.MatchChomp(":nth-of-type("))
-                                                                            {
-                                                                                CssNthChild(false, true);
-                                                                            }
-                                                                            else
-                                                                            {
-                                                                                if (tq.MatchChomp(":nth-last-of-type("))
-                                                                                {
-                                                                                    CssNthChild(true, true);
-                                                                                }
-                                                                                else
-                                                                                {
-                                                                                    if (tq.MatchChomp(":first-child"))
-                                                                                    {
-                                                                                        evals.Add(new Evaluator.IsFirstChild());
-                                                                                    }
-                                                                                    else
-                                                                                    {
-                                                                                        if (tq.MatchChomp(":last-child"))
-                                                                                        {
-                                                                                            evals.Add(new Evaluator.IsLastChild());
-                                                                                        }
-                                                                                        else
-                                                                                        {
-                                                                                            if (tq.MatchChomp(":first-of-type"))
-                                                                                            {
-                                                                                                evals.Add(new Evaluator.IsFirstOfType());
-                                                                                            }
-                                                                                            else
-                                                                                            {
-                                                                                                if (tq.MatchChomp(":last-of-type"))
-                                                                                                {
-                                                                                                    evals.Add(new Evaluator.IsLastOfType());
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    if (tq.MatchChomp(":only-child"))
-                                                                                                    {
-                                                                                                        evals.Add(new Evaluator.IsOnlyChild());
-                                                                                                    }
-                                                                                                    else
-                                                                                                    {
-                                                                                                        if (tq.MatchChomp(":only-of-type"))
-                                                                                                        {
-                                                                                                            evals.Add(new Evaluator.IsOnlyOfType());
-                                                                                                        }
-                                                                                                        else
-                                                                                                        {
-                                                                                                            if (tq.MatchChomp(":empty"))
-                                                                                                            {
-                                                                                                                evals.Add(new Evaluator.IsEmpty());
-                                                                                                            }
-                                                                                                            else
-                                                                                                            {
-                                                                                                                if (tq.MatchChomp(":root"))
-                                                                                                                {
-                                                                                                                    evals.Add(new Evaluator.IsRoot());
-                                                                                                                }
-                                                                                                                else
-                                                                                                                {
-                                                                                                                    // unhandled
-                                                                                                                    throw new Selector.SelectorParseException("Could not parse query '{0}': unexpected token at '{1}'", query, tq.Remainder());
-                                                                                                                }
-                                                                                                            }
-                                                                                                        }
-                                                                                                    }
-                                                                                                }
-                                                                                            }
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                // unhandled
+                throw new Selector.SelectorParseException("Could not parse query '{0}': unexpected token at '{1}'", query, tq.Remainder());
             }
         }
 
@@ -428,10 +328,8 @@ namespace Supremes.Select
 
         private void ByAttribute()
         {
-            TokenQueue cq = new TokenQueue(tq.ChompBalanced('[', ']'));
-            // content queue
-            string key = cq.ConsumeToAny(AttributeEvals);
-            // eq, not, start, end, contain, match, (no val)
+            TokenQueue cq = new TokenQueue(tq.ChompBalanced('[', ']')); // content queue
+            string key = cq.ConsumeToAny(AttributeEvals); // eq, not, start, end, contain, match, (no val)
             Validate.NotEmpty(key);
             cq.ConsumeWhitespace();
             if (cq.IsEmpty())
@@ -451,44 +349,29 @@ namespace Supremes.Select
                 {
                     evals.Add(new Evaluator.AttributeWithValue(key, cq.Remainder()));
                 }
+                else if (cq.MatchChomp("!="))
+                {
+                    evals.Add(new Evaluator.AttributeWithValueNot(key, cq.Remainder()));
+                }
+                else if (cq.MatchChomp("^="))
+                {
+                    evals.Add(new Evaluator.AttributeWithValueStarting(key, cq.Remainder()));
+                }
+                else if (cq.MatchChomp("$="))
+                {
+                    evals.Add(new Evaluator.AttributeWithValueEnding(key, cq.Remainder()));
+                }
+                else if (cq.MatchChomp("*="))
+                {
+                    evals.Add(new Evaluator.AttributeWithValueContaining(key, cq.Remainder()));
+                }
+                else if (cq.MatchChomp("~="))
+                {
+                    evals.Add(new Evaluator.AttributeWithValueMatching(key, new Regex(cq.Remainder(), RegexOptions.Compiled)));
+                }
                 else
                 {
-                    if (cq.MatchChomp("!="))
-                    {
-                        evals.Add(new Evaluator.AttributeWithValueNot(key, cq.Remainder()));
-                    }
-                    else
-                    {
-                        if (cq.MatchChomp("^="))
-                        {
-                            evals.Add(new Evaluator.AttributeWithValueStarting(key, cq.Remainder()));
-                        }
-                        else
-                        {
-                            if (cq.MatchChomp("$="))
-                            {
-                                evals.Add(new Evaluator.AttributeWithValueEnding(key, cq.Remainder()));
-                            }
-                            else
-                            {
-                                if (cq.MatchChomp("*="))
-                                {
-                                    evals.Add(new Evaluator.AttributeWithValueContaining(key, cq.Remainder()));
-                                }
-                                else
-                                {
-                                    if (cq.MatchChomp("~="))
-                                    {
-                                        evals.Add(new Evaluator.AttributeWithValueMatching(key, new Regex(cq.Remainder(), RegexOptions.Compiled)));
-                                    }
-                                    else
-                                    {
-                                        throw new Selector.SelectorParseException("Could not parse attribute query '{0}': unexpected token at '{1}'", query, cq.Remainder());
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    throw new Selector.SelectorParseException("Could not parse attribute query '{0}': unexpected token at '{1}'", query, cq.Remainder());
                 }
             }
         }
@@ -514,11 +397,12 @@ namespace Supremes.Select
             evals.Add(new Evaluator.IndexEquals(ConsumeIndex()));
         }
 
-        private static readonly Regex NTH_AB = new Regex("((\\+|-)?(\\d+)?)n(\\s*(\\+|-)?\\s*\\d+)?", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-
-        private static readonly Regex NTH_B = new Regex("(\\+|-)?(\\d+)", RegexOptions.Compiled);
-
         //pseudo selectors :first-child, :last-child, :nth-child, ...
+        private static readonly Regex NTH_AB
+            = new Regex("((\\+|-)?(\\d+)?)n(\\s*(\\+|-)?\\s*\\d+)?", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex NTH_B
+            = new Regex("(\\+|-)?(\\d+)", RegexOptions.Compiled);
+
         private void CssNthChild(bool backwards, bool ofType)
         {
             string argS = tq.ChompTo(")").Trim().ToLower();
@@ -531,33 +415,24 @@ namespace Supremes.Select
                 a = 2;
                 b = 1;
             }
+            else if ("even".Equals(argS))
+            {
+                a = 2;
+                b = 0;
+            }
+            else if (mAB.Success && mAB.Length == argS.Length) /*matches*/
+            {
+                a = mAB.Groups[3] != null ? Convert.ToInt32(Regex.Replace(mAB.Groups[1].Value, "^\\+", string.Empty)) : 1;
+                b = mAB.Groups[4] != null ? Convert.ToInt32(Regex.Replace(mAB.Groups[4].Value, "^\\+", string.Empty)) : 0;
+            }
+            else if (mB.Success && mB.Length == argS.Length) /*matches*/
+            {
+                a = 0;
+                b = Convert.ToInt32(Regex.Replace(mB.Groups[0].Value, "^\\+", string.Empty));
+            }
             else
             {
-                if ("even".Equals(argS))
-                {
-                    a = 2;
-                    b = 0;
-                }
-                else
-                {
-                    if (mAB.Success && mAB.Length == argS.Length) /*matches*/
-                    {
-                        a = mAB.Groups[3] != null ? Convert.ToInt32(Regex.Replace(mAB.Groups[1].Value, "^\\+", string.Empty)) : 1;
-                        b = mAB.Groups[4] != null ? Convert.ToInt32(Regex.Replace(mAB.Groups[4].Value, "^\\+", string.Empty)) : 0;
-                    }
-                    else
-                    {
-                        if (mB.Success && mB.Length == argS.Length) /*matches*/
-                        {
-                            a = 0;
-                            b = Convert.ToInt32(Regex.Replace(mB.Groups[0].Value, "^\\+", string.Empty));
-                        }
-                        else
-                        {
-                            throw new Selector.SelectorParseException("Could not parse nth-index '%s': unexpected format", argS);
-                        }
-                    }
-                }
+                throw new Selector.SelectorParseException("Could not parse nth-index '%s': unexpected format", argS);
             }
             if (ofType)
             {
