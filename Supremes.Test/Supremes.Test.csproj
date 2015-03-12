@@ -64,6 +64,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Select\CssTest.cs" />
     <Compile Include="Select\QueryParserTest.cs" />
+    <Compile Include="Select\SelectorTest.cs" />
     <Compile Include="TextUtil.cs" />
   </ItemGroup>
   <ItemGroup>
