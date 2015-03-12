@@ -175,11 +175,19 @@ namespace Supremes.Nodes
             return attributes.Dataset;
         }
 
+        /// <summary>
+        /// Gets this node's parent node.
+        /// </summary>
+        /// <returns></returns>
         public sealed override Node Parent()
         {
             return parentNode;
         }
         
+        /// <summary>
+        /// Gets this node's parent element.
+        /// </summary>
+        /// <returns></returns>
         public Element ParentElement()
         {
         	return (Element)parentNode;

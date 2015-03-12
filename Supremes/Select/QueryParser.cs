@@ -421,8 +421,8 @@ namespace Supremes.Select
             }
             else if (mAB.Success && mAB.Length == argS.Length) /*matches*/
             {
-                a = mAB.Groups[3] != null ? Convert.ToInt32(Regex.Replace(mAB.Groups[1].Value, "^\\+", string.Empty)) : 1;
-                b = mAB.Groups[4] != null ? Convert.ToInt32(Regex.Replace(mAB.Groups[4].Value, "^\\+", string.Empty)) : 0;
+                a = !string.IsNullOrEmpty(mAB.Groups[3].Value) ? Convert.ToInt32(Regex.Replace(mAB.Groups[1].Value, "^\\+", string.Empty)) : 1;
+                b = !string.IsNullOrEmpty(mAB.Groups[4].Value) ? Convert.ToInt32(Regex.Replace(mAB.Groups[4].Value, "^\\+", string.Empty)) : 0;
             }
             else if (mB.Success && mB.Length == argS.Length) /*matches*/
             {

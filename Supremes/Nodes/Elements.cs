@@ -254,6 +254,10 @@ namespace Supremes.Nodes
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Determine if any of the matched elements have a text content (that is not just whitespace).
+        /// </summary>
+        /// <returns></returns>
         public bool HasText()
         {
             foreach (Element element in contents)
