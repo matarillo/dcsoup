@@ -5,23 +5,56 @@ using System.Text;
 
 namespace Supremes.Nodes
 {
+    /// <summary>
+    /// Specifies the document's current HTML escape mode.
+    /// </summary>
     public enum DocumentEscapeMode
     {
+        /// <summary>
+        /// Restricted entities suitable for XHTML output: lt, gt, amp, and quot only.
+        /// </summary>
         Xhtml,
+        /// <summary>
+        /// Default HTML output entities.
+        /// </summary>
         Base,
+        /// <summary>
+        /// Complete HTML entities.
+        /// </summary>
         Extended
     }
 
+    /// <summary>
+    /// Specifies the output serialization syntax.
+    /// </summary>
     public enum DocumentSyntax
     {
+        /// <summary>
+        /// Serialize according to the HTML rules.
+        /// </summary>
         Html,
+        /// <summary>
+        /// Serialize according to the XML rules.
+        /// </summary>
         Xml
     }
 
+    /// <summary>
+    /// Specifies how browsers should display an HTML file.
+    /// </summary>
     public enum DocumentQuirksMode
     {
+        /// <summary>
+        /// Follows Web standards.
+        /// </summary>
         NoQuirks,
+        /// <summary>
+        /// Emulate non-standard behavior of older browsers.
+        /// </summary>
         Quirks,
+        /// <summary>
+        /// Almost follows Web standards except few behaviors.
+        /// </summary>
         LimitedQuirks
     }
     
@@ -463,10 +496,13 @@ namespace Supremes.Nodes
             return null;
         }
 
-        public override string OuterHtml()
+        /// <summary>
+        /// Get the outer HTML of this document.
+        /// </summary>
+        /// <returns></returns>
+        public sealed override string OuterHtml()
         {
-            return base.Html();
-            // no outer wrapper tag
+            return base.Html(); // no outer wrapper tag
         }
 
         /// <summary>
@@ -521,11 +557,20 @@ namespace Supremes.Nodes
             return this;
         }
 
+        /// <summary>
+        /// Gets the document's quirks mode.
+        /// </summary>
+        /// <returns></returns>
         public DocumentQuirksMode QuirksMode()
         {
             return quirksMode;
         }
 
+        /// <summary>
+        /// Sets the document's quirks mode.
+        /// </summary>
+        /// <param name="quirksMode"></param>
+        /// <returns></returns>
         public Document QuirksMode(DocumentQuirksMode quirksMode)
         {
             this.quirksMode = quirksMode;

@@ -100,9 +100,9 @@ namespace Supremes.Select
             {
                 rootEval = currentEval = evals[0];
                 // make sure OR (,) has precedence:
-                if (rootEval is CombiningEvaluator.OR && combinator != ',')
+                if (rootEval is CombiningEvaluator.Or && combinator != ',')
                 {
-                    currentEval = ((CombiningEvaluator.OR)currentEval).RightMostEvaluator();
+                    currentEval = ((CombiningEvaluator.Or)currentEval).RightMostEvaluator();
                     replaceRightMost = true;
                 }
             }
@@ -132,15 +132,15 @@ namespace Supremes.Select
             else if (combinator == ',')
             {
                 // group or.
-                CombiningEvaluator.OR or;
-                if (currentEval is CombiningEvaluator.OR)
+                CombiningEvaluator.Or or;
+                if (currentEval is CombiningEvaluator.Or)
                 {
-                    or = (CombiningEvaluator.OR)currentEval;
+                    or = (CombiningEvaluator.Or)currentEval;
                     or.Add(newEval);
                 }
                 else
                 {
-                    or = new CombiningEvaluator.OR();
+                    or = new CombiningEvaluator.Or();
                     or.Add(currentEval);
                     or.Add(newEval);
                 }
@@ -152,7 +152,7 @@ namespace Supremes.Select
             }
             if (replaceRightMost)
             {
-                ((CombiningEvaluator.OR)rootEval).ReplaceRightMostEvaluator(currentEval);
+                ((CombiningEvaluator.Or)rootEval).ReplaceRightMostEvaluator(currentEval);
             }
             else
             {

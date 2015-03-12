@@ -706,6 +706,9 @@ namespace Supremes.Nodes
 
         // implements List<Element> delegates:
 
+        /// <summary>
+        /// Gets the number of elements contained in the <see cref="Elements" />.
+        /// </summary>
         public int Count
         {
             get
@@ -714,6 +717,11 @@ namespace Supremes.Nodes
             }
         }
 
+        /// <summary>
+        /// Determines whether the <see cref="Elements" /> contains a specific value.
+        /// </summary>
+        /// <param name="o"></param>
+        /// <returns></returns>
         public bool Contains(object o)
         {
             return contents.Contains(o);
@@ -733,16 +741,28 @@ namespace Supremes.Nodes
             return this.GetEnumerator();
         }
 
+        /// <summary>
+        /// Adds an item to the <see cref="Elements" />.
+        /// </summary>
+        /// <param name="element"></param>
         public void Add(Element element)
         {
             contents.Add(element);
         }
 
+        /// <summary>
+        /// Removes the first occurrence of a specific object from the <see cref="Elements" />.
+        /// </summary>
+        /// <param name="element"></param>
+        /// <returns></returns>
         public bool Remove(Element element)
         {
             return contents.Remove(element);
         }
 
+        /// <summary>
+        /// Removes all items from the <see cref="Elements" />.
+        /// </summary>
         public void Clear()
         {
             contents.Clear();
@@ -767,22 +787,40 @@ namespace Supremes.Nodes
             return contents.GetHashCode();
         }
 
+        /// <summary>
+        /// Gets or sets the element at the specified index.
+        /// </summary>
         public Element this[int index]
         {
             get { return contents[index]; }
             set { contents[index] = value; }
         }
 
+        /// <summary>
+        /// Inserts an item to the <see cref="Elements" />
+        /// at the specified index.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="element"></param>
         public void Insert(int index, Element element)
         {
             contents.Insert(index, element);
         }
 
+        /// <summary>
+        /// Removes the <see cref="Elements" /> item at the specified index.
+        /// </summary>
+        /// <param name="index"></param>
         public void RemoveAt(int index)
         {
             contents.RemoveAt(index);
         }
 
+        /// <summary>
+        /// Determines the index of a specific item in the <see cref="Elements" />.
+        /// </summary>
+        /// <param name="element"></param>
+        /// <returns></returns>
         public int IndexOf(Element element)
         {
             return contents.IndexOf(element);

@@ -68,7 +68,7 @@ namespace Supremes.Select
             }
         }
 
-        internal sealed class OR : CombiningEvaluator
+        internal sealed class Or : CombiningEvaluator
         {
             /// <summary>
             /// Create a new Or evaluator.
@@ -77,7 +77,7 @@ namespace Supremes.Select
             /// The initial evaluators are ANDed together and used as the first clause of the OR.
             /// </remarks>
             /// <param name="evaluators">initial OR clause (these are wrapped into an AND evaluator).</param>
-            internal OR(ICollection<Evaluator> evaluators) : base()
+            internal Or(ICollection<Evaluator> evaluators) : base()
             {
                 if (num > 1)
                 {
@@ -91,7 +91,7 @@ namespace Supremes.Select
                 UpdateNumEvaluators();
             }
 
-            public OR() : base()
+            public Or() : base()
             {
             }
 
