@@ -839,7 +839,7 @@ namespace Supremes.Parsers
         internal void ReconstructFormattingElements()
         {
             int size = formattingElements.Count;
-            if (size == 0 || formattingElements.Last == null || OnStack(formattingElements.Last.Value))
+            if (size == 0 || formattingElements.Last.Value == null || OnStack(formattingElements.Last.Value))
             {
                 return;
             }
