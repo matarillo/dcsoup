@@ -67,23 +67,27 @@ namespace Supremes.Helper
         public class DescendingEnumerator : IEnumerator<T>
         {
             private LinkedListNode<T> current;
-            private bool started;
-            private bool removeAfterMoveNext;
+            private bool needsToMoveNext;
 
             public DescendingEnumerator(LinkedListNode<T> last)
             {
                 current = last;
-                started = false;
+                needsToMoveNext = true;
             }
 
             public T Current
             {
-                get { return (current == null) ? null : current.Value; }
+                get
+                {
+                    if (needsToMoveNext) throw new InvalidOperationException();
+                    return current.Value;
+                }
             }
 
             public void Dispose()
             {
                 current = null;
+                needsToMoveNext = false;
             }
 
             object System.Collections.IEnumerator.Current
@@ -93,21 +97,13 @@ namespace Supremes.Helper
 
             public bool MoveNext()
             {
-                if (started)
+                if (needsToMoveNext)
                 {
-                    if (current != null)
-                    {
-                        current = current.Previous;
-                        if (removeAfterMoveNext)
-                        {
-                            current.List.Remove(current.Next);
-                            removeAfterMoveNext = false;
-                        }
-                    }
+                    needsToMoveNext = false;
                 }
-                else
+                else if (current != null)
                 {
-                    started = true;
+                    current = current.Previous; // backwward
                 }
                 return (current != null);
             }
@@ -121,15 +117,19 @@ namespace Supremes.Helper
 
             public void Remove()
             {
-                if (!started || current == null) return;
-                removeAfterMoveNext = true;
+                if (needsToMoveNext) throw new InvalidOperationException();
+                if (current == null) return;
+                var next = current.Previous; // backwward
+                current.List.Remove(current);
+                current = next;
+                needsToMoveNext = true;
             }
 
             public bool HasNext()
             {
-                return started
-                    ? (current != null && current.Previous != null)
-                    : (current != null);
+                return needsToMoveNext
+                    ? (current != null)
+                    : (current != null && current.Previous != null); // backwward
             }
 
             #endregion
