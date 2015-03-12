@@ -1,10 +1,4 @@
-/*
- * This code is derived from MyJavaLibrary (http://somelinktomycoollibrary)
- * 
- * If this is an open source Java library, include the proper license and copyright attributions here!
- */
-
-using System;
+﻿using System;
 using Supremes.Helper;
 using Supremes.Nodes;
 using System.Collections.Generic;
@@ -82,14 +76,17 @@ namespace Supremes.Safety
         // allowed URL protocols for attributes
         // option to preserve relative links
 
-        /// <summary>This whitelist allows only text nodes: all HTML will be stripped.</summary>
+        /// <summary>
+        /// This whitelist allows only text nodes: all HTML will be stripped.
+        /// </summary>
         /// <returns>whitelist</returns>
         public static Whitelist None()
         {
             return new Supremes.Safety.Whitelist();
         }
 
-        /// <summary>This whitelist allows only simple text formatting: <code>b, em, i, strong, u</code>.
+        /// <summary>
+        /// This whitelist allows only simple text formatting: <code>b, em, i, strong, u</code>.
         /// </summary>
         /// <remarks>
         /// All other HTML (tags and attributes) will be removed.
@@ -183,8 +180,10 @@ namespace Supremes.Safety
                 .AddProtocols("q", "cite", "http", "https");
         }
 
-        /// <summary>Create a new, empty whitelist.</summary>
-        /// <remarks>Create a new, empty whitelist. Generally it will be better to start with a default prepared whitelist instead.
+        /// <summary>
+        /// Create a new, empty whitelist.</summary>
+        /// <remarks>
+        /// Generally it will be better to start with a default prepared whitelist instead.
         /// </remarks>
         /// <seealso cref="Basic()">Basic()</seealso>
         /// <seealso cref="BasicWithImages()">BasicWithImages()</seealso>
@@ -199,8 +198,10 @@ namespace Supremes.Safety
             preserveRelativeLinks = false;
         }
 
-        /// <summary>Add a list of allowed elements to a whitelist.</summary>
-        /// <remarks>Add a list of allowed elements to a whitelist. (If a tag is not allowed, it will be removed from the HTML.)
+        /// <summary>
+        /// Add a list of allowed elements to a whitelist.</summary>
+        /// <remarks>
+        /// (If a tag is not allowed, it will be removed from the HTML.)
         /// </remarks>
         /// <param name="tags">tag names to allow</param>
         /// <returns>this (for chaining)</returns>
@@ -215,9 +216,11 @@ namespace Supremes.Safety
             return this;
         }
 
-        /// <summary>Add a list of allowed attributes to a tag.</summary>
+        /// <summary>
+        /// Add a list of allowed attributes to a tag.
+        /// </summary>
         /// <remarks>
-        /// Add a list of allowed attributes to a tag. (If an attribute is not allowed on an element, it will be removed.)
+        /// (If an attribute is not allowed on an element, it will be removed.)
         /// <p/>
         /// E.g.: <code>addAttributes("a", "href", "class")</code> allows <code>href</code> and <code>class</code> attributes
         /// on <code>a</code> tags.
@@ -258,9 +261,11 @@ namespace Supremes.Safety
             return this;
         }
 
-        /// <summary>Add an enforced attribute to a tag.</summary>
+        /// <summary>
+        /// Add an enforced attribute to a tag.
+        /// </summary>
         /// <remarks>
-        /// Add an enforced attribute to a tag. An enforced attribute will always be added to the element. If the element
+        /// An enforced attribute will always be added to the element. If the element
         /// already has the attribute set, it will be overridden.
         /// <p/>
         /// E.g.: <code>addEnforcedAttribute("a", "rel", "nofollow")</code> will make all <code>a</code> tags output as
@@ -334,9 +339,11 @@ namespace Supremes.Safety
             return this;
         }
 
-        /// <summary>Add allowed URL protocols for an element's URL attribute.</summary>
+        /// <summary>
+        /// Add allowed URL protocols for an element's URL attribute.
+        /// </summary>
         /// <remarks>
-        /// Add allowed URL protocols for an element's URL attribute. This restricts the possible values of the attribute to
+        /// This restricts the possible values of the attribute to
         /// URLs with the defined protocol.
         /// <p/>
         /// E.g.: <code>addProtocols("a", "href", "ftp", "http", "https")</code>
@@ -381,7 +388,9 @@ namespace Supremes.Safety
             return this;
         }
 
-        /// <summary>Test if the supplied tag is allowed by this whitelist</summary>
+        /// <summary>
+        /// Test if the supplied tag is allowed by this whitelist
+        /// </summary>
         /// <param name="tag">test tag</param>
         /// <returns>true if allowed</returns>
         internal bool IsSafeTag(string tag)
@@ -389,7 +398,8 @@ namespace Supremes.Safety
             return tagNames.Contains(Whitelist.TagName.ValueOf(tag));
         }
 
-        /// <summary>Test if the supplied attribute is allowed by this whitelist for this tag
+        /// <summary>
+        /// Test if the supplied attribute is allowed by this whitelist for this tag
         /// </summary>
         /// <param name="tagName">tag to consider allowing the attribute in</param>
         /// <param name="el">element under test, to confirm protocol</param>

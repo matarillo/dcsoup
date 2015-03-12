@@ -46,6 +46,9 @@
     <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\Supremes.xml</DocumentationFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
@@ -112,13 +115,7 @@
     <Compile Include="Select\Selector.cs" />
     <Compile Include="Select\StructuralEvaluator.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Helper" />
-    <Folder Include="Nodes" />
-    <Folder Include="Parsers" />
-    <Folder Include="Safety" />
-    <Folder Include="Select" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Helper\entities-base.properties" />
     <EmbeddedResource Include="Helper\entities-full.properties" />

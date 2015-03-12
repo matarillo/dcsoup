@@ -1,10 +1,4 @@
-/*
- * This code is derived from MyJavaLibrary (http://somelinktomycoollibrary)
- * 
- * If this is an open source Java library, include the proper license and copyright attributions here!
- */
-
-using Supremes.Helper;
+﻿using Supremes.Helper;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

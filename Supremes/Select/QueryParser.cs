@@ -1,10 +1,4 @@
-/*
- * This code is derived from MyJavaLibrary (http://somelinktomycoollibrary)
- * 
- * If this is an open source Java library, include the proper license and copyright attributions here!
- */
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 using Supremes.Helper;
 using System.Text.RegularExpressions;
@@ -12,8 +6,9 @@ using System;
 
 namespace Supremes.Select
 {
-    /// <summary>Parses a CSS selector into an Evaluator tree.</summary>
-    /// <remarks>Parses a CSS selector into an Evaluator tree.</remarks>
+    /// <summary>
+    /// Parses a CSS selector into an Evaluator tree.
+    /// </summary>
     internal class QueryParser
     {
         private static readonly string[] combinators = new string[] { ",", ">", "+", "~", " " };
@@ -26,8 +21,9 @@ namespace Supremes.Select
 
         private IList<Evaluator> evals = new List<Evaluator>();
 
-        /// <summary>Create a new QueryParser.</summary>
-        /// <remarks>Create a new QueryParser.</remarks>
+        /// <summary>
+        /// Create a new QueryParser.
+        /// </summary>
         /// <param name="query">CSS query</param>
         private QueryParser(string query)
         {
@@ -35,8 +31,9 @@ namespace Supremes.Select
             this.tq = new TokenQueue(query);
         }
 
-        /// <summary>Parse a CSS query into an Evaluator.</summary>
-        /// <remarks>Parse a CSS query into an Evaluator.</remarks>
+        /// <summary>
+        /// Parse a CSS query into an Evaluator.
+        /// </summary>
         /// <param name="query">CSS query</param>
         /// <returns>Evaluator</returns>
         public static Evaluator Parse(string query)
@@ -45,7 +42,9 @@ namespace Supremes.Select
             return p.Parse();
         }
 
-        /// <summary>Parse the query</summary>
+        /// <summary>
+        /// Parse the query
+        /// </summary>
         /// <returns>Evaluator</returns>
         internal Evaluator Parse()
         {

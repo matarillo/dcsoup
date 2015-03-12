@@ -1,10 +1,4 @@
-/*
- * This code is derived from MyJavaLibrary (http://somelinktomycoollibrary)
- * 
- * If this is an open source Java library, include the proper license and copyright attributions here!
- */
-
-using Supremes.Helper;
+﻿using Supremes.Helper;
 using Supremes.Parsers;
 using Supremes.Select;
 using System;
@@ -303,9 +297,11 @@ namespace Supremes.Nodes
             return textNodes.AsReadOnly();
         }
 
-        /// <summary>Get this element's child data nodes.</summary>
+        /// <summary>
+        /// Get this element's child data nodes.
+        /// </summary>
         /// <remarks>
-        /// Get this element's child data nodes. The list is unmodifiable but the data nodes may be manipulated.
+        /// The list is unmodifiable but the data nodes may be manipulated.
         /// <p/>
         /// This is effectively a filter on
         /// <see cref="Node.ChildNodes()">Node.ChildNodes()</see>

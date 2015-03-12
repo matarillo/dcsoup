@@ -1,10 +1,4 @@
-/*
- * This code is derived from MyJavaLibrary (http://somelinktomycoollibrary)
- * 
- * If this is an open source Java library, include the proper license and copyright attributions here!
- */
-
-namespace Supremes.Parsers
+﻿namespace Supremes.Parsers
 {
     /// <summary>
     /// States and transition activations for the Tokeniser.

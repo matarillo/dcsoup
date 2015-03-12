@@ -1,8 +1,4 @@
-/*
- * This code is derived from jsoup 1.8.1 (http://jsoup.org/news/release-1.8.1)
- */
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;

@@ -1,10 +1,4 @@
-/*
- * This code is derived from MyJavaLibrary (http://somelinktomycoollibrary)
- * 
- * If this is an open source Java library, include the proper license and copyright attributions here!
- */
-
-using Supremes.Helper;
+﻿using Supremes.Helper;
 using Supremes.Nodes;
 using System;
 using System.Collections.Generic;
@@ -82,7 +76,7 @@ namespace Supremes.Select
     /// </remarks>
     /// <author>Jonathan Hedley, jonathan@hedley.net</author>
     /// <seealso cref="Supremes.Nodes.Element.Select(string)">Supremes.Nodes.Element.Select(string)</seealso>
-    internal class Selector
+    public class Selector
     {
         private readonly Evaluator evaluator;
 
@@ -135,8 +129,6 @@ namespace Supremes.Select
         [Serializable]
         public class SelectorParseException : InvalidOperationException
         {
-            private const long serialVersionUID = 1L;
-
             public SelectorParseException(string msg, params object[] @params)
                 : base(string.Format(msg, @params))
             {

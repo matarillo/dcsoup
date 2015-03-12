@@ -1,10 +1,4 @@
-/*
- * This code is derived from MyJavaLibrary (http://somelinktomycoollibrary)
- * 
- * If this is an open source Java library, include the proper license and copyright attributions here!
- */
-
-using Supremes.Helper;
+﻿using Supremes.Helper;
 using Supremes.Nodes;
 using System;
 using System.Collections.Generic;
@@ -21,13 +15,16 @@ namespace Supremes.Select
         {
         }
 
-        /// <summary>Test if the element meets the evaluator's requirements.</summary>
-        /// <remarks>Test if the element meets the evaluator's requirements.</remarks>
+        /// <summary>
+        /// Test if the element meets the evaluator's requirements.
+        /// </summary>
         /// <param name="root">Root of the matching subtree</param>
         /// <param name="element">tested element</param>
         public abstract bool Matches(Element root, Element element);
 
-        /// <summary>Evaluator for tag name</summary>
+        /// <summary>
+        /// Evaluator for tag name
+        /// </summary>
         public sealed class Tag : Evaluator
         {
             private readonly string tagName;
@@ -48,7 +45,9 @@ namespace Supremes.Select
             }
         }
 
-        /// <summary>Evaluator for element id</summary>
+        /// <summary>
+        /// Evaluator for element id
+        /// </summary>
         public sealed class ID : Evaluator
         {
             private string id;
@@ -69,7 +68,9 @@ namespace Supremes.Select
             }
         }
 
-        /// <summary>Evaluator for element class</summary>
+        /// <summary>
+        /// Evaluator for element class
+        /// </summary>
         public sealed class Class : Evaluator
         {
             private string className;
@@ -90,7 +91,9 @@ namespace Supremes.Select
             }
         }
 
-        /// <summary>Evaluator for attribute name matching</summary>
+        /// <summary>
+        /// Evaluator for attribute name matching
+        /// </summary>
         public sealed class Attribute : Evaluator
         {
             private string key;
@@ -111,7 +114,9 @@ namespace Supremes.Select
             }
         }
 
-        /// <summary>Evaluator for attribute name prefix matching</summary>
+        /// <summary>
+        /// Evaluator for attribute name prefix matching
+        /// </summary>
         public sealed class AttributeStarting : Evaluator
         {
             private string keyPrefix;
@@ -140,10 +145,13 @@ namespace Supremes.Select
             }
         }
 
-        /// <summary>Evaluator for attribute name/value matching</summary>
+        /// <summary>
+        /// Evaluator for attribute name/value matching
+        /// </summary>
         public sealed class AttributeWithValue : Evaluator.AttributeKeyPair
         {
-            public AttributeWithValue(string key, string value) : base(key, value)
+            public AttributeWithValue(string key, string value)
+                : base(key, value)
             {
             }
 
@@ -158,10 +166,13 @@ namespace Supremes.Select
             }
         }
 
-        /// <summary>Evaluator for attribute name != value matching</summary>
+        /// <summary>
+        /// Evaluator for attribute name != value matching
+        /// </summary>
         public sealed class AttributeWithValueNot : Evaluator.AttributeKeyPair
         {
-            public AttributeWithValueNot(string key, string value) : base(key, value)
+            public AttributeWithValueNot(string key, string value)
+                : base(key, value)
             {
             }
 
@@ -176,64 +187,72 @@ namespace Supremes.Select
             }
         }
 
-        /// <summary>Evaluator for attribute name/value matching (value prefix)</summary>
+        /// <summary>
+        /// Evaluator for attribute name/value matching (value prefix)
+        /// </summary>
         public sealed class AttributeWithValueStarting : Evaluator.AttributeKeyPair
         {
-            public AttributeWithValueStarting(string key, string value) : base(key, value)
+            public AttributeWithValueStarting(string key, string value)
+                : base(key, value)
             {
             }
 
             public override bool Matches(Element root, Element element)
             {
-                return element.HasAttr(key) && element.Attr(key).ToLower().StartsWith(value, StringComparison.Ordinal);
+                return element.HasAttr(key) && element.Attr(key).ToLower().StartsWith(value, StringComparison.Ordinal); // value is lower case already
             }
 
-            // value is lower case already
             public override string ToString()
             {
                 return string.Format("[{0}^={1}]", key, value);
             }
         }
 
-        /// <summary>Evaluator for attribute name/value matching (value ending)</summary>
+        /// <summary>
+        /// Evaluator for attribute name/value matching (value ending)
+        /// </summary>
         public sealed class AttributeWithValueEnding : Evaluator.AttributeKeyPair
         {
-            public AttributeWithValueEnding(string key, string value) : base(key, value)
+            public AttributeWithValueEnding(string key, string value)
+                : base(key, value)
             {
             }
 
             public override bool Matches(Element root, Element element)
             {
-                return element.HasAttr(key) && element.Attr(key).ToLower().EndsWith(value, StringComparison.Ordinal);
+                return element.HasAttr(key) && element.Attr(key).ToLower().EndsWith(value, StringComparison.Ordinal); // value is lower case
             }
 
-            // value is lower case
             public override string ToString()
             {
                 return string.Format("[{0}$={1}]", key, value);
             }
         }
 
-        /// <summary>Evaluator for attribute name/value matching (value containing)</summary>
+        /// <summary>
+        /// Evaluator for attribute name/value matching (value containing)
+        /// </summary>
         public sealed class AttributeWithValueContaining : Evaluator.AttributeKeyPair
         {
-            public AttributeWithValueContaining(string key, string value) : base(key, value)
+            public AttributeWithValueContaining(string key, string value)
+                : base(key, value)
             {
             }
 
             public override bool Matches(Element root, Element element)
             {
-                return element.HasAttr(key) && element.Attr(key).ToLower().Contains(value);
+                return element.HasAttr(key) && element.Attr(key).ToLower().Contains(value); // value is lower case
             }
 
-            // value is lower case
             public override string ToString()
             {
                 return string.Format("[{0}*={1}]", key, value);
             }
         }
 
-        /// <summary>Evaluator for attribute name/value matching (value regex matching)</summary>
+        /// <summary>
+        /// Evaluator for attribute name/value matching (value regex matching)
+        /// </summary>
         public sealed class AttributeWithValueMatching : Evaluator
         {
             internal string key;
@@ -257,7 +276,9 @@ namespace Supremes.Select
             }
         }
 
-        /// <summary>Abstract evaluator for attribute name/value matching</summary>
+        /// <summary>
+        /// Abstract evaluator for attribute name/value matching
+        /// </summary>
         public abstract class AttributeKeyPair : Evaluator
         {
             internal string key;
@@ -277,7 +298,9 @@ namespace Supremes.Select
             }
         }
 
-        /// <summary>Evaluator for any / all element matching</summary>
+        /// <summary>
+        /// Evaluator for any / all element matching
+        /// </summary>
         public sealed class AllElements : Evaluator
         {
             public override bool Matches(Element root, Element element)
@@ -291,10 +314,13 @@ namespace Supremes.Select
             }
         }
 
-        /// <summary>Evaluator for matching by sibling index number (e &lt; idx)</summary>
+        /// <summary>
+        /// Evaluator for matching by sibling index number (e &lt; idx)
+        /// </summary>
         public sealed class IndexLessThan : Evaluator.IndexEvaluator
         {
-            public IndexLessThan(int index) : base(index)
+            public IndexLessThan(int index)
+                : base(index)
             {
             }
 
@@ -309,10 +335,13 @@ namespace Supremes.Select
             }
         }
 
-        /// <summary>Evaluator for matching by sibling index number (e &gt; idx)</summary>
+        /// <summary>
+        /// Evaluator for matching by sibling index number (e &gt; idx)
+        /// </summary>
         public sealed class IndexGreaterThan : Evaluator.IndexEvaluator
         {
-            public IndexGreaterThan(int index) : base(index)
+            public IndexGreaterThan(int index)
+                : base(index)
             {
             }
 
@@ -327,10 +356,13 @@ namespace Supremes.Select
             }
         }
 
-        /// <summary>Evaluator for matching by sibling index number (e = idx)</summary>
+        /// <summary>
+        /// Evaluator for matching by sibling index number (e = idx)
+        /// </summary>
         public sealed class IndexEquals : Evaluator.IndexEvaluator
         {
-            public IndexEquals(int index) : base(index)
+            public IndexEquals(int index)
+                : base(index)
             {
             }
 
@@ -345,14 +377,15 @@ namespace Supremes.Select
             }
         }
 
-        /// <summary>Evaluator for matching the last sibling (css :last-child)</summary>
+        /// <summary>
+        /// Evaluator for matching the last sibling (css :last-child)
+        /// </summary>
         public sealed class IsLastChild : Evaluator
         {
             public override bool Matches(Element root, Element element)
             {
                 Element p = element.ParentElement();
-                return p != null && !(p is Document) && element.ElementSiblingIndex() == p.Children
-                    ().Count - 1;
+                return p != null && !(p is Document) && element.ElementSiblingIndex() == p.Children().Count - 1;
             }
 
             public override string ToString()
@@ -363,7 +396,8 @@ namespace Supremes.Select
 
         public sealed class IsFirstOfType : Evaluator.IsNthOfType
         {
-            public IsFirstOfType() : base(0, 1)
+            public IsFirstOfType()
+                : base(0, 1)
             {
             }
 
@@ -375,7 +409,8 @@ namespace Supremes.Select
 
         public sealed class IsLastOfType : Evaluator.IsNthLastOfType
         {
-            public IsLastOfType() : base(0, 1)
+            public IsLastOfType()
+                : base(0, 1)
             {
             }
 
@@ -397,7 +432,8 @@ namespace Supremes.Select
                 this.b = b;
             }
 
-            public CssNthEvaluator(int b) : this(0, b)
+            public CssNthEvaluator(int b)
+                : this(0, b)
             {
             }
 
@@ -434,11 +470,14 @@ namespace Supremes.Select
             internal abstract int CalculatePosition(Element root, Element element);
         }
 
-        /// <summary>css-compatible Evaluator for :eq (css :nth-child)</summary>
+        /// <summary>
+        /// css-compatible Evaluator for :eq (css :nth-child)
+        /// </summary>
         /// <seealso cref="IndexEquals">IndexEquals</seealso>
         public sealed class IsNthChild : Evaluator.CssNthEvaluator
         {
-            public IsNthChild(int a, int b) : base(a, b)
+            public IsNthChild(int a, int b)
+                : base(a, b)
             {
             }
 
@@ -453,11 +492,14 @@ namespace Supremes.Select
             }
         }
 
-        /// <summary>css pseudo class :nth-last-child)</summary>
+        /// <summary>
+        /// css pseudo class :nth-last-child)
+        /// </summary>
         /// <seealso cref="IndexEquals">IndexEquals</seealso>
         public sealed class IsNthLastChild : Evaluator.CssNthEvaluator
         {
-            public IsNthLastChild(int a, int b) : base(a, b)
+            public IsNthLastChild(int a, int b)
+                : base(a, b)
             {
             }
 
@@ -472,10 +514,13 @@ namespace Supremes.Select
             }
         }
 
-        /// <summary>css pseudo class nth-of-type</summary>
+        /// <summary>
+        /// css pseudo class nth-of-type
+        /// </summary>
         public class IsNthOfType : Evaluator.CssNthEvaluator
         {
-            public IsNthOfType(int a, int b) : base(a, b)
+            public IsNthOfType(int a, int b)
+                : base(a, b)
             {
             }
 
@@ -505,7 +550,8 @@ namespace Supremes.Select
 
         public class IsNthLastOfType : Evaluator.CssNthEvaluator
         {
-            public IsNthLastOfType(int a, int b) : base(a, b)
+            public IsNthLastOfType(int a, int b)
+                : base(a, b)
             {
             }
 
@@ -529,7 +575,9 @@ namespace Supremes.Select
             }
         }
 
-        /// <summary>Evaluator for matching the first sibling (css :first-child)</summary>
+        /// <summary>
+        /// Evaluator for matching the first sibling (css :first-child)
+        /// </summary>
         public sealed class IsFirstChild : Evaluator
         {
             public override bool Matches(Element root, Element element)
@@ -544,7 +592,9 @@ namespace Supremes.Select
             }
         }
 
-        /// <summary>css3 pseudo-class :root</summary>
+        /// <summary>
+        /// css3 pseudo-class :root
+        /// </summary>
         /// <seealso><a href="http://www.w3.org/TR/selectors/#root-pseudo">:root selector</a></seealso>
         public sealed class IsRoot : Evaluator
         {
@@ -623,7 +673,9 @@ namespace Supremes.Select
             }
         }
 
-        /// <summary>Abstract evaluator for sibling index matching</summary>
+        /// <summary>
+        /// Abstract evaluator for sibling index matching
+        /// </summary>
         /// <author>ant</author>
         public abstract class IndexEvaluator : Evaluator
         {
@@ -635,7 +687,9 @@ namespace Supremes.Select
             }
         }
 
-        /// <summary>Evaluator for matching Element (and its descendants) text</summary>
+        /// <summary>
+        /// Evaluator for matching Element (and its descendants) text
+        /// </summary>
         public sealed class ContainsText : Evaluator
         {
             private string searchText;
@@ -656,7 +710,9 @@ namespace Supremes.Select
             }
         }
 
-        /// <summary>Evaluator for matching Element's own text</summary>
+        /// <summary>
+        /// Evaluator for matching Element's own text
+        /// </summary>
         public sealed class ContainsOwnText : Evaluator
         {
             private readonly string searchText;
@@ -677,7 +733,9 @@ namespace Supremes.Select
             }
         }
 
-        /// <summary>Evaluator for matching Element (and its descendants) text with regex</summary>
+        /// <summary>
+        /// Evaluator for matching Element (and its descendants) text with regex
+        /// </summary>
         public sealed class MatchesText : Evaluator
         {
             private readonly Regex pattern;
@@ -699,7 +757,9 @@ namespace Supremes.Select
             }
         }
 
-        /// <summary>Evaluator for matching Element's own text with regex</summary>
+        /// <summary>
+        /// Evaluator for matching Element's own text with regex
+        /// </summary>
         public sealed class MatchesOwnText : Evaluator
         {
             private readonly Regex pattern;

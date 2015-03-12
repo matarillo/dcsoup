@@ -1,10 +1,4 @@
-/*
- * This code is derived from MyJavaLibrary (http://somelinktomycoollibrary)
- * 
- * If this is an open source Java library, include the proper license and copyright attributions here!
- */
-
-using Supremes.Helper;
+﻿using Supremes.Helper;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -60,8 +54,9 @@ namespace Supremes.Nodes
             }
         }
 
-        /// <summary>Set a new attribute, or replace an existing one by key.</summary>
-        /// <remarks>Set a new attribute, or replace an existing one by key.</remarks>
+        /// <summary>
+        /// Set a new attribute, or replace an existing one by key.
+        /// </summary>
         /// <param name="attribute">attribute</param>
         public void Put(Attribute attribute)
         {
@@ -73,7 +68,9 @@ namespace Supremes.Nodes
             attributes[attribute.Key] = attribute;
         }
 
-        /// <summary>Remove an attribute by key.</summary>
+        /// <summary>
+        /// Remove an attribute by key.
+        /// </summary>
         /// <param name="key">attribute key to remove</param>
         public void Remove(string key)
         {
@@ -85,7 +82,9 @@ namespace Supremes.Nodes
             attributes.Remove(key.ToLower());
         }
 
-        /// <summary>Tests if these attributes contain an attribute with this key.</summary>
+        /// <summary>
+        /// Tests if these attributes contain an attribute with this key.
+        /// </summary>
         /// <param name="key">key to check for</param>
         /// <returns>true if key exists, false otherwise</returns>
         public bool ContainsKey(string key)
@@ -93,7 +92,9 @@ namespace Supremes.Nodes
             return attributes != null && attributes.ContainsKey(key.ToLower());
         }
 
-        /// <summary>Get the number of attributes in this set.</summary>
+        /// <summary>
+        /// Get the number of attributes in this set.
+        /// </summary>
         /// <returns>size</returns>
         public int Count
         {
@@ -107,7 +108,9 @@ namespace Supremes.Nodes
             }
         }
 
-        /// <summary>Add all the attributes from the incoming set to this set.</summary>
+        /// <summary>
+        /// Add all the attributes from the incoming set to this set.
+        /// </summary>
         /// <param name="incoming">attributes to add to these attributes.</param>
         public void SetAll(Attributes incoming)
         {
@@ -133,7 +136,9 @@ namespace Supremes.Nodes
             }
         }
 
-        /// <summary>Get the attributes as a List, for iteration.</summary>
+        /// <summary>
+        /// Get the attributes as a List, for iteration.
+        /// </summary>
         /// <remarks>
         /// Get the attributes as a List, for iteration. Do not modify the keys of the attributes via this view, as changes
         /// to keys will not be recognised in the containing set.
@@ -160,7 +165,9 @@ namespace Supremes.Nodes
             get { return new Attributes._Dataset(this); }
         }
 
-        /// <summary>Get the HTML representation of these attributes.</summary>
+        /// <summary>
+        /// Get the HTML representation of these attributes.
+        /// </summary>
         /// <returns>HTML</returns>
         public string Html()
         {

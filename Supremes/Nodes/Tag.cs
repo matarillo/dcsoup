@@ -1,10 +1,4 @@
-/*
- * This code is derived from MyJavaLibrary (http://somelinktomycoollibrary)
- * 
- * If this is an open source Java library, include the proper license and copyright attributions here!
- */
-
-using Supremes.Helper;
+﻿using Supremes.Helper;
 using System.Collections.Generic;
 
 namespace Supremes.Nodes
@@ -52,17 +46,20 @@ namespace Supremes.Nodes
             this.tagName = tagName.ToLower();
         }
 
-        /// <summary>Get this tag's name.</summary>
-        /// <remarks>Get this tag's name.</remarks>
+        /// <summary>
+        /// Get this tag's name.
+        /// </summary>
         /// <returns>the tag's name</returns>
         public string GetName()
         {
             return tagName;
         }
 
-        /// <summary>Get a Tag by name.</summary>
+        /// <summary>
+        /// Get a Tag by name.
+        /// </summary>
         /// <remarks>
-        /// Get a Tag by name. If not previously defined (unknown), returns a new generic tag, that can do anything.
+        /// If not previously defined (unknown), returns a new generic tag, that can do anything.
         /// <p/>
         /// Pre-defined tags (P, DIV etc) will be ==, but unknown tags are not registered and will only .equals().
         /// </remarks>
@@ -87,70 +84,81 @@ namespace Supremes.Nodes
             return tag;
         }
 
-        /// <summary>Gets if this is a block tag.</summary>
-        /// <remarks>Gets if this is a block tag.</remarks>
+        /// <summary>
+        /// Gets if this is a block tag.
+        /// </summary>
         /// <returns>if block tag</returns>
         public bool IsBlock()
         {
             return isBlock;
         }
 
-        /// <summary>Gets if this tag should be formatted as a block (or as inline)</summary>
+        /// <summary>
+        /// Gets if this tag should be formatted as a block (or as inline)
+        /// </summary>
         /// <returns>if should be formatted as block or inline</returns>
         public bool FormatAsBlock()
         {
             return formatAsBlock;
         }
 
-        /// <summary>Gets if this tag can contain block tags.</summary>
-        /// <remarks>Gets if this tag can contain block tags.</remarks>
+        /// <summary>
+        /// Gets if this tag can contain block tags.
+        /// </summary>
         /// <returns>if tag can contain block tags</returns>
         public bool CanContainBlock()
         {
             return canContainBlock;
         }
 
-        /// <summary>Gets if this tag is an inline tag.</summary>
-        /// <remarks>Gets if this tag is an inline tag.</remarks>
+        /// <summary>
+        /// Gets if this tag is an inline tag.
+        /// </summary>
         /// <returns>if this tag is an inline tag.</returns>
         public bool IsInline()
         {
             return !isBlock;
         }
 
-        /// <summary>Gets if this tag is a data only tag.</summary>
-        /// <remarks>Gets if this tag is a data only tag.</remarks>
+        /// <summary>
+        /// Gets if this tag is a data only tag.
+        /// </summary>
         /// <returns>if this tag is a data only tag</returns>
         public bool IsData()
         {
             return !canContainInline && !IsEmpty();
         }
 
-        /// <summary>Get if this is an empty tag</summary>
+        /// <summary>
+        /// Get if this is an empty tag
+        /// </summary>
         /// <returns>if this is an empty tag</returns>
         public bool IsEmpty()
         {
             return empty;
         }
 
-        /// <summary>Get if this tag is self closing.</summary>
-        /// <remarks>Get if this tag is self closing.</remarks>
+        /// <summary>
+        /// Get if this tag is self closing.
+        /// </summary>
         /// <returns>if this tag should be output as self closing.</returns>
         public bool IsSelfClosing()
         {
             return empty || selfClosing;
         }
 
-        /// <summary>Get if this is a pre-defined tag, or was auto created on parsing.</summary>
-        /// <remarks>Get if this is a pre-defined tag, or was auto created on parsing.</remarks>
+        /// <summary>
+        /// Get if this is a pre-defined tag, or was auto created on parsing.
+        /// </summary>
         /// <returns>if a known tag</returns>
         public bool IsKnownTag()
         {
             return tags.ContainsKey(tagName);
         }
 
-        /// <summary>Check if this tagname is a known tag.</summary>
-        /// <remarks>Check if this tagname is a known tag.</remarks>
+        /// <summary>
+        /// Check if this tagname is a known tag.
+        /// </summary>
         /// <param name="tagName">name of tag</param>
         /// <returns>if known HTML tag</returns>
         public static bool IsKnownTag(string tagName)
@@ -158,8 +166,9 @@ namespace Supremes.Nodes
             return tags.ContainsKey(tagName);
         }
 
-        /// <summary>Get if this tag should preserve whitespace within child text nodes.</summary>
-        /// <remarks>Get if this tag should preserve whitespace within child text nodes.</remarks>
+        /// <summary>
+        /// Get if this tag should preserve whitespace within child text nodes.
+        /// </summary>
         /// <returns>if preserve whitepace</returns>
         public bool PreserveWhitespace()
         {

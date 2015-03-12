@@ -1,10 +1,4 @@
-/*
- * This code is derived from MyJavaLibrary (http://somelinktomycoollibrary)
- * 
- * If this is an open source Java library, include the proper license and copyright attributions here!
- */
-
-using System.Text;
+﻿using System.Text;
 
 namespace Supremes.Nodes
 {
@@ -15,7 +9,9 @@ namespace Supremes.Nodes
     /// </summary>
     internal sealed class DocumentType : Node
     {
-        /// <summary>Create a new doctype element.</summary>
+        /// <summary>
+        /// Create a new doctype element.
+        /// </summary>
         /// <param name="name">the doctype's name</param>
         /// <param name="publicId">the doctype's public ID</param>
         /// <param name="systemId">the doctype's system ID</param>

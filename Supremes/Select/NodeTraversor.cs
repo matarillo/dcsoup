@@ -1,14 +1,10 @@
-/*
- * This code is derived from MyJavaLibrary (http://somelinktomycoollibrary)
- * 
- * If this is an open source Java library, include the proper license and copyright attributions here!
- */
-
-using Supremes.Nodes;
+﻿using Supremes.Nodes;
 
 namespace Supremes.Select
 {
-    /// <summary>Depth-first node traversor.</summary>
+    /// <summary>
+    /// Depth-first node traversor.
+    /// </summary>
     /// <remarks>
     /// Depth-first node traversor. Use to iterate through all nodes under and including the specified root node.
     /// <p/>

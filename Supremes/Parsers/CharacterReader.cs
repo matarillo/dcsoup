@@ -1,10 +1,4 @@
-/*
- * This code is derived from MyJavaLibrary (http://somelinktomycoollibrary)
- * 
- * If this is an open source Java library, include the proper license and copyright attributions here!
- */
-
-using Supremes.Helper;
+﻿using Supremes.Helper;
 using System.Globalization;
 
 namespace Supremes.Parsers
@@ -81,11 +75,13 @@ namespace Supremes.Parsers
             return new string(input, pos++, 1);
         }
 
-        /// <summary>Returns the number of characters between the current position and the next instance of the input char
-        ///     </summary>
+        /// <summary>
+        /// Returns the number of characters between the current position and the next instance of the input char
+        /// </summary>
         /// <param name="c">scan target</param>
-        /// <returns>offset between current position and next instance of target. -1 if not found.
-        ///     </returns>
+        /// <returns>
+        /// offset between current position and next instance of target. -1 if not found.
+        /// </returns>
         internal int NextIndexOf(char c)
         {
             // doesn't handle scanning for surrogates
@@ -99,11 +95,13 @@ namespace Supremes.Parsers
             return -1;
         }
 
-        /// <summary>Returns the number of characters between the current position and the next instance of the input sequence
-        ///     </summary>
+        /// <summary>
+        /// Returns the number of characters between the current position and the next instance of the input sequence
+        /// </summary>
         /// <param name="seq">scan target</param>
-        /// <returns>offset between current position and next instance of target. -1 if not found.
-        ///     </returns>
+        /// <returns>
+        /// offset between current position and next instance of target. -1 if not found.
+        /// </returns>
         internal int NextIndexOf(char[] seq)
         {
             // doesn't handle scanning for surrogates
