@@ -232,7 +232,7 @@ namespace Supremes.Parsers
         {
             if (errors.CanAddError())
             {
-                errors.Add(new ParseError(reader.Pos(), "Unexpected token [%s] when in state [%s]", currentToken.Type(), state));
+                errors.Add(new ParseError(reader.Pos(), "Unexpected token [{0}] when in state [{1}]", currentToken.Type(), state.Name()));
             }
         }
 

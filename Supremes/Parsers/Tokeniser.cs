@@ -289,7 +289,7 @@ namespace Supremes.Parsers
         {
             if (errors.CanAddError())
             {
-                errors.Add(new ParseError(reader.Pos(), "Unexpected character '%s' in input state [%s]", reader.Current(), state));
+                errors.Add(new ParseError(reader.Pos(), "Unexpected character '{0}' in input state [{1}]", reader.Current(), state.Name()));
             }
         }
 
@@ -297,7 +297,7 @@ namespace Supremes.Parsers
         {
             if (errors.CanAddError())
             {
-                errors.Add(new ParseError(reader.Pos(), "Unexpectedly reached end of file (EOF) in input state [%s]", state));
+                errors.Add(new ParseError(reader.Pos(), "Unexpectedly reached end of file (EOF) in input state [{0}]", state.Name()));
             }
         }
 
@@ -305,7 +305,7 @@ namespace Supremes.Parsers
         {
             if (errors.CanAddError())
             {
-                errors.Add(new ParseError(reader.Pos(), "Invalid character reference: %s", message));
+                errors.Add(new ParseError(reader.Pos(), "Invalid character reference: {0}", message));
             }
         }
 
