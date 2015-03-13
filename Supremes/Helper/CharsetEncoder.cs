@@ -12,16 +12,6 @@ namespace Supremes.Helper
             this.encoder.Fallback = EncoderFallback.ExceptionFallback;
         }
 
-        public bool CanEncode(string input)
-        {
-            return CanEncode(input.ToCharArray());
-        }
-
-        public bool CanEncode(char c)
-        {
-            return CanEncode(new[] { c });
-        }
-
         public bool CanEncode(char[] chars)
         {
             try

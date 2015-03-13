@@ -78,16 +78,11 @@ namespace Supremes.Helper
         /// <summary>
         /// Tests if a code point is "whitespace" as defined in the HTML spec.
         /// </summary>
-        /// <param name="c">code point to test</param>
-        /// <returns>true if code point is whitespace, false otherwise</returns>
+        /// <param name="c">UTF-16 character to test</param>
+        /// <returns>true if UTF-16 character is whitespace, false otherwise</returns>
         public static bool IsWhitespace(char c)
         {
             return c == ' ' || c == '\t' || c == '\n' || c == '\f' || c == '\r';
-        }
-
-        public static bool IsWhitespace(int codePoint)
-        {
-            return (codePoint < 0x10000 && IsWhitespace((char)codePoint));
         }
 
         /// <summary>

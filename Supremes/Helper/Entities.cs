@@ -90,19 +90,18 @@ namespace Supremes.Helper
         // this method is ugly, and does a lot. but other breakups cause rescanning and stringbuilder generations
         internal static void Escape(StringBuilder accum, string @string, EscapeMode escapeMode, Encoding charset, bool inAttribute, bool normaliseWhite, bool stripLeadingWhite)
         {
-            const int MIN_SUPPLEMENTARY_CODE_POINT = 0x10000;
             bool lastWasWhite = false;
             bool reachedNonWhite = false;
             CharsetEncoder encoder = new CharsetEncoder(charset);
             IDictionary<Utf32, string> map = GetMap(escapeMode);
             int length = @string.Length;
-            Utf32 codePoint;
-            for (int offset = 0; offset < length; offset += (codePoint < MIN_SUPPLEMENTARY_CODE_POINT ? 1 : 2))
+            char c = default(char);
+            for (int offset = 0; offset < length; offset += (char.IsSurrogate(c) ? 2 : 1))
             {
-                codePoint = char.ConvertToUtf32(@string, offset);
+                c = @string[offset];
                 if (normaliseWhite)
                 {
-                    if (StringUtil.IsWhitespace(codePoint))
+                    if (StringUtil.IsWhitespace(c))
                     {
                         if ((stripLeadingWhite && !reachedNonWhite) || lastWasWhite)
                         {
@@ -118,16 +117,16 @@ namespace Supremes.Helper
                         reachedNonWhite = true;
                     }
                 }
-                // surrogate pairs, split implementation for efficiency on single char common case (saves creating strings, char[]):
-                if (codePoint < MIN_SUPPLEMENTARY_CODE_POINT)
+
+                if (!char.IsSurrogate(c))
                 {
-                    char c = (char)codePoint;
+                    // split implementation for efficiency on single char common case (saves creating strings, char[]):
                     switch (c)
                     {
                         case '&':
                             // html specific and required escapes:
                             accum.Append("&amp;");
-                            break;
+                            continue;
 
                         case '\u00A0':
                             if (escapeMode != EscapeMode.Xhtml)
@@ -138,7 +137,7 @@ namespace Supremes.Helper
                             {
                                 accum.Append(c);
                             }
-                            break;
+                            continue;
 
                         case '<':
                             if (!inAttribute)
@@ -149,7 +148,7 @@ namespace Supremes.Helper
                             {
                                 accum.Append(c);
                             }
-                            break;
+                            continue;
 
                         case '>':
                             if (!inAttribute)
@@ -160,7 +159,7 @@ namespace Supremes.Helper
                             {
                                 accum.Append(c);
                             }
-                            break;
+                            continue;
 
                         case '"':
                             if (inAttribute)
@@ -171,35 +170,30 @@ namespace Supremes.Helper
                             {
                                 accum.Append(c);
                             }
-                            break;
+                            continue;
 
                         default:
-                            if (encoder.CanEncode(c))
-                            {
-                                accum.Append(c);
-                            }
-                            else if (map.ContainsKey(codePoint))
-                            {
-                                accum.Append('&').Append(map[codePoint]).Append(';');
-                            }
-                            else
-                            {
-                                accum.Append("&#x").AppendFormat("{0:x}", codePoint).Append(';');
-                            }
                             break;
                     }
                 }
+
+                var chars = char.IsSurrogate(c)
+                    ? new[] { c, @string[offset + 1] }
+                    : new[] { c };
+                if (encoder.CanEncode(chars))
+                {
+                    accum.Append(chars);
+                    continue;
+                }
+
+                Utf32 codePoint = char.ConvertToUtf32(@string, offset);
+                if (map.ContainsKey(codePoint))
+                {
+                    accum.Append('&').Append(map[codePoint]).Append(';');
+                }
                 else
                 {
-                    string c = char.ConvertFromUtf32(codePoint);
-                    if (encoder.CanEncode(c))
-                    {
-                        accum.Append(c);
-                    }
-                    else
-                    {
-                        accum.Append("&#x").AppendFormat("{0:x}", codePoint).Append(';');
-                    }
+                    accum.Append("&#x").AppendFormat("{0:x}", codePoint).Append(';');
                 }
             }
         }
