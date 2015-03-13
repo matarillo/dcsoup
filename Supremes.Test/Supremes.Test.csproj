@@ -60,7 +60,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helper\DataUtilTest.cs" />
+    <Compile Include="Helper\StringUtilTest.cs" />
+    <Compile Include="Helper\EntitiesTest.cs" />
     <Compile Include="Helper\TokenQueueTest.cs" />
+    <Compile Include="Integration\ParseTest.cs" />
+    <Compile Include="Nodes\AttributesTest.cs" />
+    <Compile Include="Nodes\TextNodeTest.cs" />
+    <Compile Include="Nodes\NodeTest.cs" />
+    <Compile Include="Nodes\FormElementTest.cs" />
+    <Compile Include="Nodes\DocumentTypeTest.cs" />
+    <Compile Include="Nodes\AttributeTest.cs" />
+    <Compile Include="Nodes\DocumentTest.cs" />
     <Compile Include="Nodes\ElementsTest.cs" />
     <Compile Include="Nodes\TagTest.cs" />
     <Compile Include="Parsers\AttributeParseTest.cs" />
@@ -81,9 +92,52 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="htmltests\README">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="htmltests\baidu-cn-home.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="htmltests\baidu-variant.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="htmltests\google-ipod.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="htmltests\meta-charset-1.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="htmltests\meta-charset-2.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="htmltests\meta-charset-3.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="htmltests\news-com-au-home.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="htmltests\nyt-article-1.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="htmltests\smh-biz-article-1.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="htmltests\thumb.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="htmltests\xml-test.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="htmltests\yahoo-article-1.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="htmltests\yahoo-jp.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>

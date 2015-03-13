@@ -232,10 +232,24 @@ namespace Supremes.Parsers
                 {
                     return null;
                 }
+                if (CharsetIsSupported(charset)) return charset;
                 charset = charset.ToUpper(CultureInfo.InvariantCulture);
-                return charset;
+                if (CharsetIsSupported(charset)) return charset;
             }
             return null;
+        }
+
+        private static bool CharsetIsSupported(string charset)
+        {
+            try
+            {
+                var enc = Encoding.GetEncoding(charset);
+                return true;
+            }
+            catch (ArgumentException)
+            {
+                return false;
+            }
         }
     }
 }

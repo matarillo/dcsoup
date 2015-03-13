@@ -73,7 +73,7 @@ namespace Supremes.Nodes
         /// </returns>
         public bool IsBlank()
         {
-            return string.IsNullOrEmpty(GetWholeText());
+            return string.IsNullOrWhiteSpace(GetWholeText());
         }
 
         /// <summary>

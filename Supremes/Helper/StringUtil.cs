@@ -45,7 +45,7 @@ namespace Supremes.Helper
             {
                 @out[i] = ' ';
             }
-            return @out.ToString();
+            return new string(@out);
         }
 
         /// <summary>

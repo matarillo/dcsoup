@@ -246,19 +246,47 @@ namespace Supremes.Nodes
             {
                 Uri @base;
                 Uri abs;
-                if (!Uri.TryCreate(baseUri, UriKind.Absolute, out @base))
+                if (!TryCreateAbsolute(baseUri, out @base))
                 {
                     // the base is unsuitable, but the attribute may be abs on its own, so try that
-                    return Uri.TryCreate(relUrl, UriKind.Absolute, out abs)
+                    return TryCreateAbsolute(relUrl, out abs)
                         ? abs.ToString()
                         : string.Empty;
                 }
                 // .NET resolves '//path/file + ?foo' to '//path/file?foo' as desired, so no workaround needed
-                return Uri.TryCreate(@base, relUrl, out abs)
+                return TryCreateRelative(@base, relUrl, out abs)
                     ? abs.AbsoluteUri.ToString()
                     : string.Empty;
             }
         }
+
+        private static bool TryCreateAbsolute(string absoluteUri, out Uri result)
+        {
+            if (Uri.TryCreate(absoluteUri, UriKind.Absolute, out result))
+            {
+                if (UriParser.IsKnownScheme(result.Scheme))
+                {
+                    return true;
+                }
+            }
+            result = default(Uri);
+            return false;
+        }
+
+        private static bool TryCreateRelative(Uri baseUri, string relativeUri, out Uri result)
+        {
+            if (Uri.TryCreate(baseUri, relativeUri, out result))
+            {
+                if (UriParser.IsKnownScheme(result.Scheme))
+                {
+                    return true;
+                }
+            }
+            result = default(Uri);
+            return false;
+        }
+
+
 
         /// <summary>
         /// Get a child node by its 0-based index.
