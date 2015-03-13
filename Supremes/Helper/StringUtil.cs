@@ -60,9 +60,10 @@ namespace Supremes.Helper
         /// </returns>
         public static bool IsNumeric(string @string)
         {
-			if (string.IsNullOrEmpty(@string)) {
-				return false;
-			}
+            if (string.IsNullOrEmpty(@string))
+            {
+                return false;
+            }
             int l = @string.Length;
             for (int i = 0; i < l; i++)
             {
