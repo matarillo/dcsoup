@@ -13,7 +13,7 @@ namespace Supremes.Parsers
     {
         internal const char EOF = '\uffff';
 
-        private readonly char[] input;
+        private readonly string input;
 
         private readonly int length;
 
@@ -24,7 +24,7 @@ namespace Supremes.Parsers
         internal CharacterReader(string input)
         {
             Validate.NotNull(input);
-            this.input = input.ToCharArray();
+            this.input = input;
             this.length = this.input.Length;
         }
 
@@ -72,7 +72,7 @@ namespace Supremes.Parsers
 
         internal string ConsumeAsString()
         {
-            return new string(input, pos++, 1);
+            return input.Substring(pos++, 1); //new string(input, pos++, 1);
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace Supremes.Parsers
         /// <returns>
         /// offset between current position and next instance of target. -1 if not found.
         /// </returns>
-        internal int NextIndexOf(char[] seq)
+        internal int NextIndexOf(string seq)
         {
             // doesn't handle scanning for surrogates
             char startChar = seq[0];
@@ -137,7 +137,7 @@ namespace Supremes.Parsers
             int offset = NextIndexOf(c);
             if (offset != -1)
             {
-                string consumed = new string(input, pos, offset);
+                string consumed = input.Substring(pos, offset);//new string(input, pos, offset);
                 pos += offset;
                 return consumed;
             }
@@ -149,10 +149,10 @@ namespace Supremes.Parsers
 
         internal string ConsumeTo(string seq)
         {
-            int offset = NextIndexOf(seq.ToCharArray());
+            int offset = NextIndexOf(seq);
             if (offset != -1)
             {
-                string consumed = new string(input, pos, offset);
+                string consumed = input.Substring(pos, offset); //new string(input, pos, offset);
                 pos += offset;
                 return consumed;
             }
@@ -177,12 +177,12 @@ namespace Supremes.Parsers
                 pos++;
             }
         OUTER_break:
-            return pos > start ? new string(input, start, pos - start) : string.Empty;
+            return pos > start ? input.Substring(start, pos - start) : string.Empty; //new string(input, start, pos - start)
         }
 
         internal string ConsumeToEnd()
         {
-            string data = new string(input, pos, length - pos);
+            string data = input.Substring(pos, length - pos); //new string(input, pos, length - pos);
             pos = length;
             return data;
         }
@@ -202,7 +202,7 @@ namespace Supremes.Parsers
                     break;
                 }
             }
-            return new string(input, start, pos - start);
+            return input.Substring(start, pos - start); //new string(input, start, pos - start);
         }
 
         internal string ConsumeLetterThenDigitSequence()
@@ -232,7 +232,7 @@ namespace Supremes.Parsers
                     break;
                 }
             }
-            return new string(input, start, pos - start);
+            return input.Substring(start, pos - start); //new string(input, start, pos - start);
         }
 
         internal string ConsumeHexSequence()
@@ -250,7 +250,7 @@ namespace Supremes.Parsers
                     break;
                 }
             }
-            return new string(input, start, pos - start);
+            return input.Substring(start, pos - start); //new string(input, start, pos - start);
         }
 
         internal string ConsumeDigitSequence()
@@ -268,7 +268,7 @@ namespace Supremes.Parsers
                     break;
                 }
             }
-            return new string(input, start, pos - start);
+            return input.Substring(start, pos - start); //new string(input, start, pos - start);
         }
 
         internal bool Matches(char c)
@@ -380,12 +380,12 @@ namespace Supremes.Parsers
             // used to check presence of </title>, </style>. only finds consistent case.
             string loScan = seq.ToLower(CultureInfo.InvariantCulture);
             string hiScan = seq.ToUpper(CultureInfo.InvariantCulture);
-            return (NextIndexOf(loScan.ToCharArray()) > -1) || (NextIndexOf(hiScan.ToCharArray()) > -1);
+            return (NextIndexOf(loScan) > -1) || (NextIndexOf(hiScan) > -1);
         }
 
         public override string ToString()
         {
-            return new string(input, pos, length - pos);
+            return input.Substring(pos, length - pos); //new string(input, pos, length - pos);
         }
     }
 }
