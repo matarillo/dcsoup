@@ -72,7 +72,7 @@ namespace Supremes.Parsers
 
         internal string ConsumeAsString()
         {
-            return input.Substring(pos++, 1); //new string(input, pos++, 1);
+            return input.Substring(pos++, 1);
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace Supremes.Parsers
             int offset = NextIndexOf(c);
             if (offset != -1)
             {
-                string consumed = input.Substring(pos, offset);//new string(input, pos, offset);
+                string consumed = input.Substring(pos, offset);
                 pos += offset;
                 return consumed;
             }
@@ -152,7 +152,7 @@ namespace Supremes.Parsers
             int offset = NextIndexOf(seq);
             if (offset != -1)
             {
-                string consumed = input.Substring(pos, offset); //new string(input, pos, offset);
+                string consumed = input.Substring(pos, offset);
                 pos += offset;
                 return consumed;
             }
@@ -177,12 +177,12 @@ namespace Supremes.Parsers
                 pos++;
             }
         OUTER_break:
-            return pos > start ? input.Substring(start, pos - start) : string.Empty; //new string(input, start, pos - start)
+            return pos > start ? input.Substring(start, pos - start) : string.Empty;
         }
 
         internal string ConsumeToEnd()
         {
-            string data = input.Substring(pos, length - pos); //new string(input, pos, length - pos);
+            string data = input.Substring(pos, length - pos);
             pos = length;
             return data;
         }
@@ -202,7 +202,7 @@ namespace Supremes.Parsers
                     break;
                 }
             }
-            return input.Substring(start, pos - start); //new string(input, start, pos - start);
+            return input.Substring(start, pos - start);
         }
 
         internal string ConsumeLetterThenDigitSequence()
@@ -232,7 +232,7 @@ namespace Supremes.Parsers
                     break;
                 }
             }
-            return input.Substring(start, pos - start); //new string(input, start, pos - start);
+            return input.Substring(start, pos - start);
         }
 
         internal string ConsumeHexSequence()
@@ -250,7 +250,7 @@ namespace Supremes.Parsers
                     break;
                 }
             }
-            return input.Substring(start, pos - start); //new string(input, start, pos - start);
+            return input.Substring(start, pos - start);
         }
 
         internal string ConsumeDigitSequence()
@@ -268,7 +268,7 @@ namespace Supremes.Parsers
                     break;
                 }
             }
-            return input.Substring(start, pos - start); //new string(input, start, pos - start);
+            return input.Substring(start, pos - start);
         }
 
         internal bool Matches(char c)
@@ -385,7 +385,7 @@ namespace Supremes.Parsers
 
         public override string ToString()
         {
-            return input.Substring(pos, length - pos); //new string(input, pos, length - pos);
+            return input.Substring(pos, length - pos);
         }
     }
 }
