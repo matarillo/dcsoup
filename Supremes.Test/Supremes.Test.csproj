@@ -62,7 +62,10 @@
   <ItemGroup>
     <Compile Include="Helper\TokenQueueTest.cs" />
     <Compile Include="Nodes\ElementsTest.cs" />
+    <Compile Include="Nodes\TagTest.cs" />
+    <Compile Include="Parsers\AttributeParseTest.cs" />
     <Compile Include="Parsers\CharacterReaderTest.cs" />
+    <Compile Include="Parsers\HtmlParserTest.cs" />
     <Compile Include="Parsers\XmlTreeBuilderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Safety\CleanerTest.cs" />

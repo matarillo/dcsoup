@@ -114,7 +114,7 @@ namespace Supremes.Test.Nodes
         }
         
         [Test]
-        public void hasText()
+        public void HasText()
         {
             Document doc = Dcsoup.Parse("<div><p>Hello</p></div><div><p></p></div>");
             Elements divs = doc.Select("div");
