@@ -1,7 +1,8 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <package >
   <metadata>
     <id>dcsoup</id>
+    <title>dcsoup HTML Parser</title>
     <version>0.1.0</version>
     <authors>INOMATA Kentaro</authors>
     <owners>INOMATA Kentaro</owners>
@@ -19,4 +20,7 @@ This library is basically a port of jsoup, a Java HTML parser library. see also:
       <frameworkAssembly assemblyName="System.Net.Http" targetFramework="net40" />
     </frameworkAssemblies>
   </metadata>
+  <files>
+    <file src="..\Supremes\bin\Release\Supremes.dll" target="lib\net45" />
+  </files>
 </package>
