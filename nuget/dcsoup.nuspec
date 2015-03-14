@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>dcsoup</id>
+    <version>0.1.0</version>
+    <authors>INOMATA Kentaro</authors>
+    <owners>INOMATA Kentaro</owners>
+    <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
+    <projectUrl>https://github.com/matarillo/dcsoup</projectUrl>
+    <iconUrl>https://raw.github.com/matarillo/dcsoup/master/nuget/dcsoup_icon.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>dcsoup is a .NET library for working with real-world HTML. It provides a very convenient API for extracting and manipulating data, using the best of DOM, CSS, and jquery-like methods.
+This library is basically a port of jsoup, a Java HTML parser library. see also: http://jsoup.org/</description>
+    <releaseNotes>v0.1.0: initial release.</releaseNotes>
+    <copyright>Copyright © 2015 INOMATA Kentaro</copyright>
+    <tags>HTML jsoup jquery parse parser parsing crawl crawler crawling scrape scraper scraping headless xpath agility</tags>
+    <dependencies/>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.Net.Http" targetFramework="net40" />
+    </frameworkAssemblies>
+  </metadata>
+</package>

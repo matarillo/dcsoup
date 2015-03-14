@@ -11,6 +11,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		LICENSE = LICENSE
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nuget", "nuget", "{17014A93-D094-4014-8391-EBB737ECCE39}"
+	ProjectSection(SolutionItems) = preProject
+		nuget\dcsoup.nuspec = nuget\dcsoup.nuspec
+		nuget\dcsoup_icon.png = nuget\dcsoup_icon.png
+	EndProjectSection
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Supremes.Test", "Supremes.Test\Supremes.Test.csproj", "{32530C75-8A5D-4912-84F8-24EC2C68F389}"
 EndProject
 Global
@@ -30,5 +36,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{17014A93-D094-4014-8391-EBB737ECCE39} = {A70DA9CB-0A92-4F67-9FF1-D61F91504A17}
 	EndGlobalSection
 EndGlobal
