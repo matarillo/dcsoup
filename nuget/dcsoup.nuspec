@@ -7,7 +7,7 @@
     <owners>INOMATA Kentaro</owners>
     <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
     <projectUrl>https://github.com/matarillo/dcsoup</projectUrl>
-    <iconUrl>https://raw.github.com/matarillo/dcsoup/master/nuget/dcsoup_icon.png</iconUrl>
+    <iconUrl>https://raw.githubusercontent.com/matarillo/dcsoup/master/nuget/dcsoup_icon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>dcsoup is a .NET library for working with real-world HTML. It provides a very convenient API for extracting and manipulating data, using the best of DOM, CSS, and jquery-like methods.
 This library is basically a port of jsoup, a Java HTML parser library. see also: http://jsoup.org/</description>
