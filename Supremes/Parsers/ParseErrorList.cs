@@ -23,14 +23,14 @@ namespace Supremes.Parsers
             this.maxSize = maxSize;
         }
 
-        internal bool CanAddError()
+        internal bool CanAddError
         {
-            return Count < maxSize;
+            get { return Count < maxSize; }
         }
 
-        internal int GetMaxSize()
+        internal int MaxSize
         {
-            return maxSize;
+            get { return maxSize; }
         }
 
         internal static ParseErrorList NoTracking()

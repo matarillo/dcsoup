@@ -30,21 +30,21 @@ namespace Supremes.Nodes
         /// Get the contents of the comment.
         /// </summary>
         /// <returns>comment content</returns>
-        public string GetData()
+        public string Data
         {
-            return attributes[COMMENT_KEY];
+            get { return attributes[COMMENT_KEY]; }
         }
 
-        internal override void OuterHtmlHead(StringBuilder accum, int depth, DocumentOutputSettings @out)
+        internal override void AppendOuterHtmlHeadTo(StringBuilder accum, int depth, DocumentOutputSettings @out)
         {
-            if (@out.PrettyPrint())
+            if (@out.PrettyPrint)
             {
                 Indent(accum, depth, @out);
             }
-            accum.Append("<!--").Append(GetData()).Append("-->");
+            accum.Append("<!--").Append(Data).Append("-->");
         }
 
-        internal override void OuterHtmlTail(StringBuilder accum, int depth, DocumentOutputSettings @out)
+        internal override void AppendOuterHtmlTailTo(StringBuilder accum, int depth, DocumentOutputSettings @out)
         {
         }
 
@@ -54,7 +54,7 @@ namespace Supremes.Nodes
         /// <returns></returns>
         public override string ToString()
         {
-            return OuterHtml();
+            return OuterHtml;
         }
     }
 }

@@ -287,7 +287,7 @@ namespace Supremes.Parsers
 
         internal void Error(TokeniserState state)
         {
-            if (errors.CanAddError())
+            if (errors.CanAddError)
             {
                 errors.Add(new ParseError(reader.Pos(), "Unexpected character '{0}' in input state [{1}]", reader.Current(), state.Name()));
             }
@@ -295,7 +295,7 @@ namespace Supremes.Parsers
 
         internal void EofError(TokeniserState state)
         {
-            if (errors.CanAddError())
+            if (errors.CanAddError)
             {
                 errors.Add(new ParseError(reader.Pos(), "Unexpectedly reached end of file (EOF) in input state [{0}]", state.Name()));
             }
@@ -303,7 +303,7 @@ namespace Supremes.Parsers
 
         private void CharacterReferenceError(string message)
         {
-            if (errors.CanAddError())
+            if (errors.CanAddError)
             {
                 errors.Add(new ParseError(reader.Pos(), "Invalid character reference: {0}", message));
             }
@@ -311,7 +311,7 @@ namespace Supremes.Parsers
 
         private void Error(string errorMsg)
         {
-            if (errors.CanAddError())
+            if (errors.CanAddError)
             {
                 errors.Add(new ParseError(reader.Pos(), errorMsg));
             }

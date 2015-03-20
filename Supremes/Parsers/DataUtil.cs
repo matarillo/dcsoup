@@ -36,7 +36,7 @@ namespace Supremes.Parsers
         public static Document Load(string @in, string charsetName, string baseUri)
         {
             byte[] byteData = ReadFileToByteBuffer(@in);
-            Parser parser = Parser.HtmlParser();
+            Parser parser = Parser.HtmlParser;
             return ParseByteData(byteData, charsetName, baseUri, parser);
         }
 
@@ -51,7 +51,7 @@ namespace Supremes.Parsers
         public static Document Load(Stream @in, string charsetName, string baseUri)
         {
             byte[] byteData = ReadToByteBuffer(@in);
-            Parser parser = Parser.HtmlParser();
+            Parser parser = Parser.HtmlParser;
             return ParseByteData(byteData, charsetName, baseUri, parser);
         }
 
@@ -88,7 +88,7 @@ namespace Supremes.Parsers
                 // look for <meta http-equiv="Content-Type" content="text/html;charset=gb2312"> or HTML5 <meta charset="gb2312">
                 docData = defaultCharset.GetString(byteData);
                 doc = parser.ParseInput(docData, baseUri);
-                Element meta = doc.Select("meta[http-equiv=content-type], meta[charset]").First();
+                Element meta = doc.Select("meta[http-equiv=content-type], meta[charset]").First;
                 if (meta != null)
                 {
                     // if not found, will keep utf-8 as best attempt
@@ -151,7 +151,7 @@ namespace Supremes.Parsers
             if (doc == null)
             {
                 doc = parser.ParseInput(docData, baseUri);
-                doc.OutputSettings().Charset(charsetName);
+                doc.OutputSettings.Charset = Encoding.GetEncoding(charsetName);
             }
             return doc;
         }

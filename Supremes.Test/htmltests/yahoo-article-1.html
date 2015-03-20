@@ -1464,7 +1464,7 @@ photos = [
 
 <!---------------------------- DO NOT EDIT BEYOND THIS POINT ------------------------------------->
 
-       story_content = $("div.yn-story-content").html();
+       story_content = $("div.yn-story-content").Html;
 
        for (var p in photos) {
                for (var snippet in photos[p][0]) {
@@ -1563,7 +1563,7 @@ $("#yn-featured li:visible:last").css("display","none");
  
  var embed_thingie = '<div id="floatLeft"><div class="bluebar"><a href="http://news.yahoo.com/s/ynews/ynews_ts3464;_ylt=A2KIKvTWiH1Ml3sBTQNu.aF4;_ylu=X3oDMTE3dHQ4cWc2BHBvcwMyOQRzZWMDeW5fZmVhdHVyZWQEc2xrAzV5ZWFyc2FmdGVyaw--" class="bluebarlink">5 years after Katrina &raquo;</a></div><div id="border3sides" style="padding-left:10px;"><div style="padding-top:10px;"><img src="http://l.yimg.com/a/p/us/news/editorial/1/cf/1cf64fdceffce63f2d1794936c2ed81c.jpeg" width="327" height="180" border="0" alt="Larger version" name="rollimg" /><span id="text" class="thumbText">New Orleans\' fragile recovery, 5 years after Katrina</span></div><div id="smThumb"><p><a href="http://news.yahoo.com/s/ynews/ynews_ts3464;_ylt=A2KIKvTWiH1Ml3sBTgNu.aF4;_ylu=X3oDMTE3c2RsYmZqBHBvcwMzMARzZWMDeW5fZmVhdHVyZWQEc2xrA2ZyYWdpbGVzdGF0ZQ--" onmouseover="onover(thumbText1)"><span onmouseover="document.rollimg.src=image0.src;"><img src="http://l.yimg.com/a/p/us/news/editorial/1/cf/1cf64fdceffce63f2d1794936c2ed81c.jpeg" class="theThumb" /><br />Fragile state</span></a></p><p><a href="http://news.yahoo.com/s/ynews_spec/ynews_spec_ts3448;_ylt=A2KIKvTWiH1Ml3sBTwNu.aF4;_ylu=X3oDMTE3ZnMxZmhuBHBvcwMzMQRzZWMDeW5fZmVhdHVyZWQEc2xrA2Rpc2FzdGVyaGl0cw--" onmouseover="onover(thumbText2)"><span onmouseover="document.rollimg.src=image1.src;"><img src="http://l.yimg.com/a/p/us/news/editorial/b/99/b99244314f5bb86fe97ff3d9e72eb180.jpeg" class="theThumb" /><br />Disaster hits</span></a></p><p><a href="http://news.yahoo.com/nphotos/Then-and-now-New-Orleans-5-Years-after-Katrina/ss/events/us/082410katrinathennow;_ylt=A2KIKvTWiH1Ml3sBUANu.aF4;_ylu=X3oDMTE1ZDE1dTVlBHBvcwMzMgRzZWMDeW5fZmVhdHVyZWQEc2xrA3RoZW5hbmRub3c-" onmouseover="onover(thumbText3)"><span onmouseover="document.rollimg.src=image2.src;"><img src="http://l.yimg.com/a/p/us/news/editorial/5/29/52989b60cef5569da3448e6886aed4b7.jpeg" class="theThumb" /><br />Then and now</span></a></p><p style="padding-right:0 !important;"><a href="http://news.yahoo.com/s/ac/20100823/tr_ac/6628782_cleaning_up_after_hurricane_katrina_uncovers_lifes_lessons;_ylt=A2KIKvTWiH1Ml3sBUQNu.aF4;_ylu=X3oDMTE2cTA4NHNlBHBvcwMzMwRzZWMDeW5fZmVhdHVyZWQEc2xrA2xpZmVsZXNzb25z" onmouseover="onover(thumbText4)"><span onmouseover="document.rollimg.src=image3.src;"><img src="http://d.yimg.com/a/p/rids/20100817/i/r3994317792.jpg?x=400&y=266&q=85&sig=U248J4rTGZzouhs56N_ZOA--" class="theThumb" /><br />Life lessons</span></a></p></div><div style="clear:both;"></div></div></div>';
  
- story_content = $("div.yn-story-content").html();
+ story_content = $("div.yn-story-content").Html;
  
  if (story_content.indexOf("Hurricane Katrina") >= 0)
  $("div.yn-story-content p:eq(7)").after(embed_thingie);

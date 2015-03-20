@@ -33,37 +33,40 @@ namespace Supremes.Nodes
         }
 
         /// <summary>
-        /// Get the text content of this text node.
+        /// Get or Set text content of this text node.
         /// </summary>
+        /// <remarks>
+        /// <para>
+        /// if you want to use fluent API, write <c>using Supremes.Fluent;</c>.
+        /// </para>
+        /// </remarks>
+        /// <value>unencoded text</value>
         /// <returns>Unencoded, normalised text.</returns>
-        /// <seealso cref="TextNode.GetWholeText()">TextNode.GetWholeText()</seealso>
-        public string Text()
+        /// <seealso cref="TextNode.WholeText">TextNode.WholeText</seealso>
+        /// <seealso cref="Supremes.Fluent.FluentUtility">Supremes.Fluent.FluentUtility</seealso>
+        public string Text
         {
-            return NormaliseWhitespace(GetWholeText());
-        }
-
-        /// <summary>
-        /// Set the text content of this text node.
-        /// </summary>
-        /// <param name="text">unencoded text</param>
-        /// <returns>this, for chaining</returns>
-        public TextNode Text(string text)
-        {
-            this.text = text;
-            if (attributes != null)
+            get
             {
-                attributes[TEXT_KEY] = text;
+                return NormaliseWhitespace(WholeText);
             }
-            return this;
+            set
+            {
+                this.text = value;
+                if (attributes != null)
+                {
+                    attributes[TEXT_KEY] = value;
+                }
+            }
         }
 
         /// <summary>
         /// Get the (unencoded) text of this text node, including any newlines and spaces present in the original.
         /// </summary>
         /// <returns>text</returns>
-        public string GetWholeText()
+        public string WholeText
         {
-            return attributes == null ? text : attributes[TEXT_KEY];
+            get { return attributes == null ? text : attributes[TEXT_KEY]; }
         }
 
         /// <summary>
@@ -71,9 +74,9 @@ namespace Supremes.Nodes
         /// </summary>
         /// <returns>true if this document is empty or only whitespace, false if it contains any text content.
         /// </returns>
-        public bool IsBlank()
+        public bool IsBlank
         {
-            return string.IsNullOrWhiteSpace(GetWholeText());
+            get { return string.IsNullOrWhiteSpace(WholeText); }
         }
 
         /// <summary>
@@ -89,34 +92,34 @@ namespace Supremes.Nodes
         {
             Validate.IsTrue(offset >= 0, "Split offset must be not be negative");
             Validate.IsTrue(offset < text.Length, "Split offset must not be greater than current text length");
-            string head = GetWholeText().Substring(0, offset); /*substring*/
-            string tail = GetWholeText().Substring(offset); /*substring*/
-            Text(head);
-            TextNode tailNode = new Supremes.Nodes.TextNode(tail, this.BaseUri());
-            if (Parent() != null)
+            string head = WholeText.Substring(0, offset); /*substring*/
+            string tail = WholeText.Substring(offset); /*substring*/
+            Text = head;
+            TextNode tailNode = new Supremes.Nodes.TextNode(tail, this.BaseUri);
+            if (Parent != null)
             {
-                ((Node)Parent()).AddChildren(SiblingIndex() + 1, tailNode);
+                ((Node)Parent).AddChildren(SiblingIndex + 1, tailNode);
             }
             return tailNode;
         }
 
-        internal override void OuterHtmlHead(StringBuilder accum, int depth, DocumentOutputSettings @out)
+        internal override void AppendOuterHtmlHeadTo(StringBuilder accum, int depth, DocumentOutputSettings @out)
         {
-            if (@out.PrettyPrint()
-                && ((SiblingIndex() == 0
+            if (@out.PrettyPrint
+                && ((SiblingIndex == 0
                         && parentNode is Element
-                        && ((Element)parentNode).Tag().FormatAsBlock()
-                        && !IsBlank())
-                    || (@out.Outline()
-                        && SiblingNodes().Count > 0
-                        && !IsBlank())))
+                        && ((Element)parentNode).Tag.IsFormattedAsBlock
+                        && !IsBlank)
+                    || (@out.Outline
+                        && SiblingNodes.Count > 0
+                        && !IsBlank)))
             {
                 Indent(accum, depth, @out);
             }
-            bool normaliseWhite = @out.PrettyPrint()
-                && Parent() is Element
-                && !Element.PreserveWhitespace((Element)Parent());
-            Entities.Escape(accum, GetWholeText(), Convert(@out.EscapeMode()), @out.Charset(), false, normaliseWhite, false);
+            bool normaliseWhite = @out.PrettyPrint
+                && Parent is Element
+                && !Element.PreserveWhitespace((Element)Parent);
+            Entities.Escape(accum, WholeText, Convert(@out.EscapeMode), @out.Charset, false, normaliseWhite, false);
         }
 
         private static Entities.EscapeMode Convert(DocumentEscapeMode escapeMode)
@@ -134,7 +137,7 @@ namespace Supremes.Nodes
             }
         }
  
-        internal override void OuterHtmlTail(StringBuilder accum, int depth, DocumentOutputSettings @out)
+        internal override void AppendOuterHtmlTailTo(StringBuilder accum, int depth, DocumentOutputSettings @out)
         {
         }
 
@@ -144,7 +147,7 @@ namespace Supremes.Nodes
         /// <returns></returns>
         public override string ToString()
         {
-            return OuterHtml();
+            return OuterHtml;
         }
 
         /// <summary>
@@ -200,10 +203,13 @@ namespace Supremes.Nodes
         /// Get all of the element's attributes.
         /// </summary>
         /// <returns></returns>
-        public override Supremes.Nodes.Attributes Attributes()
+        public override Supremes.Nodes.Attributes Attributes
         {
-            EnsureAttributes();
-            return base.Attributes();
+            get
+            {
+                EnsureAttributes();
+                return base.Attributes;
+            }
         }
 
         /// <summary>

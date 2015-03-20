@@ -27,18 +27,18 @@ namespace Supremes.Parsers
         /// Retrieve the error message.
         /// </summary>
         /// <returns>the error message.</returns>
-        public string GetErrorMessage()
+        public string ErrorMessage
         {
-            return errorMsg;
+            get { return errorMsg; }
         }
 
         /// <summary>
         /// Retrieves the offset of the error.
         /// </summary>
         /// <returns>error offset within input</returns>
-        public int GetPosition()
+        public int Position
         {
-            return pos;
+            get { return pos; }
         }
 
         /// <summary>

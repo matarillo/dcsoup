@@ -18,7 +18,7 @@ namespace Supremes.Safety
     /// canned white-lists only allow body contained tags.
     /// <p/>
     /// Rather than interacting directly with a Cleaner object, generally see the
-    /// <code>Clean</code>
+    /// <c>Clean</c>
     /// methods in
     /// <see cref="Supremes.Dcsoup">Supremes.Dcsoup</see>
     /// .
@@ -43,18 +43,18 @@ namespace Supremes.Safety
         /// </summary>
         /// <remarks>
         /// The original document is not modified.
-        /// Only elements from the dirt document's <code>body</code> are used.
+        /// Only elements from the dirt document's <c>body</c> are used.
         /// </remarks>
         /// <param name="dirtyDocument">Untrusted base document to clean.</param>
         /// <returns>cleaned document.</returns>
         public Document Clean(Document dirtyDocument)
         {
             Validate.NotNull(dirtyDocument);
-            Document clean = Document.CreateShell(dirtyDocument.BaseUri());
-            if (dirtyDocument.Body() != null)
+            Document clean = Document.CreateShell(dirtyDocument.BaseUri);
+            if (dirtyDocument.Body != null)
             {
                 // frameset documents won't have a body. the clean doc will have empty body.
-                CopySafeNodes(dirtyDocument.Body(), clean.Body());
+                CopySafeNodes(dirtyDocument.Body, clean.Body);
             }
             return clean;
         }
@@ -78,8 +78,8 @@ namespace Supremes.Safety
         public bool IsValid(Document dirtyDocument)
         {
             Validate.NotNull(dirtyDocument);
-            Document clean = Document.CreateShell(dirtyDocument.BaseUri());
-            int numDiscarded = CopySafeNodes(dirtyDocument.Body(), clean.Body());
+            Document clean = Document.CreateShell(dirtyDocument.BaseUri);
+            int numDiscarded = CopySafeNodes(dirtyDocument.Body, clean.Body);
             return numDiscarded == 0;
         }
 
@@ -108,7 +108,7 @@ namespace Supremes.Safety
                 if (source is Element)
                 {
                     Element sourceEl = (Element)source;
-                    if (this._enclosing.whitelist.IsSafeTag(sourceEl.TagName()))
+                    if (this._enclosing.whitelist.IsSafeTag(sourceEl.TagName))
                     {
                         // safe, clone and copy safe attrs
                         Cleaner.ElementMeta meta = this._enclosing.CreateSafeElement(sourceEl);
@@ -131,15 +131,15 @@ namespace Supremes.Safety
                     if (source is TextNode)
                     {
                         TextNode sourceText = (TextNode)source;
-                        TextNode destText = new TextNode(sourceText.GetWholeText(), source.BaseUri());
+                        TextNode destText = new TextNode(sourceText.WholeText, source.BaseUri);
                         this.destination.AppendChild(destText);
                     }
                     else
                     {
-                        if (source is DataNode && this._enclosing.whitelist.IsSafeTag(source.Parent().NodeName))
+                        if (source is DataNode && this._enclosing.whitelist.IsSafeTag(source.Parent.NodeName))
                         {
                             DataNode sourceData = (DataNode)source;
-                            DataNode destData = new DataNode(sourceData.GetWholeData(), source.BaseUri());
+                            DataNode destData = new DataNode(sourceData.WholeData, source.BaseUri);
                             this.destination.AppendChild(destData);
                         }
                         else
@@ -155,7 +155,7 @@ namespace Supremes.Safety
             {
                 if (source is Element && this._enclosing.whitelist.IsSafeTag(source.NodeName))
                 {
-                    this.destination = this.destination.ParentElement();
+                    this.destination = this.destination.Parent;
                 }
             }
 
@@ -173,11 +173,11 @@ namespace Supremes.Safety
 
         private Cleaner.ElementMeta CreateSafeElement(Element sourceEl)
         {
-            string sourceTag = sourceEl.TagName();
+            string sourceTag = sourceEl.TagName;
             Attributes destAttrs = new Attributes();
-            Element dest = new Element(Tag.ValueOf(sourceTag), sourceEl.BaseUri(), destAttrs);
+            Element dest = new Element(Tag.ValueOf(sourceTag), sourceEl.BaseUri, destAttrs);
             int numDiscarded = 0;
-            Attributes sourceAttrs = sourceEl.Attributes();
+            Attributes sourceAttrs = sourceEl.Attributes;
             foreach (Attribute sourceAttr in sourceAttrs)
             {
                 if (whitelist.IsSafeAttribute(sourceTag, sourceEl, sourceAttr))

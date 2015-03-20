@@ -17,8 +17,8 @@ namespace Supremes.Test.Nodes
             Document doc = Dcsoup.Parse(h);
             Elements els = doc.Select(".headline").Select("p");
             Assert.AreEqual(2, els.Count);
-            Assert.AreEqual("Hello", els[0].Text());
-            Assert.AreEqual("There", els[1].Text());
+            Assert.AreEqual("Hello", els[0].Text);
+            Assert.AreEqual("There", els[1].Text);
         }
         
         [Test]
@@ -38,8 +38,8 @@ namespace Supremes.Test.Nodes
 
             Elements ps = doc.Select("p").Attr("style", "classy");
             Assert.AreEqual(4, ps.Count);
-            Assert.AreEqual("classy", ps.Last().Attr("style"));
-            Assert.AreEqual("bar", ps.Last().Attr("class"));
+            Assert.AreEqual("classy", ps.Last.Attr("style"));
+            Assert.AreEqual("bar", ps.Last.Attr("class"));
         }
     
         [Test]
@@ -101,8 +101,8 @@ namespace Supremes.Test.Nodes
             els.RemoveClass("yellow");
             els.ToggleClass("mellow");
 
-            Assert.AreEqual("blue", els[0].ClassName());
-            Assert.AreEqual("red green blue mellow", els[1].ClassName());
+            Assert.AreEqual("blue", els[0].ClassName);
+            Assert.AreEqual("red green blue mellow", els[1].ClassName);
         }
         
         [Test]
@@ -110,7 +110,7 @@ namespace Supremes.Test.Nodes
         {
             string h = "<div><p>Hello<p>there<p>world</div>";
             Document doc = Dcsoup.Parse(h);
-            Assert.AreEqual("Hello there world", doc.Select("div > *").Text());
+            Assert.AreEqual("Hello there world", doc.Select("div > *").Text);
         }
         
         [Test]
@@ -118,8 +118,8 @@ namespace Supremes.Test.Nodes
         {
             Document doc = Dcsoup.Parse("<div><p>Hello</p></div><div><p></p></div>");
             Elements divs = doc.Select("div");
-            Assert.IsTrue(divs.HasText());
-            Assert.IsFalse(doc.Select("div + div").HasText());
+            Assert.IsTrue(divs.HasText);
+            Assert.IsFalse(doc.Select("div + div").HasText);
         }
         
         [Test]
@@ -127,7 +127,7 @@ namespace Supremes.Test.Nodes
         {
             Document doc = Dcsoup.Parse("<div><p>Hello</p></div><div><p>There</p></div>");
             Elements divs = doc.Select("div");
-            Assert.AreEqual("<p>Hello</p>\n<p>There</p>", divs.Html());
+            Assert.AreEqual("<p>Hello</p>\n<p>There</p>", divs.Html);
         }
         
         [Test]
@@ -135,7 +135,7 @@ namespace Supremes.Test.Nodes
         {
             Document doc = Dcsoup.Parse("<div><p>Hello</p></div><div><p>There</p></div>");
             Elements divs = doc.Select("div");
-            Assert.AreEqual("<div><p>Hello</p></div><div><p>There</p></div>", TextUtil.StripNewlines(divs.OuterHtml()));
+            Assert.AreEqual("<div><p>Hello</p></div><div><p>There</p></div>", TextUtil.StripNewlines(divs.OuterHtml));
         }
         
         [Test]
@@ -145,10 +145,10 @@ namespace Supremes.Test.Nodes
             Elements ps = doc.Select("p");
         
             ps.Prepend("<b>Bold</b>").Append("<i>Ital</i>");
-            Assert.AreEqual("<p><b>Bold</b>Two<i>Ital</i></p>", TextUtil.StripNewlines(ps[1].OuterHtml()));
+            Assert.AreEqual("<p><b>Bold</b>Two<i>Ital</i></p>", TextUtil.StripNewlines(ps[1].OuterHtml));
         
-            ps.Html("<span>Gone</span>");
-            Assert.AreEqual("<p><span>Gone</span></p>", TextUtil.StripNewlines(ps[1].OuterHtml()));
+            ps.Html = "<span>Gone</span>";
+            Assert.AreEqual("<p><span>Gone</span></p>", TextUtil.StripNewlines(ps[1].OuterHtml));
         }
         
         [Test]
@@ -157,13 +157,13 @@ namespace Supremes.Test.Nodes
             Document doc = Dcsoup.Parse("<input value='one' /><textarea>two</textarea>");
             Elements els = doc.Select("input, textarea");
             Assert.AreEqual(2, els.Count);
-            Assert.AreEqual("one", els.Val());
-            Assert.AreEqual("two", els.Last().Val());
+            Assert.AreEqual("one", els.Val);
+            Assert.AreEqual("two", els.Last.Val);
         
-            els.Val("three");
-            Assert.AreEqual("three", els.First().Val());
-            Assert.AreEqual("three", els.Last().Val());
-            Assert.AreEqual("<textarea>three</textarea>", els.Last().OuterHtml());
+            els.Val = "three";
+            Assert.AreEqual("three", els.First.Val);
+            Assert.AreEqual("three", els.Last.Val);
+            Assert.AreEqual("<textarea>three</textarea>", els.Last.OuterHtml);
         }
 
         [Test]
@@ -171,7 +171,7 @@ namespace Supremes.Test.Nodes
         {
             Document doc = Dcsoup.Parse("<p>This <a>is</a> <a>jsoup</a>.</p>");
             doc.Select("a").Before("<span>foo</span>");
-            Assert.AreEqual("<p>This <span>foo</span><a>is</a> <span>foo</span><a>jsoup</a>.</p>", TextUtil.StripNewlines(doc.Body().Html()));
+            Assert.AreEqual("<p>This <span>foo</span><a>is</a> <span>foo</span><a>jsoup</a>.</p>", TextUtil.StripNewlines(doc.Body.Html));
         }
     
         [Test]
@@ -179,7 +179,7 @@ namespace Supremes.Test.Nodes
         {
             Document doc = Dcsoup.Parse("<p>This <a>is</a> <a>jsoup</a>.</p>");
             doc.Select("a").After("<span>foo</span>");
-            Assert.AreEqual("<p>This <a>is</a><span>foo</span> <a>jsoup</a><span>foo</span>.</p>", TextUtil.StripNewlines(doc.Body().Html()));
+            Assert.AreEqual("<p>This <a>is</a><span>foo</span> <a>jsoup</a><span>foo</span>.</p>", TextUtil.StripNewlines(doc.Body.Html));
         }
 
         [Test]
@@ -188,7 +188,7 @@ namespace Supremes.Test.Nodes
             string h = "<p><b>This</b> is <b>jsoup</b></p>";
             Document doc = Dcsoup.Parse(h);
             doc.Select("b").Wrap("<i></i>");
-            Assert.AreEqual("<p><i><b>This</b></i> is <i><b>jsoup</b></i></p>", doc.Body().Html());
+            Assert.AreEqual("<p><i><b>This</b></i> is <i><b>jsoup</b></i></p>", doc.Body.Html);
         }
 
         [Test]
@@ -198,7 +198,7 @@ namespace Supremes.Test.Nodes
             Document doc = Dcsoup.Parse(h);
             doc.Select("p").Wrap("<div></div>");
             Assert.AreEqual("<div><p><b>This</b> is <b>jsoup</b>.</p></div> <div><p>How do you like it?</p></div>",
-                TextUtil.StripNewlines(doc.Body().Html()));
+                TextUtil.StripNewlines(doc.Body.Html));
         }
 
         [Test]
@@ -207,7 +207,7 @@ namespace Supremes.Test.Nodes
             string h = "<div><font>One</font> <font><a href=\"/\">Two</a></font></div";
             Document doc = Dcsoup.Parse(h);
             doc.Select("font").Unwrap();
-            Assert.AreEqual("<div>One <a href=\"/\">Two</a></div>", TextUtil.StripNewlines(doc.Body().Html()));
+            Assert.AreEqual("<div>One <a href=\"/\">Two</a></div>", TextUtil.StripNewlines(doc.Body.Html));
         }
 
         [Test]
@@ -216,27 +216,27 @@ namespace Supremes.Test.Nodes
             string h = "<p><a>One</a> Two</p> Three <i>Four</i> <p>Fix <i>Six</i></p>";
             Document doc = Dcsoup.Parse(h);
             doc.Select("p").Unwrap();
-            Assert.AreEqual("<a>One</a> Two Three <i>Four</i> Fix <i>Six</i>", TextUtil.StripNewlines(doc.Body().Html()));
+            Assert.AreEqual("<a>One</a> Two Three <i>Four</i> Fix <i>Six</i>", TextUtil.StripNewlines(doc.Body.Html));
         }
 
         [Test]
         public void Empty()
         {
             Document doc = Dcsoup.Parse("<div><p>Hello <b>there</b></p> <p>now!</p></div>");
-            doc.OutputSettings().PrettyPrint(false);
+            doc.OutputSettings.PrettyPrint = false;
 
             doc.Select("p").Empty();
-            Assert.AreEqual("<div><p></p> <p></p></div>", doc.Body().Html());
+            Assert.AreEqual("<div><p></p> <p></p></div>", doc.Body.Html);
         }
 
         [Test]
         public void Remove()
         {
             Document doc = Dcsoup.Parse("<div><p>Hello <b>there</b></p> jsoup <p>now!</p></div>");
-            doc.OutputSettings().PrettyPrint(false);
+            doc.OutputSettings.PrettyPrint = false;
         
             doc.Select("p").Remove();
-            Assert.AreEqual("<div> jsoup </div>", doc.Body().Html());
+            Assert.AreEqual("<div> jsoup </div>", doc.Body.Html);
         }
     
         [Test]
@@ -244,8 +244,8 @@ namespace Supremes.Test.Nodes
         {
             string h = "<p>Hello<p>there<p>world";
             Document doc = Dcsoup.Parse(h);
-            Assert.AreEqual("there", doc.Select("p").Eq(1).Text());
-            Assert.AreEqual("there", doc.Select("p")[1].Text());
+            Assert.AreEqual("there", doc.Select("p").Eq(1).Text);
+            Assert.AreEqual("there", doc.Select("p")[1].Text);
         }
     
         [Test]
@@ -262,12 +262,12 @@ namespace Supremes.Test.Nodes
         public void Parents()
         {
             Document doc = Dcsoup.Parse("<div><p>Hello</p></div><p>There</p>");
-            Elements parents = doc.Select("p").Parents();
+            Elements parents = doc.Select("p").Parents;
 
             Assert.AreEqual(3, parents.Count);
-            Assert.AreEqual("div", parents[0].TagName());
-            Assert.AreEqual("body", parents[1].TagName());
-            Assert.AreEqual("html", parents[2].TagName());
+            Assert.AreEqual("div", parents[0].TagName);
+            Assert.AreEqual("body", parents[1].TagName);
+            Assert.AreEqual("html", parents[2].TagName);
         }
 
         [Test]
@@ -277,20 +277,20 @@ namespace Supremes.Test.Nodes
 
             Elements div1 = doc.Select("div").Not(":has(p > span)");
             Assert.AreEqual(1, div1.Count);
-            Assert.AreEqual("1", div1.First().Id());
+            Assert.AreEqual("1", div1.First.Id);
 
             Elements div2 = doc.Select("div").Not("#1");
             Assert.AreEqual(1, div2.Count);
-            Assert.AreEqual("2", div2.First().Id());
+            Assert.AreEqual("2", div2.First.Id);
         }
 
         [Test]
         public void TagNameSet()
         {
             Document doc = Dcsoup.Parse("<p>Hello <i>there</i> <i>now</i></p>");
-            doc.Select("i").TagName("em");
+            doc.Select("i").TagName = "em";
 
-            Assert.AreEqual("<p>Hello <em>there</em> <em>now</em></p>", doc.Body().Html());
+            Assert.AreEqual("<p>Hello <em>there</em> <em>now</em></p>", doc.Body.Html);
         }
 
         [Test]
@@ -329,12 +329,12 @@ namespace Supremes.Test.Nodes
             Elements els = doc.Select("*");
             Assert.AreEqual(9, els.Count);
 
-            IReadOnlyList<FormElement> forms = els.Forms();
+            IReadOnlyList<FormElement> forms = els.Forms;
             Assert.AreEqual(2, forms.Count);
             Assert.IsTrue(forms[0] != null);
             Assert.IsTrue(forms[1] != null);
-            Assert.AreEqual("1", forms[0].Id());
-            Assert.AreEqual("2", forms[1].Id());
+            Assert.AreEqual("1", forms[0].Id);
+            Assert.AreEqual("2", forms[1].Id);
         }
 
         [Test]
@@ -343,7 +343,7 @@ namespace Supremes.Test.Nodes
             Document doc = Dcsoup.Parse("<p class='tab-nav'>Check</p>");
             Elements els = doc.GetElementsByClass("tab-nav");
             Assert.AreEqual(1, els.Count);
-            Assert.AreEqual("Check", els.Text());
+            Assert.AreEqual("Check", els.Text);
         }
     }
 }

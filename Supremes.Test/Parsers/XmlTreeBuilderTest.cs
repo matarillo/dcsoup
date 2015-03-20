@@ -18,7 +18,7 @@ namespace Supremes.Test.Parsers
             XmlTreeBuilder tb = new XmlTreeBuilder();
             Document doc = tb.Parse(xml, "http://foo.com/");
             Assert.AreEqual("<doc id=\"2\" href=\"/bar\">Foo <br /><link>One</link><link>Two</link></doc>",
-                    TextUtil.StripNewlines(doc.Html()));
+                    TextUtil.StripNewlines(doc.Html));
             Assert.AreEqual(doc.GetElementById("2").AbsUrl("href"), "http://foo.com/bar");
         }
 
@@ -30,7 +30,7 @@ namespace Supremes.Test.Parsers
             XmlTreeBuilder tb = new XmlTreeBuilder();
             Document doc = tb.Parse(xml, "http://foo.com/");
             Assert.AreEqual("<doc><val>One<val>Two</val>Three</val></doc>",
-                    TextUtil.StripNewlines(doc.Html()));
+                    TextUtil.StripNewlines(doc.Html));
         }
 
         [Test]
@@ -40,16 +40,16 @@ namespace Supremes.Test.Parsers
             XmlTreeBuilder tb = new XmlTreeBuilder();
             Document doc = tb.Parse(xml, "http://foo.com/");
             Assert.AreEqual("<!DOCTYPE html><!-- a comment -->One <qux />Two",
-                    TextUtil.StripNewlines(doc.Html()));
+                    TextUtil.StripNewlines(doc.Html));
         }
 
         [Test]
         public void TestSupplyParserToDcsoupClass()
         {
             string xml = "<doc><val>One<val>Two</val></bar>Three</doc>";
-            Document doc = Dcsoup.Parse(xml, "http://foo.com/", Parser.XmlParser());
+            Document doc = Dcsoup.Parse(xml, "http://foo.com/", Parser.XmlParser);
             Assert.AreEqual("<doc><val>One<val>Two</val>Three</val></doc>",
-                    TextUtil.StripNewlines(doc.Html()));
+                    TextUtil.StripNewlines(doc.Html));
         }
 
         //[Ignore]
@@ -71,12 +71,12 @@ namespace Supremes.Test.Parsers
             string xml = "<doc><val>One<val>Two</val></bar>Three</doc>";
             byte[] utf8Xml = Encoding.UTF8.GetBytes(xml);
             Stream inStream = new MemoryStream(utf8Xml);
-            Document xmlDoc = Dcsoup.Parse(inStream, null, "http://foo.com", Parser.XmlParser());
+            Document xmlDoc = Dcsoup.Parse(inStream, null, "http://foo.com", Parser.XmlParser);
             inStream.Position = 0L;
-            Document htmlDoc = Dcsoup.Parse(inStream, null, "http://foo.com", Parser.HtmlParser());
+            Document htmlDoc = Dcsoup.Parse(inStream, null, "http://foo.com", Parser.HtmlParser);
 
             Assert.AreEqual("<doc><val>One<val>Two</val>Three</val></doc>",
-                TextUtil.StripNewlines(xmlDoc.Html()));
+                TextUtil.StripNewlines(xmlDoc.Html));
             Assert.AreNotEqual(htmlDoc, xmlDoc);
             Assert.AreEqual(1, htmlDoc.Select("head").Count); // html parser normalises
             Assert.AreEqual(0, xmlDoc.Select("head").Count); // xml parser does not
@@ -87,19 +87,19 @@ namespace Supremes.Test.Parsers
         {
             // html will force "<br>one</br>" to logically "<br />One<br />". XML should be stay "<br>one</br> -- don't recognise tag.
             Document htmlDoc = Dcsoup.Parse("<br>one</br>");
-            Assert.AreEqual("<br>one\n<br>", htmlDoc.Body().Html());
+            Assert.AreEqual("<br>one\n<br>", htmlDoc.Body.Html);
 
-            Document xmlDoc = Dcsoup.Parse("<br>one</br>", "", Parser.XmlParser());
-            Assert.AreEqual("<br>one</br>", xmlDoc.Html());
+            Document xmlDoc = Dcsoup.Parse("<br>one</br>", "", Parser.XmlParser);
+            Assert.AreEqual("<br>one</br>", xmlDoc.Html);
         }
 
         [Test]
         public void HandlesXmlDeclarationAsDeclaration()
         {
             string html = "<?xml encoding='UTF-8' ?><body>One</body><!-- comment -->";
-            Document doc = Dcsoup.Parse(html, "", Parser.XmlParser());
+            Document doc = Dcsoup.Parse(html, "", Parser.XmlParser);
             Assert.AreEqual("<?xml encoding='UTF-8' ?> <body> One </body> <!-- comment -->",
-                    StringUtil.NormaliseWhitespace(doc.OuterHtml()));
+                    StringUtil.NormaliseWhitespace(doc.OuterHtml));
             Assert.AreEqual("#declaration", doc.ChildNode(0).NodeName);
             Assert.AreEqual("#comment", doc.ChildNode(2).NodeName);
         }
@@ -113,14 +113,14 @@ namespace Supremes.Test.Parsers
 
             Assert.AreEqual("http://example.com/foo/", nodes[0].AbsUrl("src"));
             Assert.AreEqual("one", nodes[0].NodeName);
-            Assert.AreEqual("Two", ((TextNode)nodes[1]).Text());
+            Assert.AreEqual("Two", ((TextNode)nodes[1]).Text);
         }
 
         [Test]
         public void XmlParseDefaultsToHtmlOutputSyntax()
         {
-            Document doc = Dcsoup.Parse("x", "", Parser.XmlParser());
-            Assert.AreEqual(DocumentSyntax.Xml, doc.OutputSettings().Syntax());
+            Document doc = Dcsoup.Parse("x", "", Parser.XmlParser);
+            Assert.AreEqual(DocumentSyntax.Xml, doc.OutputSettings.Syntax);
         }
     }
 }

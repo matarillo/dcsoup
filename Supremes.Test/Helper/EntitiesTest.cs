@@ -87,12 +87,12 @@ namespace Supremes.Test.Nodes
         {
             string html = "<p>&sup1;&sup2;&sup3;&frac14;&frac12;&frac34;</p>";
             Document doc = Dcsoup.Parse(html);
-            doc.OutputSettings().Charset("ascii");
-            Element p = doc.Select("p").First();
-            Assert.AreEqual("&sup1;&sup2;&sup3;&frac14;&frac12;&frac34;", p.Html());
-            Assert.AreEqual("¹²³¼½¾", p.Text());
-            doc.OutputSettings().Charset("UTF-8");
-            Assert.AreEqual("¹²³¼½¾", p.Html());
+            doc.OutputSettings.Charset = Encoding.ASCII;
+            Element p = doc.Select("p").First;
+            Assert.AreEqual("&sup1;&sup2;&sup3;&frac14;&frac12;&frac34;", p.Html);
+            Assert.AreEqual("¹²³¼½¾", p.Text);
+            doc.OutputSettings.Charset = Encoding.UTF8;
+            Assert.AreEqual("¹²³¼½¾", p.Html);
         }
 
         [Test]

@@ -57,50 +57,44 @@ namespace Supremes.Nodes
 
         internal override string NodeName
         {
-        	get { return tag.GetName(); }
+        	get { return tag.Name; }
         }
 
         /// <summary>
-        /// Get the name of the tag for this element.
+        /// Get or Set the name of the tag for this element.
         /// </summary>
         /// <remarks>
-        /// E.g.
-        /// <code>div</code>
+        /// <para>
+        /// E.g. <c>div</c>
+        /// </para>
+        /// <para>
+        /// For example, convert a <c>&lt;span&gt;</c> to a <c>&lt;div&gt;</c>
+        /// with <c>el.TagName = "div";</c> .
+        /// </para>
+        /// <para>
+        /// if you want to use fluent API, write <c>using Supremes.Fluent;</c>.
+        /// </para>
         /// </remarks>
+        /// <value>the new tag name</value>
         /// <returns>the tag name</returns>
-        public string TagName()
+        /// <seealso cref="Supremes.Fluent.FluentUtility">Supremes.Fluent.FluentUtility</seealso>
+        public string TagName
         {
-            return tag.GetName();
-        }
-
-        /// <summary>
-        /// Change the tag of this element.
-        /// </summary>
-        /// <remarks>
-        /// For example, convert a
-        /// <code>&lt;span&gt;</code>
-        /// to a
-        /// <code>&lt;div&gt;</code>
-        /// with
-        /// <code>el.tagName("div");</code>
-        /// .
-        /// </remarks>
-        /// <param name="tagName">new tag name for this element</param>
-        /// <returns>this element, for chaining</returns>
-        public Element TagName(string tagName)
-        {
-            Validate.NotEmpty(tagName, "Tag name must not be empty.");
-            tag = Supremes.Nodes.Tag.ValueOf(tagName);
-            return this;
+            get { return tag.Name; }
+            set
+            {
+                Validate.NotEmpty(value, "Tag name must not be empty.");
+                tag = Supremes.Nodes.Tag.ValueOf(value);
+            }
         }
 
         /// <summary>
         /// Get the Tag for this element.
         /// </summary>
         /// <returns>the tag object</returns>
-        public Tag Tag()
+        public Tag Tag
         {
-            return tag;
+            get { return tag; }
         }
 
         /// <summary>
@@ -108,27 +102,24 @@ namespace Supremes.Nodes
         /// </summary>
         /// <remarks>
         /// (E.g.
-        /// <code>&lt;div&gt; == true</code>
+        /// <c>&lt;div&gt; == true</c>
         /// or an inline element
-        /// <code>&lt;p&gt; == false</code>
+        /// <c>&lt;p&gt; == false</c>
         /// ).
         /// </remarks>
         /// <returns>true if block, false if not (and thus inline)</returns>
-        public bool IsBlock()
+        public bool IsBlock
         {
-            return tag.IsBlock();
+            get { return tag.IsBlock; }
         }
 
         /// <summary>
-        /// Get the
-        /// <code>id</code>
-        /// attribute of this element.
+        /// Get the <c>id</c> attribute of this element.
         /// </summary>
         /// <returns>The id attribute, if present, or an empty string if not.</returns>
-        public string Id()
+        public string Id
         {
-            string id = Attr("id");
-			return id ?? string.Empty;
+            get { return Attr("id") ?? string.Empty; }
         }
 
         /// <summary>
@@ -153,61 +144,55 @@ namespace Supremes.Nodes
         /// starting with "data-" is included the dataset.
         /// <p/>
         /// E.g., the element
-        /// <code>&lt;div data-package="jsoup" data-language="Java" class="group"&gt;...</code>
+        /// <c>&lt;div data-package="jsoup" data-language="Java" class="group"&gt;...</c>
         /// has the dataset
-        /// <code>package=jsoup, language=java</code>
+        /// <c>package=jsoup, language=java</c>
         /// .
         /// <p/>
         /// This map is a filtered view of the element's attribute map. Changes to one map (add, remove, update) are reflected
         /// in the other map.
         /// <p/>
         /// You can find elements that have data attributes using the
-        /// <code>[^data-]</code>
+        /// <c>[^data-]</c>
         /// attribute key prefix selector.
         /// </remarks>
         /// <returns>
         /// a map of
-        /// <code>key=value</code>
+        /// <c>key=value</c>
         /// custom data attributes.
         /// </returns>
-        public IDictionary<string, string> Dataset()
+        public IDictionary<string, string> Dataset
         {
-            return attributes.Dataset;
+            get { return attributes.Dataset; }
         }
 
         /// <summary>
-        /// Gets this node's parent node.
+        /// Gets this element's parent element.
         /// </summary>
         /// <returns></returns>
-        public sealed override Node Parent()
+        public new Element Parent
         {
-            return parentNode;
+            get { return (Element)parentNode; }
         }
         
-        /// <summary>
-        /// Gets this node's parent element.
-        /// </summary>
-        /// <returns></returns>
-        public Element ParentElement()
-        {
-        	return (Element)parentNode;
-        }
-
         /// <summary>
         /// Get this element's parent and ancestors, up to the document root.
         /// </summary>
         /// <returns>this element's stack of parents, closest first.</returns>
-        public Elements Parents()
+        public Elements Parents
         {
-            Elements parents = new Elements();
-            AccumulateParents(this, parents);
-            return parents;
+            get
+            {
+                Elements parents = new Elements();
+                AccumulateParents(this, parents);
+                return parents;
+            }
         }
 
         private static void AccumulateParents(Element el, Elements parents)
         {
-        	Element parent = el.ParentElement();
-            if (parent != null && !parent.TagName().Equals("#root"))
+        	Element parent = el.Parent;
+            if (parent != null && !parent.TagName.Equals("#root"))
             {
                 parents.Add(parent);
                 AccumulateParents(parent, parents);
@@ -224,12 +209,12 @@ namespace Supremes.Nodes
         /// <param name="index">the index number of the element to retrieve</param>
         /// <returns>
         /// the child element, if it exists, otherwise throws an
-        /// <code>IndexOutOfBoundsException</code>
+        /// <c>IndexOutOfBoundsException</c>
         /// </returns>
         /// <seealso cref="Node.ChildNode(int)">Node.ChildNode(int)</seealso>
         public Element Child(int index)
         {
-            return Children()[index];
+            return Children[index];
         }
 
         /// <summary>
@@ -237,19 +222,22 @@ namespace Supremes.Nodes
         /// </summary>
         /// <remarks>
         /// This is effectively a filter on
-        /// <see cref="Node.ChildNodes()">Node.ChildNodes()</see>
+        /// <see cref="Node.ChildNodes">Node.ChildNodes</see>
         /// to get Element nodes.
         /// </remarks>
         /// <returns>
         /// child elements. If this element has no children, returns an
         /// empty list.
         /// </returns>
-        /// <seealso cref="Node.ChildNodes()">Node.ChildNodes()</seealso>
-        public Elements Children()
+        /// <seealso cref="Node.ChildNodes">Node.ChildNodes</seealso>
+        public Elements Children
         {
-            // create on the fly rather than maintaining two lists. if gets slow, memoize, and mark dirty on change
-            IList<Element> elements = childNodes.OfType<Element>().ToList();
-            return new Elements(elements);
+            get
+            {
+                // create on the fly rather than maintaining two lists. if gets slow, memoize, and mark dirty on change
+                IList<Element> elements = childNodes.OfType<Element>().ToList();
+                return new Elements(elements);
+            }
         }
 
         /// <summary>
@@ -259,7 +247,7 @@ namespace Supremes.Nodes
         /// The list is unmodifiable but the text nodes may be manipulated.
         /// <p/>
         /// This is effectively a filter on
-        /// <see cref="Node.ChildNodes()">Node.ChildNodes()</see>
+        /// <see cref="Node.ChildNodes">Node.ChildNodes</see>
         /// to get Text nodes.
         /// </remarks>
         /// <returns>
@@ -267,35 +255,35 @@ namespace Supremes.Nodes
         /// empty list.
         /// <p/>
         /// For example, with the input HTML:
-        /// <code><p>One <span>Two</span> Three <br /> Four</p></code>
+        /// <c><p>One <span>Two</span> Three <br /> Four</p></c>
         /// with the
-        /// <code>p</code>
+        /// <c>p</c>
         /// element selected:
         /// <ul>
         /// <li>
-        /// <code>p.text()</code>
+        /// <c>p.Text</c>
         /// =
-        /// <code>"One Two Three Four"</code>
+        /// <c>"One Two Three Four"</c>
         /// </li>
         /// <li>
-        /// <code>p.ownText()</code>
+        /// <c>p.OwnText</c>
         /// =
-        /// <code>"One Three Four"</code>
+        /// <c>"One Three Four"</c>
         /// </li>
         /// <li>
-        /// <code>p.children()</code>
+        /// <c>p.Children</c>
         /// =
-        /// <code>Elements[&lt;span&gt;, &lt;br /&gt;]</code>
+        /// <c>Elements[&lt;span&gt;, &lt;br /&gt;]</c>
         /// </li>
         /// <li>
-        /// <code>p.childNodes()</code>
+        /// <c>p.ChildNodes</c>
         /// =
-        /// <code>List&lt;Node&gt;["One ", &lt;span&gt;, " Three ", &lt;br /&gt;, " Four"]</code>
+        /// <c>List&lt;Node&gt;["One ", &lt;span&gt;, " Three ", &lt;br /&gt;, " Four"]</c>
         /// </li>
         /// <li>
-        /// <code>p.textNodes()</code>
+        /// <c>p.TextNodes</c>
         /// =
-        /// <code>List&lt;TextNode&gt;["One ", " Three ", " Four"]</code>
+        /// <c>List&lt;TextNode&gt;["One ", " Three ", " Four"]</c>
         /// </li>
         /// </ul>
         /// </returns>
@@ -312,14 +300,14 @@ namespace Supremes.Nodes
         /// The list is unmodifiable but the data nodes may be manipulated.
         /// <p/>
         /// This is effectively a filter on
-        /// <see cref="Node.ChildNodes()">Node.ChildNodes()</see>
+        /// <see cref="Node.ChildNodes">Node.ChildNodes</see>
         /// to get Data nodes.
         /// </remarks>
         /// <returns>
         /// child data nodes. If this element has no data nodes, returns an
         /// empty list.
         /// </returns>
-        /// <seealso cref="Data()">Data()</seealso>
+        /// <seealso cref="Data">Data</seealso>
         internal IReadOnlyList<DataNode> DataNodes()
         {
             List<DataNode> dataNodes = childNodes.OfType<DataNode>().ToList();
@@ -334,20 +322,20 @@ namespace Supremes.Nodes
         /// </summary>
         /// <remarks>
         /// This method is generally more powerful to use than the DOM-type
-        /// <code>getElementBy*</code>
+        /// <c>getElementBy*</c>
         /// methods, because
         /// multiple filters can be combined, e.g.:
         /// <ul>
         /// <li>
-        /// <code>el.select("a[href]")</code>
+        /// <c>el.select("a[href]")</c>
         /// - finds links (
-        /// <code>a</code>
+        /// <c>a</c>
         /// tags with
-        /// <code>href</code>
+        /// <c>href</c>
         /// attributes)
         /// </li>
         /// <li>
-        /// <code>el.select("a[href*=example.com]")</code>
+        /// <c>el.select("a[href*=example.com]")</c>
         /// - finds links pointing to example.com (loosely)
         /// </li>
         /// </ul>
@@ -401,9 +389,9 @@ namespace Supremes.Nodes
         /// </remarks>
         /// <param name="index">
         /// 0-based index to insert children at. Specify
-        /// <code>0</code>
+        /// <c>0</c>
         /// to insert at the start,
-        /// <code>-1</code>
+        /// <c>-1</c>
         /// at the
         /// end
         /// </param>
@@ -412,7 +400,7 @@ namespace Supremes.Nodes
         public Element InsertChildren(int index, IEnumerable<Node> children)
         {
             Validate.NotNull(children, "Children collection to be inserted must not be null.");
-            int currentSize = ChildNodeSize();
+            int currentSize = ChildNodeSize;
             if (index < 0)
             {
                 index += currentSize + 1;
@@ -428,17 +416,17 @@ namespace Supremes.Nodes
         /// </summary>
         /// <param name="tagName">
         /// the name of the tag (e.g.
-        /// <code>div</code>
+        /// <c>div</c>
         /// ).
         /// </param>
         /// <returns>
         /// the new element, to allow you to add content to it, e.g.:
-        /// <code>parent.appendElement("h1").attr("id", "header").text("Welcome");</code>
+        /// <c>parent.appendElement("h1").attr("id", "header").text("Welcome");</c>
         /// </returns>
         public Element AppendElement(string tagName)
         {
         	Tag tag = Nodes.Tag.ValueOf(tagName);
-            Element child = new Element(tag, BaseUri());
+            Element child = new Element(tag, BaseUri);
             AppendChild(child);
             return child;
         }
@@ -448,17 +436,17 @@ namespace Supremes.Nodes
         /// </summary>
         /// <param name="tagName">
         /// the name of the tag (e.g.
-        /// <code>div</code>
+        /// <c>div</c>
         /// ).
         /// </param>
         /// <returns>
         /// the new element, to allow you to add content to it, e.g.:
-        /// <code>parent.prependElement("h1").attr("id", "header").text("Welcome");</code>
+        /// <c>parent.prependElement("h1").attr("id", "header").text("Welcome");</c>
         /// </returns>
         public Element PrependElement(string tagName)
         {
         	Tag tag = Nodes.Tag.ValueOf(tagName);
-            Element child = new Element(tag, BaseUri());
+            Element child = new Element(tag, BaseUri);
             PrependChild(child);
             return child;
         }
@@ -470,7 +458,7 @@ namespace Supremes.Nodes
         /// <returns>this element</returns>
         public Element AppendText(string text)
         {
-            TextNode node = new TextNode(text, BaseUri());
+            TextNode node = new TextNode(text, BaseUri);
             AppendChild(node);
             return this;
         }
@@ -482,7 +470,7 @@ namespace Supremes.Nodes
         /// <returns>this element</returns>
         public Element PrependText(string text)
         {
-            TextNode node = new TextNode(text, BaseUri());
+            TextNode node = new TextNode(text, BaseUri);
             PrependChild(node);
             return this;
         }
@@ -495,11 +483,11 @@ namespace Supremes.Nodes
         /// </remarks>
         /// <param name="html">HTML to add inside this element, after the existing HTML</param>
         /// <returns>this element</returns>
-        /// <seealso cref="Html(string)">Html(string)</seealso>
+        /// <seealso cref="Html">Html</seealso>
         public Element Append(string html)
         {
             Validate.NotNull(html);
-            IReadOnlyList<Node> nodes = Parser.ParseFragment(html, this, BaseUri());
+            IReadOnlyList<Node> nodes = Parser.ParseFragment(html, this, BaseUri);
             AddChildren(nodes.ToArray());
             return this;
         }
@@ -512,11 +500,11 @@ namespace Supremes.Nodes
         /// </remarks>
         /// <param name="html">HTML to add inside this element, before the existing HTML</param>
         /// <returns>this element</returns>
-        /// <seealso cref="Html(string)">Html(string)</seealso>
+        /// <seealso cref="Html">Html</seealso>
         public Element Prepend(string html)
         {
             Validate.NotNull(html);
-            IReadOnlyList<Node> nodes = Parser.ParseFragment(html, this, BaseUri());
+            IReadOnlyList<Node> nodes = Parser.ParseFragment(html, this, BaseUri);
             AddChildren(0, nodes.ToArray());
             return this;
         }
@@ -583,7 +571,7 @@ namespace Supremes.Nodes
         /// </summary>
         /// <param name="html">
         /// HTML to wrap around this element, e.g.
-        /// <code><div class="head"></div></code>
+        /// <c><div class="head"></div></c>
         /// . Can be arbitrarily deep.
         /// </param>
         /// <returns>this element, for chaining.</returns>
@@ -601,29 +589,32 @@ namespace Supremes.Nodes
         /// followed by a unique selector for the element (tag.class.class:nth-child(n)).
         /// </remarks>
         /// <returns>the CSS Path that can be used to retrieve the element in a selector.</returns>
-        public string CssSelector()
+        public string CssSelector
         {
-            if (Id().Length > 0)
+            get
             {
-                return "#" + Id();
+                if (Id.Length > 0)
+                {
+                    return "#" + Id;
+                }
+                StringBuilder selector = new StringBuilder(TagName);
+                string classes = string.Join(".", ClassNames);
+                if (classes.Length > 0)
+                {
+                    selector.Append('.').Append(classes);
+                }
+                if (Parent == null || Parent is Document)
+                {
+                    // don't add Document to selector, as will always have a html node
+                    return selector.ToString();
+                }
+                selector.Insert(0, " > ");
+                if (Parent.Select(selector.ToString()).Count > 1)
+                {
+                    selector.Append(string.Format(":nth-child({0})", ElementSiblingIndex + 1));
+                }
+                return Parent.CssSelector + selector.ToString();
             }
-            StringBuilder selector = new StringBuilder(TagName());
-            string classes = string.Join(".", ClassNames());
-            if (classes.Length > 0)
-            {
-                selector.Append('.').Append(classes);
-            }
-            if (Parent() == null || ParentElement() is Document)
-            {
-                // don't add Document to selector, as will always have a html node
-                return selector.ToString();
-            }
-            selector.Insert(0, " > ");
-            if (ParentElement().Select(selector.ToString()).Count > 1)
-            {
-                selector.Append(string.Format(":nth-child({0})", ElementSiblingIndex() + 1));
-            }
-            return ParentElement().CssSelector() + selector.ToString();
         }
 
         /// <summary>
@@ -634,22 +625,25 @@ namespace Supremes.Nodes
         /// of itself, so will not be included in the returned list.
         /// </remarks>
         /// <returns>sibling elements</returns>
-        public Elements SiblingElements()
+        public Elements SiblingElements
         {
-            if (parentNode == null)
+            get
             {
-                return new Elements(0);
-            }
-            IList<Element> elements = ParentElement().Children();
-            Elements siblings = new Elements(elements.Count - 1);
-            foreach (Element el in elements)
-            {
-                if (el != this)
+                if (parentNode == null)
                 {
-                    siblings.Add(el);
+                    return new Elements(0);
                 }
+                IList<Element> elements = Parent.Children;
+                Elements siblings = new Elements(elements.Count - 1);
+                foreach (Element el in elements)
+                {
+                    if (el != this)
+                    {
+                        siblings.Add(el);
+                    }
+                }
+                return siblings;
             }
-            return siblings;
         }
 
         /// <summary>
@@ -657,40 +651,43 @@ namespace Supremes.Nodes
         /// </summary>
         /// <remarks>
         /// E.g., if a
-        /// <code>div</code>
+        /// <c>div</c>
         /// contains two
-        /// <code>p</code>
+        /// <c>p</c>
         /// s,
         /// the
-        /// <code>nextElementSibling</code>
+        /// <c>nextElementSibling</c>
         /// of the first
-        /// <code>p</code>
+        /// <c>p</c>
         /// is the second
-        /// <code>p</code>
+        /// <c>p</c>
         /// .
         /// <p/>
         /// This is similar to
-        /// <see cref="Node.NextSibling()">Node.NextSibling()</see>
+        /// <see cref="Node.NextSibling">Node.NextSibling</see>
         /// , but specifically finds only Elements
         /// </remarks>
         /// <returns>the next element, or null if there is no next element</returns>
-        /// <seealso cref="PreviousElementSibling()">PreviousElementSibling()</seealso>
-        public Element NextElementSibling()
+        /// <seealso cref="PreviousElementSibling">PreviousElementSibling</seealso>
+        public Element NextElementSibling
         {
-            if (parentNode == null)
+            get
             {
-                return null;
-            }
-            IList<Element> siblings = ParentElement().Children();
-            int index = IndexInList(this, siblings);
-            Validate.IsTrue(index >= 0);
-            if (siblings.Count > index + 1)
-            {
-                return siblings[index + 1];
-            }
-            else
-            {
-                return null;
+                if (parentNode == null)
+                {
+                    return null;
+                }
+                IList<Element> siblings = Parent.Children;
+                int index = IndexInList(this, siblings);
+                Validate.IsTrue(index >= 0);
+                if (siblings.Count > index + 1)
+                {
+                    return siblings[index + 1];
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
 
@@ -698,23 +695,26 @@ namespace Supremes.Nodes
         /// Gets the previous element sibling of this element.
         /// </summary>
         /// <returns>the previous element, or null if there is no previous element</returns>
-        /// <seealso cref="NextElementSibling()">NextElementSibling()</seealso>
-        public Element PreviousElementSibling()
+        /// <seealso cref="NextElementSibling">NextElementSibling</seealso>
+        public Element PreviousElementSibling
         {
-            if (parentNode == null)
+            get
             {
-                return null;
-            }
-            IList<Element> siblings = ParentElement().Children();
-            int index = IndexInList(this, siblings);
-            Validate.IsTrue(index >= 0);
-            if (index > 0)
-            {
-                return siblings[index - 1];
-            }
-            else
-            {
-                return null;
+                if (parentNode == null)
+                {
+                    return null;
+                }
+                IList<Element> siblings = Parent.Children;
+                int index = IndexInList(this, siblings);
+                Validate.IsTrue(index >= 0);
+                if (index > 0)
+                {
+                    return siblings[index - 1];
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
 
@@ -723,11 +723,14 @@ namespace Supremes.Nodes
         /// </summary>
         /// <returns>the first sibling that is an element (aka the parent's first element child)
         /// </returns>
-        public Element FirstElementSibling()
+        public Element FirstElementSibling
         {
-            // todo: should firstSibling() exclude this?
-            IList<Element> siblings = ParentElement().Children();
-            return siblings.Count > 1 ? siblings[0] : null;
+            get
+            {
+                // todo: should firstSibling() exclude this?
+                IList<Element> siblings = Parent.Children;
+                return siblings.Count > 1 ? siblings[0] : null;
+            }
         }
 
         /// <summary>
@@ -737,13 +740,16 @@ namespace Supremes.Nodes
         /// I.e. if this is the first element sibling, returns 0.
         /// </remarks>
         /// <returns>position in element sibling list</returns>
-        public int ElementSiblingIndex()
+        public int ElementSiblingIndex
         {
-            if (Parent() == null)
+            get
             {
-                return 0;
+                if (Parent == null)
+                {
+                    return 0;
+                }
+                return IndexInList(this, Parent.Children);
             }
-            return IndexInList(this, ParentElement().Children());
         }
 
         /// <summary>
@@ -752,10 +758,13 @@ namespace Supremes.Nodes
         /// <returns>
         /// the last sibling that is an element (aka the parent's last element child)
         /// </returns>
-        public Element LastElementSibling()
+        public Element LastElementSibling
         {
-            IList<Element> siblings = ParentElement().Children();
-            return siblings.Count > 1 ? siblings[siblings.Count - 1] : null;
+            get
+            {
+                IList<Element> siblings = Parent.Children;
+                return siblings.Count > 1 ? siblings[siblings.Count - 1] : null;
+            }
         }
 
         private static int IndexInList(Element search, IList<Element> elements)
@@ -816,16 +825,16 @@ namespace Supremes.Nodes
         /// Case insensitive.
         /// <p/>
         /// Elements can have multiple classes (e.g.
-        /// <code>&lt;div class="header round first"&gt;</code>
+        /// <c>&lt;div class="header round first"&gt;</c>
         /// . This method
         /// checks each class, so you can find the above with
-        /// <code>el.getElementsByClass("header");</code>
+        /// <c>el.getElementsByClass("header");</c>
         /// .
         /// </remarks>
         /// <param name="className">the name of the class to search for.</param>
         /// <returns>elements with the supplied class name, empty if none</returns>
         /// <seealso cref="HasClass(string)">HasClass(string)</seealso>
-        /// <seealso cref="ClassNames()">ClassNames()</seealso>
+        /// <seealso cref="ClassNames">ClassNames</seealso>
         public Elements GetElementsByClass(string className)
         {
             Validate.NotEmpty(className);
@@ -840,7 +849,7 @@ namespace Supremes.Nodes
         /// </remarks>
         /// <param name="key">
         /// name of the attribute, e.g.
-        /// <code>href</code>
+        /// <c>href</c>
         /// </param>
         /// <returns>elements that have this attribute, empty if none</returns>
         public Elements GetElementsByAttribute(string key)
@@ -855,13 +864,13 @@ namespace Supremes.Nodes
         /// </summary>
         /// <remarks>
         /// Use
-        /// <code>data-</code>
+        /// <c>data-</c>
         /// to find elements
         /// that have HTML5 datasets.
         /// </remarks>
         /// <param name="keyPrefix">
         /// name prefix of the attribute e.g.
-        /// <code>data-</code>
+        /// <c>data-</c>
         /// </param>
         /// <returns>elements that have attribute names that start with with the prefix, empty if none.
         /// </returns>
@@ -1009,7 +1018,7 @@ namespace Supremes.Nodes
         /// </remarks>
         /// <param name="searchText">to look for in the element's text</param>
         /// <returns>elements that contain the string, case insensitive.</returns>
-        /// <seealso cref="Element.Text()">Element.Text()</seealso>
+        /// <seealso cref="Element.Text">Element.Text</seealso>
         public Elements GetElementsContainingText(string searchText)
         {
             return Collector.Collect(new Evaluator.ContainsText(searchText), this);
@@ -1024,7 +1033,7 @@ namespace Supremes.Nodes
         /// </remarks>
         /// <param name="searchText">to look for in the element's own text</param>
         /// <returns>elements that contain the string, case insensitive.</returns>
-        /// <seealso cref="Element.OwnText()">Element.OwnText()</seealso>
+        /// <seealso cref="Element.OwnText">Element.OwnText</seealso>
         public Elements GetElementsContainingOwnText(string searchText)
         {
             return Collector.Collect(new Evaluator.ContainsOwnText(searchText), this);
@@ -1035,7 +1044,7 @@ namespace Supremes.Nodes
         /// </summary>
         /// <param name="pattern">regular expression to match text against</param>
         /// <returns>elements matching the supplied regular expression.</returns>
-        /// <seealso cref="Element.Text()">Element.Text()</seealso>
+        /// <seealso cref="Element.Text">Element.Text</seealso>
         public Elements GetElementsMatchingText(Regex pattern)
         {
             return Collector.Collect(new Evaluator.MatchesText(pattern), this);
@@ -1047,7 +1056,7 @@ namespace Supremes.Nodes
         /// <param name="regex">regular expression to match text against. You can use <a href="http://java.sun.com/docs/books/tutorial/essential/regex/pattern.html#embedded">embedded flags</a> (such as (?i) and (?m) to control regex options.
         /// </param>
         /// <returns>elements matching the supplied regular expression.</returns>
-        /// <seealso cref="Element.Text()">Element.Text()</seealso>
+        /// <seealso cref="Element.Text">Element.Text</seealso>
         public Elements GetElementsMatchingText(string regex)
         {
             Regex pattern;
@@ -1060,7 +1069,7 @@ namespace Supremes.Nodes
         /// </summary>
         /// <param name="pattern">regular expression to match text against</param>
         /// <returns>elements matching the supplied regular expression.</returns>
-        /// <seealso cref="Element.OwnText()">Element.OwnText()</seealso>
+        /// <seealso cref="Element.OwnText">Element.OwnText</seealso>
         public Elements GetElementsMatchingOwnText(Regex pattern)
         {
             return Collector.Collect(new Evaluator.MatchesOwnText(pattern), this);
@@ -1072,7 +1081,7 @@ namespace Supremes.Nodes
         /// <param name="regex">regular expression to match text against. You can use <a href="http://java.sun.com/docs/books/tutorial/essential/regex/pattern.html#embedded">embedded flags</a> (such as (?i) and (?m) to control regex options.
         /// </param>
         /// <returns>elements matching the supplied regular expression.</returns>
-        /// <seealso cref="Element.OwnText()">Element.OwnText()</seealso>
+        /// <seealso cref="Element.OwnText">Element.OwnText</seealso>
         public Elements GetElementsMatchingOwnText(string regex)
         {
             Regex pattern = new Regex(regex, RegexOptions.Compiled); // may throw an exception
@@ -1089,26 +1098,39 @@ namespace Supremes.Nodes
         }
 
         /// <summary>
-        /// Gets the combined text of this element and all its children.
+        /// Get or Set the combined text of this element and all its children.
         /// </summary>
         /// <remarks>
-        /// Whitespace is normalized and trimmed.
+        /// <para>
+        /// when get, whitespace is normalized and trimmed.
         /// <p/>
         /// For example, given HTML
-        /// <code>&lt;p&gt;Hello  &lt;b&gt;there&lt;/b&gt; now! &lt;/p&gt;</code>
-        /// ,
-        /// <code>p.text()</code>
-        /// returns
-        /// <code>"Hello there now!"</code>
+        /// <c>&lt;p&gt;Hello  &lt;b&gt;there&lt;/b&gt; now! &lt;/p&gt;</c>,
+        /// <c>p.Text</c> returns <c>"Hello there now!"</c>
+        /// </para>
+        /// <para>
+        /// when set, any existing contents (text or elements) will be cleared.
+        /// </para>
         /// </remarks>
+        /// <value>unencoded text</value>
         /// <returns>unencoded text, or empty string if none.</returns>
-        /// <seealso cref="OwnText()">OwnText()</seealso>
-        /// <seealso cref="TextNodes()">TextNodes()</seealso>
-        public string Text()
+        /// <seealso cref="OwnText">OwnText</seealso>
+        /// <seealso cref="TextNodes">TextNodes</seealso>
+        public virtual string Text
         {
-            StringBuilder accum = new StringBuilder();
-            new NodeTraversor(new TextVisitor(accum)).Traverse(this);
-            return accum.ToString().Trim();
+            get
+            {
+                StringBuilder accum = new StringBuilder();
+                new NodeTraversor(new TextVisitor(accum)).Traverse(this);
+                return accum.ToString().Trim();
+            }
+            set
+            {
+                Validate.NotNull(value);
+                Empty();
+                TextNode textNode = new TextNode(value, baseUri);
+                AppendChild(textNode);
+            }
         }
 
         private sealed class TextVisitor : INodeVisitor
@@ -1130,7 +1152,7 @@ namespace Supremes.Nodes
                     if (node is Element)
                     {
                         Element element = (Element)node;
-                        if (accum.Length > 0 && (element.IsBlock() || element.TagName().Equals("br")) && 
+                        if (accum.Length > 0 && (element.IsBlock || element.TagName.Equals("br")) && 
                             !TextNode.LastCharIsWhitespace(accum))
                         {
                             accum.Append(" ");
@@ -1152,34 +1174,37 @@ namespace Supremes.Nodes
         /// </summary>
         /// <remarks>
         /// For example, given HTML
-        /// <code>&lt;p&gt;Hello &lt;b&gt;there&lt;/b&gt; now!&lt;/p&gt;</code>
+        /// <c>&lt;p&gt;Hello &lt;b&gt;there&lt;/b&gt; now!&lt;/p&gt;</c>
         /// ,
-        /// <code>p.ownText()</code>
+        /// <c>p.OwnText</c>
         /// returns
-        /// <code>"Hello now!"</code>
+        /// <c>"Hello now!"</c>
         /// ,
         /// whereas
-        /// <code>p.text()</code>
+        /// <c>p.Text</c>
         /// returns
-        /// <code>"Hello there now!"</code>
+        /// <c>"Hello there now!"</c>
         /// .
         /// Note that the text within the
-        /// <code>b</code>
+        /// <c>b</c>
         /// element is not returned, as it is not a direct child of the
-        /// <code>p</code>
+        /// <c>p</c>
         /// element.
         /// </remarks>
         /// <returns>unencoded text, or empty string if none.</returns>
-        /// <seealso cref="Text()">Text()</seealso>
-        /// <seealso cref="TextNodes()">TextNodes()</seealso>
-        public string OwnText()
+        /// <seealso cref="Text">Text</seealso>
+        /// <seealso cref="TextNodes">TextNodes</seealso>
+        public string OwnText
         {
-            StringBuilder sb = new StringBuilder();
-            OwnText(sb);
-            return sb.ToString().Trim();
+            get
+            {
+                StringBuilder sb = new StringBuilder();
+                AppendOwnTextTo(sb);
+                return sb.ToString().Trim();
+            }
         }
 
-        private void OwnText(StringBuilder accum)
+        private void AppendOwnTextTo(StringBuilder accum)
         {
             foreach (Node child in childNodes)
             {
@@ -1200,8 +1225,8 @@ namespace Supremes.Nodes
 
         private static void AppendNormalisedText(StringBuilder accum, TextNode textNode)
         {
-            string text = textNode.GetWholeText();
-            if (PreserveWhitespace(textNode.ParentNode()))
+            string text = textNode.WholeText;
+            if (PreserveWhitespace(textNode.Parent))
             {
                 accum.Append(text);
             }
@@ -1213,7 +1238,7 @@ namespace Supremes.Nodes
 
         private static void AppendWhitespaceIfBr(Element element, StringBuilder accum)
         {
-            if (element.TagName().Equals("br") && !TextNode.LastCharIsWhitespace(accum))
+            if (element.TagName.Equals("br") && !TextNode.LastCharIsWhitespace(accum))
             {
                 accum.Append(" ");
             }
@@ -1225,57 +1250,43 @@ namespace Supremes.Nodes
             if (node != null && node is Element)
             {
                 Element element = (Element)node;
-                return element.Tag().PreserveWhitespace() || element.ParentElement() != null && element.ParentElement().Tag().PreserveWhitespace();
+                return element.Tag.PreservesWhitespace || element.Parent != null && element.Parent.Tag.PreservesWhitespace;
             }
             return false;
-        }
-
-        /// <summary>
-        /// Set the text of this element.
-        /// </summary>
-        /// <remarks>
-        /// Any existing contents (text or elements) will be cleared
-        /// </remarks>
-        /// <param name="text">unencoded text</param>
-        /// <returns>this element</returns>
-        public virtual Element Text(string text)
-        {
-            Validate.NotNull(text);
-            Empty();
-            TextNode textNode = new TextNode(text, baseUri);
-            AppendChild(textNode);
-            return this;
         }
 
         /// <summary>
         /// Test if this element has any text content (that is not just whitespace).
         /// </summary>
         /// <returns>true if element has non-blank text content.</returns>
-        public bool HasText()
+        public bool HasText
         {
-            foreach (Node child in childNodes)
+            get
             {
-                if (child is TextNode)
+                foreach (Node child in childNodes)
                 {
-                    TextNode textNode = (TextNode)child;
-                    if (!textNode.IsBlank())
+                    if (child is TextNode)
                     {
-                        return true;
-                    }
-                }
-                else
-                {
-                    if (child is Element)
-                    {
-                        Element el = (Element)child;
-                        if (el.HasText())
+                        TextNode textNode = (TextNode)child;
+                        if (!textNode.IsBlank)
                         {
                             return true;
                         }
                     }
+                    else
+                    {
+                        if (child is Element)
+                        {
+                            Element el = (Element)child;
+                            if (el.HasText)
+                            {
+                                return true;
+                            }
+                        }
+                    }
                 }
+                return false;
             }
-            return false;
         }
 
         /// <summary>
@@ -1283,32 +1294,35 @@ namespace Supremes.Nodes
         /// </summary>
         /// <remarks>
         /// Data is e.g. the inside of a
-        /// <code>script</code>
+        /// <c>script</c>
         /// tag.
         /// </remarks>
         /// <returns>the data, or empty string if none</returns>
-        /// <seealso cref="DataNodes()">DataNodes()</seealso>
-        public string Data()
+        /// <seealso cref="DataNodes">DataNodes</seealso>
+        public string Data
         {
-            StringBuilder sb = new StringBuilder();
-            foreach (Node childNode in childNodes)
+            get
             {
-                if (childNode is DataNode)
+                StringBuilder sb = new StringBuilder();
+                foreach (Node childNode in childNodes)
                 {
-                    DataNode data = (DataNode)childNode;
-                    sb.Append(data.GetWholeData());
-                }
-                else
-                {
-                    if (childNode is Element)
+                    if (childNode is DataNode)
                     {
-                        Element element = (Element)childNode;
-                        string elementData = element.Data();
-                        sb.Append(elementData);
+                        DataNode data = (DataNode)childNode;
+                        sb.Append(data.WholeData);
+                    }
+                    else
+                    {
+                        if (childNode is Element)
+                        {
+                            Element element = (Element)childNode;
+                            string elementData = element.Data;
+                            sb.Append(elementData);
+                        }
                     }
                 }
+                return sb.ToString();
             }
-            return sb.ToString();
         }
 
         /// <summary>
@@ -1316,58 +1330,56 @@ namespace Supremes.Nodes
         /// which may include multiple class names, space separated.
         /// </summary>
         /// <remarks>
-        /// (E.g. on <code>&lt;div class="header gray"&gt;</code> returns,
-        /// "<code>header gray</code>")
+        /// (E.g. on <c>&lt;div class="header gray"&gt;</c> returns,
+        /// "<c>header gray</c>")
         /// </remarks>
         /// <returns>
         /// The literal class attribute, or <b>empty string</b>
         /// if no class attribute set.
         /// </returns>
-        public string ClassName()
+        public string ClassName
         {
-            return Attr("class");
+            get { return Attr("class"); }
         }
 
         /// <summary>
-        /// Get all of the element's class names.
+        /// Get or Set all of the element's class names.
         /// </summary>
         /// <remarks>
+        /// <para>
         /// E.g. on element
-        /// <code>&lt;div class="header gray"</code>
-        /// &gt;},
-        /// returns a set of two elements
-        /// <code>"header", "gray"</code>
-        /// . Note that modifications to this set are not pushed to
-        /// the backing
-        /// <code>class</code>
-        /// attribute; use the
-        /// <see cref="ClassNames(System.Collections.Generic.ICollection{string})">ClassNames(System.Collections.Generic.ICollection&lt;string&gt;)
-        /// </see>
+        /// <c>&lt;div class="header gray"&gt;</c>, 
+        /// this property returns a set of two elements
+        /// <c>"header", "gray"</c>.
+        /// Note that modifications to this set are not pushed to
+        /// the backing <c>class</c> attribute;
+        /// use the
+        /// <see cref="ClassNames">ClassNames</see>
         /// method to persist them.
+        /// </para>
+        /// <para>
+        /// if you want to use fluent API, write <c>using Supremes.Fluent;</c>.
+        /// </para>
         /// </remarks>
+        /// <value>the new set of classes</value>
         /// <returns>set of classnames, empty if no class attribute</returns>
-        public ICollection<string> ClassNames()
+        /// <seealso cref="Supremes.Fluent.FluentUtility">Supremes.Fluent.FluentUtility</seealso>
+        public ICollection<string> ClassNames
         {
-            if (classNames == null)
+            get
             {
-                string[] names = Regex.Split(ClassName(), "\\s+");
-                classNames = new LinkedHashSet<string>(names);
+                if (classNames == null)
+                {
+                    string[] names = Regex.Split(ClassName, "\\s+");
+                    classNames = new LinkedHashSet<string>(names);
+                }
+                return classNames;
             }
-            return classNames;
-        }
-
-        /// <summary>
-        /// Set the element's
-        /// <code>class</code>
-        /// attribute to the supplied class names.
-        /// </summary>
-        /// <param name="classNames">set of classes</param>
-        /// <returns>this element, for chaining</returns>
-        public Element ClassNames(ICollection<string> classNames)
-        {
-            Validate.NotNull(classNames);
-            attributes["class"] = string.Join(" ", classNames);
-            return this;
+            set
+            {
+                Validate.NotNull(value);
+                attributes["class"] = string.Join(" ", value);
+            }
         }
 
         /// <summary>
@@ -1380,7 +1392,7 @@ namespace Supremes.Nodes
         /// <returns>true if it does, false if not</returns>
         public bool HasClass(string className)
         {
-            ICollection<string> classNames = ClassNames();
+            ICollection<string> classNames = ClassNames;
             foreach (string name in classNames)
             {
                 if (string.Equals(className, name, StringComparison.OrdinalIgnoreCase))
@@ -1393,7 +1405,7 @@ namespace Supremes.Nodes
 
         /// <summary>
         /// Add a class name to this element's
-        /// <code>class</code>
+        /// <c>class</c>
         /// attribute.
         /// </summary>
         /// <param name="className">class name to add</param>
@@ -1401,15 +1413,15 @@ namespace Supremes.Nodes
         public Element AddClass(string className)
         {
             Validate.NotNull(className);
-            ICollection<string> classes = ClassNames();
+            ICollection<string> classes = ClassNames;
             classes.Add(className);
-            ClassNames(classes);
+            ClassNames = classes;
             return this;
         }
 
         /// <summary>
         /// Remove a class name from this element's
-        /// <code>class</code>
+        /// <c>class</c>
         /// attribute.
         /// </summary>
         /// <param name="className">class name to remove</param>
@@ -1417,15 +1429,15 @@ namespace Supremes.Nodes
         public Element RemoveClass(string className)
         {
             Validate.NotNull(className);
-            ICollection<string> classes = ClassNames();
+            ICollection<string> classes = ClassNames;
             classes.Remove(className);
-            ClassNames(classes);
+            ClassNames = classes;
             return this;
         }
 
         /// <summary>
         /// Toggle a class name on this element's
-        /// <code>class</code>
+        /// <c>class</c>
         /// attribute: if present, remove it; otherwise add it.
         /// </summary>
         /// <param name="className">class name to toggle</param>
@@ -1433,7 +1445,7 @@ namespace Supremes.Nodes
         public Element ToggleClass(string className)
         {
             Validate.NotNull(className);
-            ICollection<string> classes = ClassNames();
+            ICollection<string> classes = ClassNames;
             if (classes.Contains(className))
             {
                 classes.Remove(className);
@@ -1442,60 +1454,63 @@ namespace Supremes.Nodes
             {
                 classes.Add(className);
             }
-            ClassNames(classes);
+            ClassNames = classes;
             return this;
         }
 
         /// <summary>
-        /// Get the value of a form element (input, textarea, etc).
+        /// Get or Set the value of a form element (input, textarea, etc).
         /// </summary>
+        /// <remarks>
+        /// <para>
+        /// if you want to use fluent API, write <c>using Supremes.Fluent;</c>.
+        /// </para>
+        /// </remarks>
+        /// <value>value to set</value>
         /// <returns>the value of the form element, or empty string if not set.</returns>
-        public string Val()
+        /// <seealso cref="Supremes.Fluent.FluentUtility">Supremes.Fluent.FluentUtility</seealso>
+        public string Val
         {
-            if (TagName().Equals("textarea"))
+            get
             {
-                return Text();
+                if (TagName.Equals("textarea"))
+                {
+                    return Text;
+                }
+                else
+                {
+                    return Attr("value");
+                }
             }
-            else
+            set
             {
-                return Attr("value");
+                if (TagName.Equals("textarea"))
+                {
+                    Text = value;
+                }
+                else
+                {
+                    Attr("value", value);
+                }
             }
         }
 
-        /// <summary>
-        /// Set the value of a form element (input, textarea, etc).
-        /// </summary>
-        /// <param name="value">value to set</param>
-        /// <returns>this element (for chaining)</returns>
-        public Element Val(string value)
-        {
-            if (TagName().Equals("textarea"))
-            {
-                Text(value);
-            }
-            else
-            {
-                Attr("value", value);
-            }
-            return this;
-        }
-
-        internal override void OuterHtmlHead(StringBuilder accum, int depth, DocumentOutputSettings @out)
+        internal override void AppendOuterHtmlHeadTo(StringBuilder accum, int depth, DocumentOutputSettings @out)
         {
             if (accum.Length > 0
-                && @out.PrettyPrint()
-                && (tag.FormatAsBlock()
-                    || (ParentElement() != null && ParentElement().Tag().FormatAsBlock())
-                    || @out.Outline()))
+                && @out.PrettyPrint
+                && (tag.IsFormattedAsBlock
+                    || (Parent != null && Parent.Tag.IsFormattedAsBlock)
+                    || @out.Outline))
             {
                 Indent(accum, depth, @out);
             }
-            accum.Append("<").Append(TagName());
-            attributes.Html(accum, @out);
+            accum.Append("<").Append(TagName);
+            attributes.AppendHtmlTo(accum, @out);
             // selfclosing includes unknown tags, isEmpty defines tags that are always empty
-            if (childNodes.Count == 0 && tag.IsSelfClosing())
+            if (childNodes.Count == 0 && tag.IsSelfClosing)
             {
-                if (@out.Syntax() == DocumentSyntax.Html && tag.IsEmpty())
+                if (@out.Syntax == DocumentSyntax.Html && tag.IsEmpty)
                 {
                     accum.Append('>');
                 }
@@ -1511,72 +1526,71 @@ namespace Supremes.Nodes
             }
         }
 
-        internal override void OuterHtmlTail(StringBuilder accum, int depth, DocumentOutputSettings @out)
+        internal override void AppendOuterHtmlTailTo(StringBuilder accum, int depth, DocumentOutputSettings @out)
         {
-            if (!(childNodes.Count == 0 && tag.IsSelfClosing()))
+            if (!(childNodes.Count == 0 && tag.IsSelfClosing))
             {
-                if (@out.PrettyPrint()
+                if (@out.PrettyPrint
                     && (childNodes.Count > 0
-                        && (tag.FormatAsBlock()
-                            || (@out.Outline()
+                        && (tag.IsFormattedAsBlock
+                            || (@out.Outline
                                 && (childNodes.Count > 1
                                     || (childNodes.Count == 1
                                         && !(childNodes[0] is TextNode)))))))
                 {
                     Indent(accum, depth, @out);
                 }
-                accum.Append("</").Append(TagName()).Append(">");
+                accum.Append("</").Append(TagName).Append(">");
             }
         }
 
         /// <summary>
-        /// Retrieves the element's inner HTML.
+        /// Get Or Set the element's inner HTML.
         /// </summary>
         /// <remarks>
-        /// E.g. on a
-        /// <code>&lt;div&gt;</code>
-        /// with one empty
-        /// <code>&lt;p&gt;</code>
-        /// , would return
-        /// <code>&lt;p&gt;&lt;/p&gt;</code>
-        /// . (Whereas
-        /// <see cref="Node.OuterHtml()">Node.OuterHtml()</see>
+        /// <para>
+        /// when get on a <c>&lt;div&gt;</c> with one empty <c>&lt;p&gt;</c>,
+        /// would return <c>&lt;p&gt;&lt;/p&gt;</c>.
+        /// (Whereas
+        /// <see cref="Node.OuterHtml">Node.OuterHtml</see>
         /// would return
-        /// <code>&lt;div&gt;&lt;p&gt;&lt;/p&gt;&lt;/div&gt;</code>
-        /// .)
+        /// <c>&lt;div&gt;&lt;p&gt;&lt;/p&gt;&lt;/div&gt;</c>.)
+        /// </para>
+        /// <para>
+        /// when set, clears the existing HTML first.
+        /// </para>
+        /// <para>
+        /// if you want to use fluent API, write <c>using Supremes.Fluent;</c>.
+        /// </para>
         /// </remarks>
+        /// <value>HTML to parse and set into this element</value>
         /// <returns>String of HTML.</returns>
-        /// <seealso cref="Node.OuterHtml()">Node.OuterHtml()</seealso>
-        public string Html()
+        /// <seealso cref="Node.OuterHtml">Node.OuterHtml</seealso>
+        /// <seealso cref="Append(string)">Append(string)</seealso>
+        /// <seealso cref="Supremes.Fluent.FluentUtility">Supremes.Fluent.FluentUtility</seealso>
+        public string Html
         {
-            StringBuilder accum = new StringBuilder();
-            Html(accum);
-            return GetOutputSettings().PrettyPrint()
-                ? accum.ToString().Trim()
-                : accum.ToString();
+            get
+            {
+                StringBuilder accum = new StringBuilder();
+                AppendHtmlTo(accum);
+                return GetOutputSettings().PrettyPrint
+                    ? accum.ToString().Trim()
+                    : accum.ToString();
+            }
+            set
+            {
+                Empty();
+                Append(value);
+            }
         }
 
-        private void Html(StringBuilder accum)
+        private void AppendHtmlTo(StringBuilder accum)
         {
             foreach (Node node in childNodes)
             {
-                ((Node)node).OuterHtml(accum);
+                ((Node)node).AppendOuterHtmlTo(accum);
             }
-        }
-
-        /// <summary>
-        /// Set this element's inner HTML.
-        /// </summary>
-        /// <remarks>
-        /// Clears the existing HTML first.</remarks>
-        /// <param name="html">HTML to parse and set into this element</param>
-        /// <returns>this element</returns>
-        /// <seealso cref="Append(string)">Append(string)</seealso>
-        public Element Html(string html)
-        {
-            Empty();
-            Append(html);
-            return this;
         }
 
         /// <summary>
@@ -1585,7 +1599,7 @@ namespace Supremes.Nodes
         /// <returns></returns>
         public override string ToString()
         {
-            return OuterHtml();
+            return OuterHtml;
         }
 
         /// <summary>

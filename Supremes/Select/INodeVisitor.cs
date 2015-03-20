@@ -11,9 +11,9 @@ namespace Supremes.Select
     /// to iterate through nodes.
     /// <p/>
     /// This interface provides two methods,
-    /// <code>head</code>
+    /// <c>head</c>
     /// and
-    /// <code>tail</code>
+    /// <c>tail</c>
     /// . The head method is called when the node is first
     /// seen, and the tail method when all of the node's children have been visited. As an example, head can be used to
     /// create a start tag for a node, and tail to create the end tag.

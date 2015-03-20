@@ -36,7 +36,7 @@ namespace Supremes.Select
 
             public override bool Matches(Element root, Element element)
             {
-                return (element.TagName().Equals(tagName));
+                return (element.TagName.Equals(tagName));
             }
 
             public override string ToString()
@@ -59,7 +59,7 @@ namespace Supremes.Select
 
             public override bool Matches(Element root, Element element)
             {
-                return (id.Equals(element.Id()));
+                return (id.Equals(element.Id));
             }
 
             public override string ToString()
@@ -128,7 +128,7 @@ namespace Supremes.Select
 
             public override bool Matches(Element root, Element element)
             {
-                IReadOnlyList<Nodes.Attribute> values = element.Attributes().AsList();
+                IReadOnlyList<Nodes.Attribute> values = element.Attributes.AsList();
                 foreach (Nodes.Attribute attribute in values)
                 {
                     if (attribute.Key.StartsWith(keyPrefix, StringComparison.Ordinal))
@@ -326,7 +326,7 @@ namespace Supremes.Select
 
             public override bool Matches(Element root, Element element)
             {
-                return element.ElementSiblingIndex() < index;
+                return element.ElementSiblingIndex < index;
             }
 
             public override string ToString()
@@ -347,7 +347,7 @@ namespace Supremes.Select
 
             public override bool Matches(Element root, Element element)
             {
-                return element.ElementSiblingIndex() > index;
+                return element.ElementSiblingIndex > index;
             }
 
             public override string ToString()
@@ -368,7 +368,7 @@ namespace Supremes.Select
 
             public override bool Matches(Element root, Element element)
             {
-                return element.ElementSiblingIndex() == index;
+                return element.ElementSiblingIndex == index;
             }
 
             public override string ToString()
@@ -384,8 +384,8 @@ namespace Supremes.Select
         {
             public override bool Matches(Element root, Element element)
             {
-                Element p = element.ParentElement();
-                return p != null && !(p is Document) && element.ElementSiblingIndex() == p.Children().Count - 1;
+                Element p = element.Parent;
+                return p != null && !(p is Document) && element.ElementSiblingIndex == p.Children.Count - 1;
             }
 
             public override string ToString()
@@ -439,7 +439,7 @@ namespace Supremes.Select
 
             public override bool Matches(Element root, Element element)
             {
-                Element p = element.ParentElement();
+                Element p = element.Parent;
                 if (p == null || (p is Document))
                 {
                     return false;
@@ -483,7 +483,7 @@ namespace Supremes.Select
 
             internal override int CalculatePosition(Element root, Element element)
             {
-                return element.ElementSiblingIndex() + 1;
+                return element.ElementSiblingIndex + 1;
             }
 
             internal override string GetPseudoClass()
@@ -505,7 +505,7 @@ namespace Supremes.Select
 
             internal override int CalculatePosition(Element root, Element element)
             {
-                return element.ParentElement().Children().Count - element.ElementSiblingIndex();
+                return element.Parent.Children.Count - element.ElementSiblingIndex;
             }
 
             internal override string GetPseudoClass()
@@ -527,10 +527,10 @@ namespace Supremes.Select
             internal override int CalculatePosition(Element root, Element element)
             {
                 int pos = 0;
-                Elements family = element.ParentElement().Children();
+                Elements family = element.Parent.Children;
                 for (int i = 0; i < family.Count; i++)
                 {
-                    if (family[i].Tag().Equals(element.Tag()))
+                    if (family[i].Tag.Equals(element.Tag))
                     {
                         pos++;
                     }
@@ -558,10 +558,10 @@ namespace Supremes.Select
             internal override int CalculatePosition(Element root, Element element)
             {
                 int pos = 0;
-                Elements family = element.ParentElement().Children();
-                for (int i = element.ElementSiblingIndex(); i < family.Count; i++)
+                Elements family = element.Parent.Children;
+                for (int i = element.ElementSiblingIndex; i < family.Count; i++)
                 {
-                    if (family[i].Tag().Equals(element.Tag()))
+                    if (family[i].Tag.Equals(element.Tag))
                     {
                         pos++;
                     }
@@ -582,8 +582,8 @@ namespace Supremes.Select
         {
             public override bool Matches(Element root, Element element)
             {
-                Element p = element.ParentElement();
-                return p != null && !(p is Document) && element.ElementSiblingIndex() == 0;
+                Element p = element.Parent;
+                return p != null && !(p is Document) && element.ElementSiblingIndex == 0;
             }
 
             public override string ToString()
@@ -614,8 +614,8 @@ namespace Supremes.Select
         {
             public override bool Matches(Element root, Element element)
             {
-                Element p = element.ParentElement();
-                return p != null && !(p is Document) && element.SiblingElements().Count == 0;
+                Element p = element.Parent;
+                return p != null && !(p is Document) && element.SiblingElements.Count == 0;
             }
 
             public override string ToString()
@@ -628,16 +628,16 @@ namespace Supremes.Select
         {
             public override bool Matches(Element root, Element element)
             {
-                Element p = element.ParentElement();
+                Element p = element.Parent;
                 if (p == null || p is Document)
                 {
                     return false;
                 }
                 int pos = 0;
-                Elements family = p.Children();
+                Elements family = p.Children;
                 for (int i = 0; i < family.Count; i++)
                 {
-                    if (family[i].Tag().Equals(element.Tag()))
+                    if (family[i].Tag.Equals(element.Tag))
                     {
                         pos++;
                     }
@@ -655,7 +655,7 @@ namespace Supremes.Select
         {
             public override bool Matches(Element root, Element element)
             {
-                IReadOnlyList<Node> family = element.ChildNodes();
+                IReadOnlyList<Node> family = element.ChildNodes;
                 for (int i = 0; i < family.Count; i++)
                 {
                     Node n = family[i];
@@ -701,7 +701,7 @@ namespace Supremes.Select
 
             public override bool Matches(Element root, Element element)
             {
-                return (element.Text().ToLower().Contains(searchText));
+                return (element.Text.ToLower().Contains(searchText));
             }
 
             public override string ToString()
@@ -724,7 +724,7 @@ namespace Supremes.Select
 
             public override bool Matches(Element root, Element element)
             {
-                return (element.OwnText().ToLower().Contains(searchText));
+                return (element.OwnText.ToLower().Contains(searchText));
             }
 
             public override string ToString()
@@ -747,7 +747,7 @@ namespace Supremes.Select
 
             public override bool Matches(Element root, Element element)
             {
-                Match m = pattern.Match(element.Text());
+                Match m = pattern.Match(element.Text);
                 return m.Success; /*find*/
             }
 
@@ -771,7 +771,7 @@ namespace Supremes.Select
 
             public override bool Matches(Element root, Element element)
             {
-                Match m = pattern.Match(element.OwnText());
+                Match m = pattern.Match(element.OwnText);
                 return m.Success; /*find*/
             }
 

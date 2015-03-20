@@ -35,8 +35,8 @@ namespace Supremes.Test.Nodes
         {
             String html = "\uFEFF<html><head><title>One</title></head><body>Two</body></html>";
             byte[] buffer = Encoding.UTF8.GetBytes(html);
-            Document doc = DataUtil.ParseByteData(buffer, "UTF-8", "http://foo.com/", Parser.HtmlParser());
-            Assert.AreEqual("One", doc.Head().Text());
+            Document doc = DataUtil.ParseByteData(buffer, "UTF-8", "http://foo.com/", Parser.HtmlParser);
+            Assert.AreEqual("One", doc.Head.Text);
         }
 
         [Test]
@@ -44,9 +44,9 @@ namespace Supremes.Test.Nodes
         {
             String html = "\uFEFF<html><head><title>One</title></head><body>Two</body></html>";
             byte[] buffer = Encoding.UTF8.GetBytes(html);
-            Document doc = DataUtil.ParseByteData(buffer, null, "http://foo.com/", Parser.HtmlParser());
-            Assert.AreEqual("One", doc.Head().Text());
-            Assert.AreEqual("utf-8", doc.OutputSettings().Charset().WebName);
+            Document doc = DataUtil.ParseByteData(buffer, null, "http://foo.com/", Parser.HtmlParser);
+            Assert.AreEqual("One", doc.Head.Text);
+            Assert.AreEqual("utf-8", doc.OutputSettings.Charset.WebName);
         }
 
         [Test]

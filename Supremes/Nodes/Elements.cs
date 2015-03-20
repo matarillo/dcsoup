@@ -12,7 +12,7 @@ namespace Supremes.Nodes
     /// s, with methods that act on every element in the list.
     /// <p/>
     /// To get an
-    /// <code>Elements</code>
+    /// <c>Elements</c>
     /// object, use the
     /// <see cref="Element.Select(string)">Element.Select(string)</see>
     /// method.
@@ -134,7 +134,7 @@ namespace Supremes.Nodes
 
         /// <summary>
         /// Add the class name to every matched element's
-        /// <code>class</code>
+        /// <c>class</c>
         /// attribute.
         /// </summary>
         /// <param name="className">class name to add</param>
@@ -150,7 +150,7 @@ namespace Supremes.Nodes
 
         /// <summary>
         /// Remove the class name from every matched element's
-        /// <code>class</code>
+        /// <c>class</c>
         /// attribute, if present.
         /// </summary>
         /// <param name="className">class name to remove</param>
@@ -166,7 +166,7 @@ namespace Supremes.Nodes
 
         /// <summary>
         /// Toggle the class name on every matched element's
-        /// <code>class</code>
+        /// <c>class</c>
         /// attribute.
         /// </summary>
         /// <param name="className">class name to add if missing, or remove if present, from every element.
@@ -183,7 +183,7 @@ namespace Supremes.Nodes
 
         /// <summary>
         /// Determine if any of the matched elements have this class name set in their
-        /// <code>class</code>
+        /// <c>class</c>
         /// attribute.
         /// </summary>
         /// <param name="className">class name to check for</param>
@@ -202,33 +202,37 @@ namespace Supremes.Nodes
 
         /// <summary>
         /// Get the form element's value of the first matched element.
-        /// </summary>
-        /// <returns>The form element's value, or empty if not set.</returns>
-        /// <seealso cref="Element.Val()">Element.Val()</seealso>
-        public string Val()
-        {
-            if (Count > 0)
-            {
-                return First().Val();
-            }
-            else
-            {
-                return string.Empty;
-            }
-        }
-
-        /// <summary>
         /// Set the form element's value in each of the matched elements.
         /// </summary>
-        /// <param name="value">The value to set into each matched element</param>
-        /// <returns>this (for chaining)</returns>
-        public Elements Val(string value)
+        /// <remarks>
+        /// <para>
+        /// if you want to use fluent API, write <c>using Supremes.Fluent;</c>.
+        /// </para>
+        /// </remarks>
+        /// <value>The value to set into each matched element</value>
+        /// <returns>The form element's value, or empty if not set.</returns>
+        /// <seealso cref="Element.Val">Element.Val</seealso>
+        /// <seealso cref="Supremes.Fluent.FluentUtility">Supremes.Fluent.FluentUtility</seealso>
+        public string Val
         {
-            foreach (Element element in contents)
+            get
             {
-                element.Val(value);
+                if (Count > 0)
+                {
+                    return First.Val;
+                }
+                else
+                {
+                    return string.Empty;
+                }
             }
-            return this;
+            set
+            {
+                foreach (Element element in contents)
+                {
+                    element.Val = value;
+                }
+            }
         }
 
         /// <summary>
@@ -239,75 +243,103 @@ namespace Supremes.Nodes
         /// children, as the Element.text() method returns the combined text of a parent and all its children.
         /// </remarks>
         /// <returns>string of all text: unescaped and no HTML.</returns>
-        /// <seealso cref="Element.Text()">Element.Text()</seealso>
-        public string Text()
+        /// <seealso cref="Element.Text">Element.Text</seealso>
+        public string Text
         {
-            StringBuilder sb = new StringBuilder();
-            foreach (Element element in contents)
+            get
             {
-                if (sb.Length != 0)
+                StringBuilder sb = new StringBuilder();
+                foreach (Element element in contents)
                 {
-                    sb.Append(" ");
+                    if (sb.Length != 0)
+                    {
+                        sb.Append(" ");
+                    }
+                    sb.Append(element.Text);
                 }
-                sb.Append(element.Text());
+                return sb.ToString();
             }
-            return sb.ToString();
         }
 
         /// <summary>
         /// Determine if any of the matched elements have a text content (that is not just whitespace).
         /// </summary>
         /// <returns></returns>
-        public bool HasText()
+        public bool HasText
         {
-            foreach (Element element in contents)
+            get
             {
-                if (element.HasText())
+                foreach (Element element in contents)
                 {
-                    return true;
+                    if (element.HasText)
+                    {
+                        return true;
+                    }
                 }
+                return false;
             }
-            return false;
         }
 
         /// <summary>
         /// Get the combined inner HTML of all matched elements.
+        /// Set the inner HTML of each matched element.
         /// </summary>
+        /// <remarks>
+        /// <para>
+        /// if you want to use fluent API, write <c>using Supremes.Fluent;</c>.
+        /// </para>
+        /// </remarks>
+        /// <value>HTML to parse and set into each matched element.</value>
         /// <returns>string of all element's inner HTML.</returns>
-        /// <seealso cref="Text()">Text()</seealso>
-        /// <seealso cref="OuterHtml()">OuterHtml()</seealso>
-        public string Html()
+        /// <seealso cref="Text">Text</seealso>
+        /// <seealso cref="OuterHtml">OuterHtml</seealso>
+        /// <seealso cref="Element.Html">Element.Html</seealso>
+        /// <seealso cref="Supremes.Fluent.FluentUtility">Supremes.Fluent.FluentUtility</seealso>
+        public string Html
         {
-            StringBuilder sb = new StringBuilder();
-            foreach (Element element in contents)
+            get
             {
-                if (sb.Length != 0)
+                StringBuilder sb = new StringBuilder();
+                foreach (Element element in contents)
                 {
-                    sb.Append("\n");
+                    if (sb.Length != 0)
+                    {
+                        sb.Append("\n");
+                    }
+                    sb.Append(element.Html);
                 }
-                sb.Append(element.Html());
+                return sb.ToString();
             }
-            return sb.ToString();
+            set
+            {
+                foreach (Element element in contents)
+                {
+                    element.Html = value;
+                }
+            }
         }
 
         /// <summary>
         /// Get the combined outer HTML of all matched elements.
         /// </summary>
         /// <returns>string of all element's outer HTML.</returns>
-        /// <seealso cref="Text()">Text()</seealso>
-        /// <seealso cref="Html()">Html()</seealso>
-        public string OuterHtml()
+        /// <seealso cref="Text">Text</seealso>
+        /// <seealso cref="Html">Html</seealso>
+        public string OuterHtml
         {
-            StringBuilder sb = new StringBuilder();
-            foreach (Element element in contents)
+            get
             {
-                if (sb.Length != 0)
+                StringBuilder sb = new StringBuilder();
+                foreach (Element element in contents)
                 {
-                    sb.Append("\n");
+                    if (sb.Length != 0)
+                    {
+                        sb.Append("\n");
+                    }
+                    sb.Append(element.OuterHtml);
                 }
-                sb.Append(element.OuterHtml());
+                return sb.ToString();
             }
-            return sb.ToString();
         }
 
         /// <summary>
@@ -315,53 +347,58 @@ namespace Supremes.Nodes
         /// </summary>
         /// <remarks>
         /// Alias of
-        /// <see cref="OuterHtml()">OuterHtml()</see>
+        /// <see cref="OuterHtml">OuterHtml</see>
         /// .
         /// </remarks>
         /// <returns>string of all element's outer HTML.</returns>
-        /// <seealso cref="Text()">Text()</seealso>
-        /// <seealso cref="Html()">Html()</seealso>
+        /// <seealso cref="Text">Text</seealso>
+        /// <seealso cref="Html">Html</seealso>
         public override string ToString()
         {
-            return OuterHtml();
+            return OuterHtml;
         }
 
         /// <summary>
-        /// Update the tag name of each matched element.
+        /// Get the tag name of the first matched element.
+        /// Set the tag name of each matched element.
         /// </summary>
         /// <remarks>
+        /// <para>
         /// For example, to change each
-        /// <code>&lt;i&gt;</code>
+        /// <c>&lt;i&gt;</c>
         /// to a
-        /// <code>&lt;em&gt;</code>
+        /// <c>&lt;em&gt;</c>
         /// , do
-        /// <code>doc.select("i").tagName("em");</code>
+        /// <c>doc.Select("i").TagName = "em";</c>
+        /// </para>
+        /// <para>
+        /// if you want to use fluent API, write <c>using Supremes.Fluent;</c>.
+        /// </para>
         /// </remarks>
-        /// <param name="tagName">the new tag name</param>
-        /// <returns>this, for chaining</returns>
-        /// <seealso cref="Element.TagName(string)">Element.TagName(string)</seealso>
-        public Elements TagName(string tagName)
+        /// <value>the new tag name</value>
+        /// <returns>The tag name of the first matched element, or empty if not matched.</returns>
+        /// <seealso cref="Element.TagName">Element.TagName</seealso>
+        /// <seealso cref="Supremes.Fluent.FluentUtility">Supremes.Fluent.FluentUtility</seealso>
+        public string TagName
         {
-            foreach (Element element in contents)
+            get
             {
-                element.TagName(tagName);
+                if (Count > 0)
+                {
+                    return First.TagName;
+                }
+                else
+                {
+                    return string.Empty;
+                }
             }
-            return this;
-        }
-
-        /// <summary>
-        /// Set the inner HTML of each matched element.
-        /// </summary>
-        /// <param name="html">HTML to parse and set into each matched element.</param>
-        /// <returns>this, for chaining</returns>
-        /// <seealso cref="Element.Html(string)">Element.Html(string)</seealso>
-        public Elements Html(string html)
-        {
-            foreach (Element element in contents)
+            set
             {
-                element.Html(html);
+                foreach (Element element in contents)
+                {
+                    element.TagName = value;
+                }
             }
-            return this;
         }
 
         /// <summary>
@@ -429,15 +466,15 @@ namespace Supremes.Nodes
         /// </summary>
         /// <remarks>
         /// For example, with HTML
-        /// <code><p><b>This</b> is <b>Nsoup</b></p></code>
+        /// <c><p><b>This</b> is <b>Nsoup</b></p></c>
         /// ,
-        /// <code>doc.select("b").wrap("&lt;i&gt;&lt;/i&gt;");</code>
+        /// <c>doc.select("b").wrap("&lt;i&gt;&lt;/i&gt;");</c>
         /// becomes
-        /// <code><p><i><b>This</b></i> is <i><b>jsoup</b></i></p></code>
+        /// <c><p><i><b>This</b></i> is <i><b>jsoup</b></i></p></c>
         /// </remarks>
         /// <param name="html">
         /// HTML to wrap around each element, e.g.
-        /// <code><div class="head"></div></code>
+        /// <c><div class="head"></div></c>
         /// . Can be arbitrarily deep.
         /// </param>
         /// <returns>this (for chaining)</returns>
@@ -464,12 +501,12 @@ namespace Supremes.Nodes
         /// </para>
         /// <para>
         /// E.g. with HTML:
-        /// <code><div><font>One</font> <font><a href="/">Two</a></font></div></code>
+        /// <c><div><font>One</font> <font><a href="/">Two</a></font></div></c>
         /// <br/>
-        /// <code>doc.select("font").unwrap();</code>
+        /// <c>doc.select("font").unwrap();</c>
         /// <br/>
         /// HTML =
-        /// <code><div>One <a href="/">Two</a></div></code>
+        /// <c><div>One <a href="/">Two</a></div></c>
         /// </para>
         /// </remarks>
         /// <returns>this (for chaining)</returns>
@@ -492,11 +529,11 @@ namespace Supremes.Nodes
         /// </para>
         /// <para>
         /// E.g. HTML:
-        /// <code><div><p>Hello <b>there</b></p> <p>now</p></div></code>
+        /// <c><div><p>Hello <b>there</b></p> <p>now</p></div></c>
         /// <br />
-        /// <code>doc.select("p").empty();</code><br />
+        /// <c>doc.select("p").empty();</c><br />
         /// HTML =
-        /// <code><div><p></p> <p></p></div></code>
+        /// <c><div><p></p> <p></p></div></c>
         /// </para>
         /// </remarks>
         /// <returns>this, for chaining</returns>
@@ -520,11 +557,11 @@ namespace Supremes.Nodes
         /// </para>
         /// <para>
         /// E.g. HTML:
-        /// <code><div><p>Hello</p> <p>there</p> <img /></div></code>
+        /// <c><div><p>Hello</p> <p>there</p> <img /></div></c>
         /// <br />
-        /// <code>doc.select("p").remove();</code><br />
+        /// <c>doc.select("p").remove();</c><br />
         /// HTML =
-        /// <code><div> <img /></div></code>
+        /// <c><div> <img /></div></c>
         /// </para>
         /// <para>
         /// Note that this method should not be used to clean user-submitted HTML; rather, use
@@ -568,11 +605,11 @@ namespace Supremes.Nodes
         /// <remarks>
         /// <para>
         /// E.g. HTML:
-        /// <code>&lt;div class=logo&gt;One&lt;/div&gt; &lt;div&gt;Two&lt;/div&gt;</code>
+        /// <c>&lt;div class=logo&gt;One&lt;/div&gt; &lt;div&gt;Two&lt;/div&gt;</c>
         /// <br />
-        /// <code>Elements divs = doc.select("div").not("#logo");</code><br />
+        /// <c>Elements divs = doc.select("div").not("#logo");</c><br />
         /// Result:
-        /// <code>divs: [<div>Two</div>]</code>
+        /// <c>divs: [<div>Two</div>]</c>
         /// </para>
         /// </remarks>
         /// <param name="query">the selector query whose results should be removed from these elements
@@ -641,14 +678,17 @@ namespace Supremes.Nodes
         /// Get all of the parents and ancestor elements of the matched elements.
         /// </summary>
         /// <returns>all of the parents and ancestor elements of the matched elements</returns>
-        public Elements Parents()
+        public Elements Parents
         {
-            LinkedHashSet<Element> combo = new LinkedHashSet<Element>();
-            foreach (Element e in contents)
+            get
             {
-                combo.AddRange(e.Parents());
+                LinkedHashSet<Element> combo = new LinkedHashSet<Element>();
+                foreach (Element e in contents)
+                {
+                    combo.AddRange(e.Parents);
+                }
+                return new Supremes.Nodes.Elements(combo);
             }
-            return new Supremes.Nodes.Elements(combo);
         }
 
         // list-like methods
@@ -656,19 +696,19 @@ namespace Supremes.Nodes
         /// <summary>
         /// Get the first matched element.
         /// </summary>
-        /// <returns>The first matched element, or <code>null</code> if contents is empty.</returns>
-        public Element First()
+        /// <returns>The first matched element, or <c>null</c> if contents is empty.</returns>
+        public Element First
         {
-            return contents.Count == 0 ? null : contents[0];
+            get { return contents.Count == 0 ? null : contents[0]; }
         }
 
         /// <summary>
         /// Get the last matched element.
         /// </summary>
-        /// <returns>The last matched element, or <code>null</code> if contents is empty.</returns>
-        public Element Last()
+        /// <returns>The last matched element, or <c>null</c> if contents is empty.</returns>
+        public Element Last
         {
-            return contents.Count == 0 ? null : contents[contents.Count - 1];
+            get { return contents.Count == 0 ? null : contents[contents.Count - 1]; }
         }
 
         /// <summary>
@@ -698,10 +738,13 @@ namespace Supremes.Nodes
         /// s pulled from the matched elements. The list will be empty if the elements contain
         /// no forms.
         /// </returns>
-        public IReadOnlyList<FormElement> Forms()
+        public IReadOnlyList<FormElement> Forms
         {
-            List<FormElement> forms = contents.OfType<FormElement>().ToList();
-            return forms.AsReadOnly();
+            get
+            {
+                List<FormElement> forms = contents.OfType<FormElement>().ToList();
+                return forms.AsReadOnly();
+            }
         }
 
         // implements List<Element> delegates:

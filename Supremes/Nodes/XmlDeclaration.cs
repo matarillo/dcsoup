@@ -35,17 +35,17 @@ namespace Supremes.Nodes
         /// Get the unencoded XML declaration.
         /// </summary>
         /// <returns>XML declaration</returns>
-        public string GetWholeDeclaration()
+        public string WholeDeclaration
         {
-            return attributes[DECL_KEY];
+            get { return attributes[DECL_KEY]; }
         }
 
-        internal override void OuterHtmlHead(StringBuilder accum, int depth, DocumentOutputSettings @out)
+        internal override void AppendOuterHtmlHeadTo(StringBuilder accum, int depth, DocumentOutputSettings @out)
         {
-            accum.Append("<").Append(isProcessingInstruction ? "!" : "?").Append(GetWholeDeclaration()).Append(">");
+            accum.Append("<").Append(isProcessingInstruction ? "!" : "?").Append(WholeDeclaration).Append(">");
         }
 
-        internal override void OuterHtmlTail(StringBuilder accum, int depth, DocumentOutputSettings @out)
+        internal override void AppendOuterHtmlTailTo(StringBuilder accum, int depth, DocumentOutputSettings @out)
         {
         }
 
@@ -55,7 +55,7 @@ namespace Supremes.Nodes
         /// <returns></returns>
         public override string ToString()
         {
-            return OuterHtml();
+            return OuterHtml;
         }
     }
 }

@@ -30,16 +30,16 @@ namespace Supremes.Test.Nodes
         public void OuterHtmlGeneration()
         {
             DocumentType html5 = new DocumentType("html", "", "", "");
-            Assert.AreEqual("<!DOCTYPE html>", html5.OuterHtml());
+            Assert.AreEqual("<!DOCTYPE html>", html5.OuterHtml);
 
             DocumentType publicDocType = new DocumentType("html", "-//IETF//DTD HTML//", "", "");
-            Assert.AreEqual("<!DOCTYPE html PUBLIC \"-//IETF//DTD HTML//\">", publicDocType.OuterHtml());
+            Assert.AreEqual("<!DOCTYPE html PUBLIC \"-//IETF//DTD HTML//\">", publicDocType.OuterHtml);
 
             DocumentType systemDocType = new DocumentType("html", "", "http://www.ibm.com/data/dtd/v11/ibmxhtml1-transitional.dtd", "");
-            Assert.AreEqual("<!DOCTYPE html \"http://www.ibm.com/data/dtd/v11/ibmxhtml1-transitional.dtd\">", systemDocType.OuterHtml());
+            Assert.AreEqual("<!DOCTYPE html \"http://www.ibm.com/data/dtd/v11/ibmxhtml1-transitional.dtd\">", systemDocType.OuterHtml);
 
             DocumentType combo = new DocumentType("notHtml", "--public", "--system", "");
-            Assert.AreEqual("<!DOCTYPE notHtml PUBLIC \"--public\" \"--system\">", combo.OuterHtml());
+            Assert.AreEqual("<!DOCTYPE notHtml PUBLIC \"--public\" \"--system\">", combo.OuterHtml);
         }
     }
 }

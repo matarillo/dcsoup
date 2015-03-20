@@ -73,14 +73,14 @@ namespace Supremes.Select
                 {
                     return false;
                 }
-                Element parent = element.ParentElement();
+                Element parent = element.Parent;
                 while (parent != root)
                 {
                     if (evaluator.Matches(root, parent))
                     {
                         return true;
                     }
-                    parent = parent.ParentElement();
+                    parent = parent.Parent;
                 }
                 return false;
             }
@@ -104,7 +104,7 @@ namespace Supremes.Select
                 {
                     return false;
                 }
-                Element parent = element.ParentElement();
+                Element parent = element.Parent;
                 return parent != null && evaluator.Matches(root, parent);
             }
 
@@ -127,14 +127,14 @@ namespace Supremes.Select
                 {
                     return false;
                 }
-                Element prev = element.PreviousElementSibling();
+                Element prev = element.PreviousElementSibling;
                 while (prev != null)
                 {
                     if (evaluator.Matches(root, prev))
                     {
                         return true;
                     }
-                    prev = prev.PreviousElementSibling();
+                    prev = prev.PreviousElementSibling;
                 }
                 return false;
             }
@@ -158,7 +158,7 @@ namespace Supremes.Select
                 {
                     return false;
                 }
-                Element prev = element.PreviousElementSibling();
+                Element prev = element.PreviousElementSibling;
                 return prev != null && evaluator.Matches(root, prev);
             }
 

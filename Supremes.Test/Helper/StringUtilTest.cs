@@ -80,7 +80,7 @@ namespace Supremes.Test.Nodes
             string test71540charsExpectedSingleWhitespace = "\ud869\udeb2\u304b\u309a 1";
 
             Assert.AreEqual(test71540charsExpectedSingleWhitespace, StringUtil.NormaliseWhitespace(test71540chars));
-            string extractedText = Dcsoup.Parse(test71540chars).Text();
+            string extractedText = Dcsoup.Parse(test71540chars).Text;
             Assert.AreEqual(test71540charsExpectedSingleWhitespace, extractedText);
         }
     }

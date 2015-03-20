@@ -73,25 +73,26 @@ namespace Supremes.Nodes
         /// Get the HTML representation of this attribute.
         /// </summary>
         /// <remarks>
-        /// e.g.
-        /// <code>href="index.html"</code>
-        /// .
+        /// e.g. <c>href="index.html"</c>.
         /// </remarks>
         /// <returns>HTML</returns>
-        public string Html()
+        public string Html
         {
-            StringBuilder accum = new StringBuilder();
-            Html(accum, (new Document(string.Empty)).OutputSettings());
-            return accum.ToString();
+            get
+            {
+                StringBuilder accum = new StringBuilder();
+                AppendHtmlTo(accum, (new Document(string.Empty)).OutputSettings);
+                return accum.ToString();
+            }
         }
 
-        internal void Html(StringBuilder accum, DocumentOutputSettings @out)
+        internal void AppendHtmlTo(StringBuilder accum, DocumentOutputSettings @out)
         {
             accum.Append(key);
             if (!ShouldCollapseAttribute(@out))
             {
                 accum.Append("=\"");
-                Entities.Escape(accum, value, Convert(@out.EscapeMode()), @out.Charset(), true, false, false);
+                Entities.Escape(accum, value, Convert(@out.EscapeMode), @out.Charset, true, false, false);
                 accum.Append('"');
             }
         }
@@ -113,13 +114,13 @@ namespace Supremes.Nodes
 
         /// <summary>
         /// Get the string representation of this attribute, implemented as
-        /// <see cref="Html()">Html()</see>
+        /// <see cref="Html">Html</see>
         /// .
         /// </summary>
         /// <returns>string</returns>
         public override string ToString()
         {
-            return Html();
+            return Html;
         }
 
         /// <summary>
@@ -148,7 +149,7 @@ namespace Supremes.Nodes
         internal bool ShouldCollapseAttribute(DocumentOutputSettings @out)
         {
             return (string.Empty.Equals(value) || string.Equals(value, key, StringComparison.OrdinalIgnoreCase))
-                && @out.Syntax() == DocumentSyntax.Html
+                && @out.Syntax == DocumentSyntax.Html
                 && Array.BinarySearch(booleanAttributes, key) >= 0;
         }
 

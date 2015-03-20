@@ -40,7 +40,7 @@ namespace Supremes.Parsers
                     tb.GetDocument().AppendChild(doctype);
                     if (d.IsForceQuirks())
                     {
-                        tb.GetDocument().QuirksMode(DocumentQuirksMode.Quirks);
+                        tb.GetDocument().QuirksMode = DocumentQuirksMode.Quirks;
                     }
                     tb.Transition(HtmlTreeBuilderState.BeforeHtml);
                 }
@@ -482,7 +482,7 @@ namespace Supremes.Parsers
                             {
                                 if (!html.HasAttr(attribute.Key))
                                 {
-                                    html.Attributes().Put(attribute);
+                                    html.Attributes.Put(attribute);
                                 }
                             }
                         }
@@ -508,7 +508,7 @@ namespace Supremes.Parsers
                                 {
                                     if (!body.HasAttr(attribute.Key))
                                     {
-                                        body.Attributes().Put(attribute);
+                                        body.Attributes.Put(attribute);
                                     }
                                 }
                             }
@@ -531,7 +531,7 @@ namespace Supremes.Parsers
                             else
                             {
                                 Element second = stack[1];
-                                if (second.Parent() != null)
+                                if (second.Parent != null)
                                 {
                                     second.Remove();
                                 }
@@ -706,7 +706,7 @@ namespace Supremes.Parsers
                         }
                         else if (name.Equals("table"))
                         {
-                            if (tb.GetDocument().QuirksMode() != DocumentQuirksMode.Quirks && tb.InButtonScope("p"))
+                            if (tb.GetDocument().QuirksMode != DocumentQuirksMode.Quirks && tb.InButtonScope("p"))
                             {
                                 tb.Process(new Token.EndTag("p"));
                             }
@@ -1111,7 +1111,7 @@ namespace Supremes.Parsers
                                     }
                                     // todo: move the aforementioned bookmark to be immediately after the new node in the list of active formatting elements.
                                     // not getting how this bookmark both straddles the element above, but is inbetween here...
-                                    if (lastNode.Parent() != null)
+                                    if (lastNode.Parent != null)
                                     {
                                         lastNode.Remove();
                                     }
@@ -1122,7 +1122,7 @@ namespace Supremes.Parsers
                             INNER_break: ;
                                 if (StringUtil.In(commonAncestor.NodeName, HtmlTreeBuilderState.Constants.InBodyEndTableFosters))
                                 {
-                                    if (lastNode.Parent() != null)
+                                    if (lastNode.Parent!= null)
                                     {
                                         lastNode.Remove();
                                     }
@@ -1130,15 +1130,15 @@ namespace Supremes.Parsers
                                 }
                                 else
                                 {
-                                    if (lastNode.Parent() != null)
+                                    if (lastNode.Parent != null)
                                     {
                                         lastNode.Remove();
                                     }
                                     commonAncestor.AppendChild(lastNode);
                                 }
-                                Element adopter = new Element(formatEl.Tag(), tb.GetBaseUri());
-                                adopter.Attributes().SetAll(formatEl.Attributes());
-                                Node[] childNodes = furthestBlock.ChildNodes().ToArray();
+                                Element adopter = new Element(formatEl.Tag, tb.GetBaseUri());
+                                adopter.Attributes.SetAll(formatEl.Attributes);
+                                Node[] childNodes = furthestBlock.ChildNodes.ToArray();
                                 foreach (Node childNode in childNodes)
                                 {
                                     adopter.AppendChild(childNode);

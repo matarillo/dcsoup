@@ -188,9 +188,9 @@ namespace Supremes.Test.Select
         {
             Elements sel = html.Select(":empty");
             Assert.AreEqual(3, sel.Count);
-            Assert.AreEqual("head", sel[0].TagName());
-            Assert.AreEqual("br", sel[1].TagName());
-            Assert.AreEqual("p", sel[2].TagName());
+            Assert.AreEqual("head", sel[0].TagName);
+            Assert.AreEqual("br", sel[1].TagName);
+            Assert.AreEqual("p", sel[2].TagName);
         }
 	
         [Test]
@@ -198,7 +198,7 @@ namespace Supremes.Test.Select
         {
             Elements sel = html.Select("span :only-child");
             Assert.AreEqual(1, sel.Count);
-            Assert.AreEqual("br", sel[0].TagName());
+            Assert.AreEqual("br", sel[0].TagName);
 		
             Check(html.Select("#only :only-child"), "only");
         }
@@ -208,13 +208,13 @@ namespace Supremes.Test.Select
         {
             Elements sel = html.Select(":only-of-type");
             Assert.AreEqual(6, sel.Count);
-            Assert.AreEqual("head", sel[0].TagName());
-            Assert.AreEqual("body", sel[1].TagName());
-            Assert.AreEqual("span", sel[2].TagName());
-            Assert.AreEqual("br", sel[3].TagName());
-            Assert.AreEqual("p", sel[4].TagName());
+            Assert.AreEqual("head", sel[0].TagName);
+            Assert.AreEqual("body", sel[1].TagName);
+            Assert.AreEqual("span", sel[2].TagName);
+            Assert.AreEqual("br", sel[3].TagName);
+            Assert.AreEqual("p", sel[4].TagName);
             Assert.IsTrue(sel[4].HasClass("empty"));
-            Assert.AreEqual("em", sel[5].TagName());
+            Assert.AreEqual("em", sel[5].TagName);
         }
         
         protected void Check(Elements result, params string[] expectedContent)
@@ -223,7 +223,7 @@ namespace Supremes.Test.Select
             for (int i = 0; i < expectedContent.Length; i++)
             {
                 Assert.NotNull(result[i]);
-                Assert.AreEqual(expectedContent[i], result[i].OwnText(), "Expected element");
+                Assert.AreEqual(expectedContent[i], result[i].OwnText, "Expected element");
             }
         }
     }

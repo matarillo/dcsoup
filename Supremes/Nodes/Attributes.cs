@@ -160,7 +160,7 @@ namespace Supremes.Nodes
         /// <summary>
         /// Retrieves a filtered view of attributes that are HTML5 custom data attributes; that is, attributes with keys
         /// starting with
-        /// <code>data-</code>
+        /// <c>data-</c>
         /// .
         /// </summary>
         /// <returns>map of custom data attributes.</returns>
@@ -173,15 +173,18 @@ namespace Supremes.Nodes
         /// Get the HTML representation of these attributes.
         /// </summary>
         /// <returns>HTML</returns>
-        public string Html()
+        public string Html
         {
-            StringBuilder accum = new StringBuilder();
-            Html(accum, (new Document(string.Empty)).OutputSettings());
-            // output settings a bit funky, but this html() seldom used
-            return accum.ToString();
+            get
+            {
+                StringBuilder accum = new StringBuilder();
+                AppendHtmlTo(accum, (new Document(string.Empty)).OutputSettings);
+                // output settings a bit funky, but this html() seldom used
+                return accum.ToString();
+            }
         }
 
-        internal void Html(StringBuilder accum, DocumentOutputSettings @out)
+        internal void AppendHtmlTo(StringBuilder accum, DocumentOutputSettings @out)
         {
             if (attributes == null)
             {
@@ -191,7 +194,7 @@ namespace Supremes.Nodes
             {
                 Attribute attribute = (Attribute)entry.Value;
                 accum.Append(" ");
-                attribute.Html(accum, @out);
+                attribute.AppendHtmlTo(accum, @out);
             }
         }
 
@@ -201,7 +204,7 @@ namespace Supremes.Nodes
         /// <returns></returns>
         public override string ToString()
         {
-            return Html();
+            return Html;
         }
 
         /// <summary>

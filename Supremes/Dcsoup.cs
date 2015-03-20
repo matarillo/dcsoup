@@ -25,7 +25,7 @@ namespace Supremes
             string charsetName = (contentType != null) ? contentType.CharSet : null;
             string baseUri = self.RequestMessage.RequestUri.ToString();
             byte[] byteData = self.Content.ReadAsByteArrayAsync().Result;
-            Parser parser = Parser.HtmlParser();
+            Parser parser = Parser.HtmlParser;
             return DataUtil.ParseByteData(byteData, charsetName, baseUri, parser);
         }
 
@@ -39,7 +39,7 @@ namespace Supremes
         /// <param name="baseUri">
         /// The URL where the HTML was retrieved from. Used to resolve relative URLs to absolute URLs, that occur
         /// before the HTML declares a
-        /// <code>&lt;base href&gt;</code>
+        /// <c>&lt;base href&gt;</c>
         /// tag.
         /// </param>
         /// <returns>sane HTML</returns>
@@ -59,12 +59,12 @@ namespace Supremes
         /// <param name="baseUri">
         /// The URL where the HTML was retrieved from. Used to resolve relative URLs to absolute URLs, that occur
         /// before the HTML declares a
-        /// <code>&lt;base href&gt;</code>
+        /// <c>&lt;base href&gt;</c>
         /// tag.
         /// </param>
         /// <param name="parser">
         /// alternate
-        /// <see cref="Parser.XmlParser()">parser</see>
+        /// <see cref="Parser.XmlParser">parser</see>
         /// to use.
         /// </param>
         /// <returns>sane HTML</returns>
@@ -78,7 +78,7 @@ namespace Supremes
         /// </summary>
         /// <remarks>
         /// As no base URI is specified, absolute URL detection relies on the HTML including a
-        /// <code>&lt;base href&gt;</code>
+        /// <c>&lt;base href&gt;</c>
         /// tag.
         /// </remarks>
         /// <param name="html">HTML to parse</param>
@@ -95,11 +95,11 @@ namespace Supremes
         /// <param name="in">file to load HTML from</param>
         /// <param name="charsetName">
         /// (optional) character set of file contents. Set to
-        /// <code>null</code>
+        /// <c>null</c>
         /// to determine from
-        /// <code>http-equiv</code>
+        /// <c>http-equiv</c>
         /// meta tag, if present, or fall back to
-        /// <code>UTF-8</code>
+        /// <c>UTF-8</c>
         /// (which is often safe to do).
         /// </param>
         /// <param name="baseUri">
@@ -123,11 +123,11 @@ namespace Supremes
         /// <param name="in">file to load HTML from</param>
         /// <param name="charsetName">
         /// (optional) character set of file contents. Set to
-        /// <code>null</code>
+        /// <c>null</c>
         /// to determine from
-        /// <code>http-equiv</code>
+        /// <c>http-equiv</c>
         /// meta tag, if present, or fall back to
-        /// <code>UTF-8</code>
+        /// <c>UTF-8</c>
         /// (which is often safe to do).
         /// </param>
         /// <returns>sane HTML</returns>
@@ -146,11 +146,11 @@ namespace Supremes
         /// <param name="in">input stream to read. Make sure to close it after parsing.</param>
         /// <param name="charsetName">
         /// (optional) character set of file contents. Set to
-        /// <code>null</code>
+        /// <c>null</c>
         /// to determine from
-        /// <code>http-equiv</code>
+        /// <c>http-equiv</c>
         /// meta tag, if present, or fall back to
-        /// <code>UTF-8</code>
+        /// <c>UTF-8</c>
         /// (which is often safe to do).
         /// </param>
         /// <param name="baseUri">
@@ -175,11 +175,11 @@ namespace Supremes
         /// <param name="in">input stream to read. Make sure to close it after parsing.</param>
         /// <param name="charsetName">
         /// (optional) character set of file contents. Set to
-        /// <code>null</code>
+        /// <c>null</c>
         /// to determine from
-        /// <code>http-equiv</code>
+        /// <c>http-equiv</c>
         /// meta tag, if present, or fall back to
-        /// <code>UTF-8</code>
+        /// <c>UTF-8</c>
         /// (which is often safe to do).
         /// </param>
         /// <param name="baseUri">
@@ -187,7 +187,7 @@ namespace Supremes
         /// </param>
         /// <param name="parser">
         /// alternate
-        /// <see cref="Parser.XmlParser()">parser</see>
+        /// <see cref="Parser.XmlParser">parser</see>
         /// to use.
         /// </param>
         /// <returns>sane HTML</returns>
@@ -201,13 +201,13 @@ namespace Supremes
 
         /// <summary>
         /// Parse a fragment of HTML, with the assumption that it forms the
-        /// <code>body</code>
+        /// <c>body</c>
         /// of the HTML.
         /// </summary>
         /// <param name="bodyHtml">body HTML fragment</param>
         /// <param name="baseUri">URL to resolve relative URLs against.</param>
         /// <returns>sane HTML document</returns>
-        /// <seealso cref="Supremes.Nodes.Document.Body()">Supremes.Nodes.Document.Body()</seealso>
+        /// <seealso cref="Supremes.Nodes.Document.Body">Supremes.Nodes.Document.Body</seealso>
         public static Document ParseBodyFragment(string bodyHtml, string baseUri)
         {
             return Parser.ParseBodyFragment(bodyHtml, baseUri);
@@ -215,12 +215,12 @@ namespace Supremes
 
         /// <summary>
         /// Parse a fragment of HTML, with the assumption that it forms the
-        /// <code>body</code>
+        /// <c>body</c>
         /// of the HTML.
         /// </summary>
         /// <param name="bodyHtml">body HTML fragment</param>
         /// <returns>sane HTML document</returns>
-        /// <seealso cref="Supremes.Nodes.Document.Body()">Supremes.Nodes.Document.Body()</seealso>
+        /// <seealso cref="Supremes.Nodes.Document.Body">Supremes.Nodes.Document.Body</seealso>
         public static Document ParseBodyFragment(string bodyHtml)
         {
             return Parser.ParseBodyFragment(bodyHtml, string.Empty);
@@ -235,15 +235,15 @@ namespace Supremes
         /// </para>
         /// <para>
         /// The encoding character set is determined by the content-type header or http-equiv meta tag, or falls back to
-        /// <code>UTF-8</code>
+        /// <c>UTF-8</c>
         /// .
         /// </para>
         /// </remarks>
         /// <param name="url">
         /// URL to fetch (with a GET). The protocol must be
-        /// <code>http</code>
+        /// <c>http</c>
         /// or
-        /// <code>https</code>
+        /// <c>https</c>
         /// .
         /// </param>
         /// <param name="timeoutMillis">
@@ -283,7 +283,7 @@ namespace Supremes
             Document dirty = ParseBodyFragment(bodyHtml, baseUri);
             Cleaner cleaner = new Cleaner(whitelist);
             Document clean = cleaner.Clean(dirty);
-            return clean.Body().Html();
+            return clean.Body.Html;
         }
 
         /// <summary>
@@ -316,8 +316,8 @@ namespace Supremes
             Document dirty = ParseBodyFragment(bodyHtml, baseUri);
             Cleaner cleaner = new Cleaner(whitelist);
             Document clean = cleaner.Clean(dirty);
-            clean.OutputSettings(outputSettings);
-            return clean.Body().Html();
+            clean.OutputSettings = outputSettings;
+            return clean.Body.Html;
         }
 
         /// <summary>

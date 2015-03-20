@@ -41,7 +41,7 @@ namespace Supremes.Parsers
         /// <returns></returns>
         public Document ParseInput(string html, string baseUri)
         {
-            errors = IsTrackErrors() ? ParseErrorList.Tracking(maxErrors) : ParseErrorList.NoTracking();
+            errors = CanTrackErrors ? ParseErrorList.Tracking(maxErrors) : ParseErrorList.NoTracking();
             Document doc = treeBuilder.Parse(html, baseUri, errors);
             return doc;
         }
@@ -52,9 +52,9 @@ namespace Supremes.Parsers
         /// Get the TreeBuilder currently in use.
         /// </summary>
         /// <returns>current TreeBuilder.</returns>
-        internal TreeBuilder GetTreeBuilder()
+        internal TreeBuilder TreeBuilder
         {
-            return treeBuilder;
+            get { return treeBuilder; }
         }
 
         /// <summary>
@@ -72,9 +72,9 @@ namespace Supremes.Parsers
         /// Check if parse error tracking is enabled.
         /// </summary>
         /// <returns>current track error state.</returns>
-        public bool IsTrackErrors()
+        public bool CanTrackErrors
         {
-            return maxErrors > 0;
+            get { return maxErrors > 0; }
         }
 
         /// <summary>
@@ -94,9 +94,9 @@ namespace Supremes.Parsers
         /// Retrieve the parse errors, if any, from the last parse.
         /// </remarks>
         /// <returns>list of parse errors, up to the size of the maximum errors tracked.</returns>
-        public IList<ParseError> GetErrors()
+        public IList<ParseError> Errors
         {
-            return errors;
+            get { return errors; }
         }
 
         // builders
@@ -109,9 +109,9 @@ namespace Supremes.Parsers
         /// based on a knowledge of the semantics of the incoming tags.
         /// </remarks>
         /// <returns>a new HTML parser.</returns>
-        public static Parser HtmlParser()
+        public static Parser HtmlParser
         {
-            return new Parser(new HtmlTreeBuilder());
+            get { return new Parser(new HtmlTreeBuilder()); }
         }
 
         /// <summary>
@@ -122,9 +122,9 @@ namespace Supremes.Parsers
         /// rather creates a simple tree directly from the input.
         /// </remarks>
         /// <returns>a new simple XML parser.</returns>
-        public static Parser XmlParser()
+        public static Parser XmlParser
         {
-            return new Parser(new XmlTreeBuilder());
+            get { return new Parser(new XmlTreeBuilder()); }
         }
         
         // utility methods
@@ -178,7 +178,7 @@ namespace Supremes.Parsers
 
         /// <summary>
         /// Parse a fragment of HTML into the
-        /// <code>body</code>
+        /// <c>body</c>
         /// of a Document.
         /// </summary>
         /// <param name="bodyHtml">fragment of HTML</param>
@@ -187,7 +187,7 @@ namespace Supremes.Parsers
         public static Document ParseBodyFragment(string bodyHtml, string baseUri)
         {
             Document doc = Document.CreateShell(baseUri);
-            Element body = doc.Body();
+            Element body = doc.Body;
             IReadOnlyList<Node> nodeList = ParseFragment(bodyHtml, body, baseUri);
             Node[] nodes = nodeList.ToArray();
             // the node list gets modified when re-parented

@@ -16,8 +16,8 @@ namespace Supremes.Test.Nodes
                     "<select id=7><option></select><textarea id=8><p id=9>";
             Document doc = Dcsoup.Parse(html);
 
-            FormElement form = (FormElement)doc.Select("form").First();
-            Assert.AreEqual(8, form.Elements().Count);
+            FormElement form = (FormElement)doc.Select("form").First;
+            Assert.AreEqual(8, form.Elements.Count);
         }
 
         /// <summary>
@@ -32,8 +32,8 @@ namespace Supremes.Test.Nodes
             string html = "<form><input name='one' value='two'><select name='three'><option value='not'>" +
                     "<option value='four' selected><option value='five' selected><textarea name=six>seven</textarea></form>";
             Document doc = Dcsoup.Parse(html);
-            FormElement form = (FormElement)doc.Select("form").First();
-            IList<KeyValuePair<string, string>> data = form.FormData();
+            FormElement form = (FormElement)doc.Select("form").First;
+            IList<KeyValuePair<string, string>> data = form.FormData;
 
             Assert.AreEqual(4, data.Count);
             Assert.AreEqual("[one, two]", data[0].ToString()); // string expression is different
@@ -55,7 +55,7 @@ namespace Supremes.Test.Nodes
             Document doc = Dcsoup.Parse(html, "http://example.com/");
             doc.Select("[name=q]").Attr("value", "jsoup");
 
-            FormElement form = ((FormElement)doc.Select("form").First());
+            FormElement form = ((FormElement)doc.Select("form").First);
             var client = new System.Net.Http.HttpClient();
             var message = form.SubmitAsync(client).Result;
             Assert.AreEqual(System.Net.Http.HttpMethod.Get, message.RequestMessage.Method);
@@ -77,7 +77,7 @@ namespace Supremes.Test.Nodes
         {
             string html = "<form><input name='q'></form>";
             Document doc = Dcsoup.Parse(html, "http://example.com/");
-            FormElement form = ((FormElement)doc.Select("form").First());
+            FormElement form = ((FormElement)doc.Select("form").First);
 
             var client = new System.Net.Http.HttpClient();
             var message = form.SubmitAsync(client).Result;
@@ -89,7 +89,7 @@ namespace Supremes.Test.Nodes
         {
             string html = "<form><input name='q'></form>";
             Document doc = Dcsoup.Parse(html);
-            FormElement form = ((FormElement)doc.Select("form").First());
+            FormElement form = ((FormElement)doc.Select("form").First);
 
             var ex = Assert.Throws(typeof(ArgumentException), () =>
             {
@@ -103,12 +103,12 @@ namespace Supremes.Test.Nodes
         public void FormsAddedAfterParseAreFormElements()
         {
             Document doc = Dcsoup.Parse("<body />");
-            doc.Body().Html("<form action='http://example.com/search'><input name='q' value='search'>");
-            Element formEl = doc.Select("form").First();
+            doc.Body.Html = "<form action='http://example.com/search'><input name='q' value='search'>";
+            Element formEl = doc.Select("form").First;
             Assert.IsTrue(formEl is FormElement);
 
             FormElement form = (FormElement)formEl;
-            Assert.AreEqual(1, form.Elements().Count);
+            Assert.AreEqual(1, form.Elements.Count);
         }
 
         /// <summary>
@@ -121,16 +121,16 @@ namespace Supremes.Test.Nodes
         public void ControlsAddedAfterParseAreLinkedWithForms()
         {
             Document doc = Dcsoup.Parse("<body />");
-            doc.Body().Html("<form />");
+            doc.Body.Html = "<form />";
 
-            Element formEl = doc.Select("form").First();
+            Element formEl = doc.Select("form").First;
             formEl.Append("<input name=foo value=bar>");
 
             Assert.IsTrue(formEl is FormElement);
             FormElement form = (FormElement)formEl;
-            Assert.AreEqual(1, form.Elements().Count);
+            Assert.AreEqual(1, form.Elements.Count);
 
-            IList<KeyValuePair<string, string>> data = form.FormData();
+            IList<KeyValuePair<string, string>> data = form.FormData;
             Assert.AreEqual("[foo, bar]", data[0].ToString()); // string expression is different
         }
     }

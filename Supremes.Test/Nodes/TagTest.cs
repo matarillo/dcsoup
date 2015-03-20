@@ -37,8 +37,8 @@ namespace Supremes.Test.Nodes
         {
             Tag div = Tag.ValueOf("div");
 
-            Assert.IsTrue(div.IsBlock());
-            Assert.IsTrue(div.FormatAsBlock());
+            Assert.IsTrue(div.IsBlock);
+            Assert.IsTrue(div.IsFormattedAsBlock);
         }
 
         [Test]
@@ -46,17 +46,17 @@ namespace Supremes.Test.Nodes
         {
             Tag p = Tag.ValueOf("p");
 
-            Assert.IsTrue(p.IsBlock());
-            Assert.IsFalse(p.FormatAsBlock());
+            Assert.IsTrue(p.IsBlock);
+            Assert.IsFalse(p.IsFormattedAsBlock);
         }
 
         [Test]
         public void ImgSemantics()
         {
             Tag img = Tag.ValueOf("img");
-            Assert.IsTrue(img.IsInline());
-            Assert.IsTrue(img.IsSelfClosing());
-            Assert.IsFalse(img.IsBlock());
+            Assert.IsTrue(img.IsInline);
+            Assert.IsTrue(img.IsSelfClosing);
+            Assert.IsFalse(img.IsBlock);
         }
 
         [Test]
@@ -66,8 +66,8 @@ namespace Supremes.Test.Nodes
             Tag foo2 = Tag.ValueOf("FOO");
 
             Assert.AreEqual(foo, foo2);
-            Assert.IsTrue(foo.IsInline());
-            Assert.IsTrue(foo.FormatAsBlock());
+            Assert.IsTrue(foo.IsInline);
+            Assert.IsTrue(foo.IsFormattedAsBlock);
         }
 
         [Test]

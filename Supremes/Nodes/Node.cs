@@ -72,15 +72,15 @@ namespace Supremes.Nodes
         /// Get an attribute's value by its key.
         /// </summary>
         /// <remarks>
-        /// To get an absolute URL from an attribute that may be a relative URL, prefix the key with <code><b>abs</b></code>,
+        /// To get an absolute URL from an attribute that may be a relative URL, prefix the key with <c><b>abs</b></c>,
         /// which is a shortcut to the
         /// <see cref="AbsUrl(string)">AbsUrl(string)</see>
         /// method.
-        /// E.g.: <blockquote><code>String url = a.attr("abs:href");</code></blockquote>
+        /// E.g.: <blockquote><c>String url = a.attr("abs:href");</c></blockquote>
         /// </remarks>
         /// <param name="attributeKey">The attribute key.</param>
         /// <returns>The attribute, or empty string if not present (to avoid nulls).</returns>
-        /// <seealso cref="Attributes()">Attributes()</seealso>
+        /// <seealso cref="Attributes">Attributes</seealso>
         /// <seealso cref="HasAttr(string)">HasAttr(string)</seealso>
         /// <seealso cref="AbsUrl(string)">AbsUrl(string)</seealso>
         public virtual string Attr(string attributeKey)
@@ -109,9 +109,9 @@ namespace Supremes.Nodes
         /// <returns>
         /// attributes (which implements iterable, in same order as presented in original HTML).
         /// </returns>
-        public virtual Attributes Attributes()
+        public virtual Attributes Attributes
         {
-            return attributes;
+            get { return attributes; }
         }
 
         /// <summary>
@@ -164,9 +164,9 @@ namespace Supremes.Nodes
         /// Get the base URI of this node.
         /// </summary>
         /// <returns>base URI</returns>
-        public string BaseUri()
+        public string BaseUri
         {
-            return baseUri;
+            get { return baseUri; }
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Supremes.Nodes
 
         /// <summary>
         /// Get an absolute URL from a URL attribute that may be relative
-        /// (i.e. an <code>&lt;a href&gt;</code> or <code>&lt;img src&gt;</code>).
+        /// (i.e. an <c>&lt;a href&gt;</c> or <c>&lt;img src&gt;</c>).
         /// </summary>
         /// <remarks>
         /// <para>
@@ -217,7 +217,7 @@ namespace Supremes.Nodes
         /// <para>
         /// As an alternate, you can use the
         /// <see cref="Attr(string)">Attr(string)</see>
-        /// method with the <code>abs:</code> prefix, e.g.:
+        /// method with the <c>abs:</c> prefix, e.g.:
         /// <c>string absUrl = linkEl.Attr("abs:href");</c>
         /// </para>
         /// <para>
@@ -294,7 +294,7 @@ namespace Supremes.Nodes
         /// <param name="index">index of child node</param>
         /// <returns>
         /// the child node at this index. Throws a
-        /// <code>IndexOutOfBoundsException</code>
+        /// <c>IndexOutOfBoundsException</c>
         /// if the index is out of bounds.
         /// </returns>
         public Node ChildNode(int index)
@@ -310,9 +310,9 @@ namespace Supremes.Nodes
         /// themselves can be manipulated.
         /// </remarks>
         /// <returns>list of children. If no children, returns an empty list.</returns>
-        public IReadOnlyList<Node> ChildNodes()
+        public IReadOnlyList<Node> ChildNodes
         {
-            return new ReadOnlyCollection<Node>(childNodes);
+            get { return new ReadOnlyCollection<Node>(childNodes); }
         }
 
         /// <summary>
@@ -336,9 +336,9 @@ namespace Supremes.Nodes
         /// Get the number of child nodes that this node holds.
         /// </summary>
         /// <returns>the number of child nodes that this node holds.</returns>
-        public int ChildNodeSize()
+        public int ChildNodeSize
         {
-            return childNodes.Count;
+            get { return childNodes.Count; }
         }
 
         internal Node[] ChildNodesAsArray()
@@ -350,21 +350,9 @@ namespace Supremes.Nodes
         /// Gets this node's parent node.
         /// </summary>
         /// <returns>parent node; or null if no parent.</returns>
-        public virtual Node Parent()
+        public Node Parent
         {
-            return parentNode;
-        }
-
-        /// <summary>
-        /// Gets this node's parent node.
-        /// </summary>
-        /// <remarks>
-        /// Node overridable by extending classes, so useful if you really just need the Node type.
-        /// </remarks>
-        /// <returns>parent node; or null if no parent.</returns>
-        public Node ParentNode()
-        {
-            return parentNode;
+            get { return parentNode; }
         }
 
         /// <summary>
@@ -373,19 +361,22 @@ namespace Supremes.Nodes
         /// <returns>
         /// the Document associated with this Node, or null if there is no such Document.
         /// </returns>
-        public Document OwnerDocument()
+        public Document OwnerDocument
         {
-            if (this is Document)
+            get
             {
-                return (Document)this;
-            }
-            else if (parentNode == null)
-            {
-                return null;
-            }
-            else
-            {
-                return parentNode.OwnerDocument();
+                if (this is Document)
+                {
+                    return (Document)this;
+                }
+                else if (parentNode == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return parentNode.OwnerDocument;
+                }
             }
         }
 
@@ -409,7 +400,7 @@ namespace Supremes.Nodes
         /// <seealso cref="After(string)">After(string)</seealso>
         public virtual Node Before(string html)
         {
-            AddSiblingHtml(SiblingIndex(), html);
+            AddSiblingHtml(SiblingIndex, html);
             return this;
         }
 
@@ -423,7 +414,7 @@ namespace Supremes.Nodes
         {
             Validate.NotNull(node);
             Validate.NotNull(parentNode);
-            parentNode.AddChildren(SiblingIndex(), node);
+            parentNode.AddChildren(SiblingIndex, node);
             return this;
         }
 
@@ -435,7 +426,7 @@ namespace Supremes.Nodes
         /// <seealso cref="Before(string)">Before(string)</seealso>
         public virtual Node After(string html)
         {
-            AddSiblingHtml(SiblingIndex() + 1, html);
+            AddSiblingHtml(SiblingIndex + 1, html);
             return this;
         }
 
@@ -449,7 +440,7 @@ namespace Supremes.Nodes
         {
             Validate.NotNull(node);
             Validate.NotNull(parentNode);
-            parentNode.AddChildren(SiblingIndex() + 1, node);
+            parentNode.AddChildren(SiblingIndex + 1, node);
             return this;
         }
 
@@ -457,8 +448,8 @@ namespace Supremes.Nodes
         {
             Validate.NotNull(html);
             Validate.NotNull(parentNode);
-            Element context = Parent() is Element ? (Element)Parent() : null;
-            IReadOnlyList<Node> nodes = Parser.ParseFragment(html, context, BaseUri());
+            Element context = Parent as Element;
+            IReadOnlyList<Node> nodes = Parser.ParseFragment(html, context, BaseUri);
             parentNode.AddChildren(index, nodes.ToArray());
         }
 
@@ -467,15 +458,15 @@ namespace Supremes.Nodes
         /// </summary>
         /// <param name="html">
         /// HTML to wrap around this element, e.g.
-        /// <code><div class="head"></div></code>
+        /// <c><div class="head"></div></c>
         /// . Can be arbitrarily deep.
         /// </param>
         /// <returns>this node, for chaining.</returns>
         public Node Wrap(string html)
         {
             Validate.NotEmpty(html);
-            Element context = Parent() is Element ? (Element)Parent() : null;
-            IReadOnlyList<Node> wrapChildren = Parser.ParseFragment(html, context, BaseUri());
+            Element context = Parent as Element;
+            IReadOnlyList<Node> wrapChildren = Parser.ParseFragment(html, context, BaseUri);
             Node wrapNode = wrapChildren[0];
             if (wrapNode == null || !(wrapNode is Element))
             {
@@ -506,17 +497,17 @@ namespace Supremes.Nodes
         /// This has the effect of dropping the node but keeping its children.
         /// <p/>
         /// For example, with the input html:<br/>
-        /// <code><div>One <span>Two <b>Three</b></span></div></code>
+        /// <c><div>One <span>Two <b>Three</b></span></div></c>
         /// <br/>
         /// Calling
-        /// <code>element.unwrap()</code>
+        /// <c>element.Unwrap()</c>
         /// on the
-        /// <code>span</code>
+        /// <c>span</c>
         /// element will result in the html:<br/>
-        /// <code><div>One Two <b>Three</b></div></code>
+        /// <c><div>One Two <b>Three</b></div></c>
         /// <br/>
         /// and the
-        /// <code>"Two "</code>
+        /// <c>"Two "</c>
         /// <see cref="TextNode">TextNode</see>
         /// being returned.
         /// </remarks>
@@ -537,7 +528,7 @@ namespace Supremes.Nodes
 
         private Element GetDeepChild(Element el)
         {
-            IList<Element> children = el.Children();
+            IList<Element> children = el.Children;
             if (children.Count > 0)
             {
                 return GetDeepChild(children[0]);
@@ -576,17 +567,17 @@ namespace Supremes.Nodes
             {
                 @in.parentNode.RemoveChild(@in);
             }
-            int index = @out.SiblingIndex();
+            int index = @out.SiblingIndex;
             childNodes[index] = @in;
             @in.parentNode = this;
-            @in.SetSiblingIndex(index);
+            @in.SiblingIndex = index;
             @out.parentNode = null;
         }
 
         internal void RemoveChild(Supremes.Nodes.Node @out)
         {
             Validate.IsTrue(@out.parentNode == this);
-            int index = @out.SiblingIndex();
+            int index = @out.SiblingIndex;
             childNodes.RemoveAt(index);
             ReindexChildren();
             @out.parentNode = null;
@@ -600,7 +591,7 @@ namespace Supremes.Nodes
                 Supremes.Nodes.Node childImpl = (Supremes.Nodes.Node)child;
                 ReparentChild(childImpl);
                 childNodes.Add(childImpl);
-                childImpl.SetSiblingIndex(childNodes.Count - 1);
+                childImpl.SiblingIndex = childNodes.Count - 1;
             }
         }
 
@@ -629,7 +620,7 @@ namespace Supremes.Nodes
         {
             for (int i = 0; i < childNodes.Count; i++)
             {
-                ((Supremes.Nodes.Node)childNodes[i]).SetSiblingIndex(i);
+                childNodes[i].SiblingIndex = i;
             }
         }
 
@@ -638,50 +629,55 @@ namespace Supremes.Nodes
         /// </summary>
         /// <remarks>
         /// Similar to
-        /// <see cref="ChildNodes()">node.parent.childNodes()</see>
+        /// <see cref="ChildNodes">node.parent.ChildNodes</see>
         /// , but does not
         /// include this node (a node is not a sibling of itself).
         /// </remarks>
         /// <returns>node siblings. If the node has no parent, returns an empty list.</returns>
-        public IReadOnlyList<Node> SiblingNodes()
+        public IReadOnlyList<Node> SiblingNodes
         {
-            if (parentNode == null)
+            get
             {
-                return new ReadOnlyCollection<Node>(new Node[0]);
-            }
-            IList<Node> nodes = parentNode.childNodes;
-            List<Node> siblings = new List<Node>(nodes.Count - 1);
-            foreach (Node node in nodes)
-            {
-                if (node != this)
+                if (parentNode == null)
                 {
-                    siblings.Add(node);
+                    return new ReadOnlyCollection<Node>(new Node[0]);
                 }
+                IList<Node> nodes = parentNode.childNodes;
+                List<Node> siblings = new List<Node>(nodes.Count - 1);
+                foreach (Node node in nodes)
+                {
+                    if (node != this)
+                    {
+                        siblings.Add(node);
+                    }
+                }
+                return siblings.AsReadOnly();
             }
-            return siblings.AsReadOnly();
         }
 
         /// <summary>
         /// Get this node's next sibling.
         /// </summary>
         /// <returns>next sibling, or null if this is the last sibling</returns>
-        public Node NextSibling()
+        public Node NextSibling
         {
-            if (parentNode == null)
+            get
             {
-                return null;
-            }
-            // root
-            IList<Node> siblings = parentNode.childNodes;
-            int index = SiblingIndex();
-            Validate.NotNull(index);
-            if (siblings.Count > index + 1)
-            {
-                return siblings[index + 1];
-            }
-            else
-            {
-                return null;
+                if (parentNode == null)
+                {
+                    return null; // root
+                }
+                IList<Node> siblings = parentNode.childNodes;
+                int index = SiblingIndex;
+                Validate.NotNull(index);
+                if (siblings.Count > index + 1)
+                {
+                    return siblings[index + 1];
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
 
@@ -689,23 +685,25 @@ namespace Supremes.Nodes
         /// Get this node's previous sibling.
         /// </summary>
         /// <returns>the previous sibling, or null if this is the first sibling</returns>
-        public Node PreviousSibling()
+        public Node PreviousSibling
         {
-            if (parentNode == null)
+            get
             {
-                return null;
-                // root
-            }
-            IList<Node> siblings = parentNode.childNodes;
-            int index = SiblingIndex();
-            Validate.NotNull(index);
-            if (index > 0)
-            {
-                return siblings[index - 1];
-            }
-            else
-            {
-                return null;
+                if (parentNode == null)
+                {
+                    return null; // root
+                }
+                IList<Node> siblings = parentNode.childNodes;
+                int index = SiblingIndex;
+                Validate.NotNull(index);
+                if (index > 0)
+                {
+                    return siblings[index - 1];
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
 
@@ -716,15 +714,11 @@ namespace Supremes.Nodes
         /// I.e. if this is the first node sibling, returns 0.
         /// </remarks>
         /// <returns>position in node sibling list</returns>
-        /// <seealso cref="Element.ElementSiblingIndex()">Element.ElementSiblingIndex()</seealso>
-        public int SiblingIndex()
+        /// <seealso cref="Element.ElementSiblingIndex">Element.ElementSiblingIndex</seealso>
+        public int SiblingIndex
         {
-            return siblingIndex;
-        }
-
-        internal void SetSiblingIndex(int siblingIndex)
-        {
-            this.siblingIndex = siblingIndex;
+            get { return siblingIndex; }
+            internal set { siblingIndex = value; }
         }
 
         /// <summary>
@@ -744,14 +738,17 @@ namespace Supremes.Nodes
         /// Get the outer HTML of this node.
         /// </summary>
         /// <returns>HTML</returns>
-        public virtual string OuterHtml()
+        public virtual string OuterHtml
         {
-            StringBuilder accum = new StringBuilder(128);
-            OuterHtml(accum);
-            return accum.ToString();
+            get
+            {
+                StringBuilder accum = new StringBuilder(128);
+                AppendOuterHtmlTo(accum);
+                return accum.ToString();
+            }
         }
 
-        internal void OuterHtml(StringBuilder accum)
+        internal void AppendOuterHtmlTo(StringBuilder accum)
         {
             new NodeTraversor(new Node.OuterHtmlVisitor(accum, GetOutputSettings())).Traverse(this);
         }
@@ -759,9 +756,9 @@ namespace Supremes.Nodes
         internal DocumentOutputSettings GetOutputSettings()
         {
             // if this node has no document (or parent), retrieve the default output settings
-            return OwnerDocument() != null
-                ? OwnerDocument().OutputSettings()
-                : (new Document(string.Empty)).OutputSettings();
+            return OwnerDocument != null
+                ? OwnerDocument.OutputSettings
+                : (new Document(string.Empty)).OutputSettings;
         }
 
         /// <summary>
@@ -770,9 +767,9 @@ namespace Supremes.Nodes
         /// <param name="accum">accumulator to place HTML into</param>
         /// <param name="depth"></param>
         /// <param name="out"></param>
-        internal abstract void OuterHtmlHead(StringBuilder accum, int depth, DocumentOutputSettings @out);
+        internal abstract void AppendOuterHtmlHeadTo(StringBuilder accum, int depth, DocumentOutputSettings @out);
 
-        internal abstract void OuterHtmlTail(StringBuilder accum, int depth, DocumentOutputSettings @out);
+        internal abstract void AppendOuterHtmlTailTo(StringBuilder accum, int depth, DocumentOutputSettings @out);
 
         /// <summary>
         /// Converts the value of this instance to a string.
@@ -780,12 +777,12 @@ namespace Supremes.Nodes
         /// <returns></returns>
         public override string ToString()
         {
-            return OuterHtml();
+            return OuterHtml;
         }
 
         internal void Indent(StringBuilder accum, int depth, DocumentOutputSettings @out)
         {
-            accum.Append("\n").Append(StringUtil.Padding(depth * @out.IndentAmount()));
+            accum.Append("\n").Append(StringUtil.Padding(depth * @out.IndentAmount));
         }
 
         /// <summary>
@@ -882,7 +879,7 @@ namespace Supremes.Nodes
 
             public void Head(Node node, int depth)
             {
-                ((Node)node).OuterHtmlHead(accum, depth, @out);
+                ((Node)node).AppendOuterHtmlHeadTo(accum, depth, @out);
             }
 
             public void Tail(Node node, int depth)
@@ -890,7 +887,7 @@ namespace Supremes.Nodes
                 if (!node.NodeName.Equals("#text"))
                 {
                     // saves a void hit.
-                    ((Node)node).OuterHtmlTail(accum, depth, @out);
+                    ((Node)node).AppendOuterHtmlTailTo(accum, depth, @out);
                 }
             }
         }

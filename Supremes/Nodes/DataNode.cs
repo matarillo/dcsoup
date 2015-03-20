@@ -27,35 +27,33 @@ namespace Supremes.Nodes
         }
 
         /// <summary>
-        /// Get the data contents of this node.
+        /// Get or Set the data contents of this node.
         /// </summary>
         /// <remarks>
-        /// Will be unescaped and with original new lines, space etc.
+        /// if you want to use fluent API, write <c>using Supremes.Fluent;</c>.
         /// </remarks>
-        /// <returns>data</returns>
-        public string GetWholeData()
+        /// <value>unencoded data</value>
+        /// <returns>data will be unescaped and with original new lines, space etc.</returns>
+        /// <seealso cref="Supremes.Fluent.FluentUtility">Supremes.Fluent.FluentUtility</seealso>
+        public string WholeData
         {
-            return attributes[DATA_KEY];
+            set
+            {
+                attributes[DATA_KEY] = value;
+            }
+            get
+            {
+                return attributes[DATA_KEY];
+            }
         }
 
-        /// <summary>
-        /// Set the data contents of this node.
-        /// </summary>
-        /// <param name="data">unencoded data</param>
-        /// <returns>this node, for chaining</returns>
-        public DataNode SetWholeData(string data)
+        internal override void AppendOuterHtmlHeadTo(StringBuilder accum, int depth, DocumentOutputSettings @out)
         {
-            attributes[DATA_KEY] = data;
-            return this;
-        }
-
-        internal override void OuterHtmlHead(StringBuilder accum, int depth, DocumentOutputSettings @out)
-        {
-            accum.Append(GetWholeData());
+            accum.Append(WholeData);
             // data is not escaped in return from data nodes, so " in script, style is plain
         }
 
-        internal override void OuterHtmlTail(StringBuilder accum, int depth, DocumentOutputSettings @out)
+        internal override void AppendOuterHtmlTailTo(StringBuilder accum, int depth, DocumentOutputSettings @out)
         {
         }
 
@@ -65,7 +63,7 @@ namespace Supremes.Nodes
         /// <returns></returns>
         public override string ToString()
         {
-            return OuterHtml();
+            return OuterHtml;
         }
 
         /// <summary>

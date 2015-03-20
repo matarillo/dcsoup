@@ -22,8 +22,8 @@ namespace Supremes.Test.Nodes
             Assert.AreEqual("Jsoup", a.Dataset["name"]);
             Assert.AreEqual("a&p", a["tot"]);
 
-            Assert.AreEqual(" tot=\"a&amp;p\" hello=\"There\" data-name=\"Jsoup\"", a.Html());
-            Assert.AreEqual(a.Html(), a.ToString());
+            Assert.AreEqual(" tot=\"a&amp;p\" hello=\"There\" data-name=\"Jsoup\"", a.Html);
+            Assert.AreEqual(a.Html, a.ToString());
         }
     }
 }

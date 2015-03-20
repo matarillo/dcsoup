@@ -82,171 +82,144 @@ namespace Supremes.Nodes
         }
 
         /// <summary>
-        /// Get the document's current HTML escape mode: <code>base</code>, which provides a limited set of named HTML
-        /// entities and escapes other characters as numbered entities for maximum compatibility; or <code>extended</code>,
-        /// which uses the complete set of HTML named entities.
+        /// Get or Set the document's current HTML escape mode,
+        /// which determines how characters are escaped
+        /// when the output character set does not support a given character.
         /// </summary>
         /// <remarks>
-        /// The default escape mode is <code>base</code>.
+        /// <para>
+        /// <c>Base</c>, which provides a limited set of named HTML entities
+        /// and escapes other characters as numbered entities for maximum compatibility;
+        /// or <c>Extended</c>, which uses the complete set of HTML named entities.
+        /// </para>
+        /// <para>
+        /// The default escape mode is <c>Base</c>.
+        /// </para>
+        /// <para>
+        /// if you want to use fluent API, write <c>using Supremes.Fluent;</c>.
+        /// </para>
         /// </remarks>
+        /// <value>the new escape mode to use</value>
         /// <returns>the document's current escape mode</returns>
-        public DocumentEscapeMode EscapeMode()
+        /// <seealso cref="Supremes.Fluent.FluentUtility">Supremes.Fluent.FluentUtility</seealso>
+        public DocumentEscapeMode EscapeMode
         {
-            return escapeMode;
+            get { return escapeMode; }
+            set { escapeMode = value; }
         }
 
         /// <summary>
-        /// Set the document's escape mode, which determines how characters are escaped when the output character set
-        /// does not support a given character:- using either a named or a numbered escape.
-        /// </summary>
-        /// <param name="escapeMode">the new escape mode to use</param>
-        /// <returns>the document's output settings, for chaining</returns>
-        public DocumentOutputSettings EscapeMode(DocumentEscapeMode escapeMode)
-        {
-            this.escapeMode = escapeMode;
-            return this;
-        }
-
-        /// <summary>
-        /// Get the document's current output charset, which is used to control which characters are escaped when
-        /// generating HTML (via the <code>html()</code> methods), and which are kept intact.
+        /// Get or Set the document's current output charset, 
+        /// which is used to control which characters are escaped
+        /// when generating HTML (via the <c>Html</c> properties),
+        /// and which are kept intact.
         /// </summary>
         /// <remarks>
-        /// Where possible (when parsing from a URL or File), the document's output charset is automatically set to the
-        /// input charset. Otherwise, it defaults to UTF-8.
+        /// <para>
+        /// Where possible (when parsing from a URL or File),
+        /// the document's output charset is automatically set to the input charset.
+        /// Otherwise, it defaults to utf-8.
+        /// </para>
+        /// <para>
+        /// if you want to use fluent API, write <c>using Supremes.Fluent;</c>.
+        /// </para>
         /// </remarks>
-        /// <returns>the document's current charset.</returns>
-        public Encoding Charset()
+        /// <value>the new charset to use</value>
+        /// <returns>the document's current charset</returns>
+        /// <seealso cref="Supremes.Fluent.FluentUtility">Supremes.Fluent.FluentUtility</seealso>
+        public Encoding Charset
         {
-            return charset;
+            get { return charset; }
+            set { charset = value; }
         }
 
         /// <summary>
-        /// Update the document's output charset.
+        /// Get or Set the document's current output syntax.
         /// </summary>
-        /// <param name="charset">the new charset to use.</param>
-        /// <returns>the document's output settings, for chaining</returns>
-        public DocumentOutputSettings Charset(Encoding charset)
-        {
-            // todo: this should probably update the doc's meta charset
-            this.charset = charset;
-            //charsetEncoder = charset.NewEncoder();
-            return this;
-        }
-
-        /// <summary>
-        /// Update the document's output charset.
-        /// </summary>
-        /// <param name="charset">the new charset (by name) to use.</param>
-        /// <returns>the document's output settings, for chaining</returns>
-        public DocumentOutputSettings Charset(string charset)
-        {
-            Charset(Encoding.GetEncoding(charset)); // may throw an exception
-            return this;
-        }
-
-        /// <summary>
-        /// Get the document's current output syntax.
-        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// Either <c>Html</c>, with empty tags and boolean attributes (etc),
+        /// or <c>Xml</c>, with self-closing tags.
+        /// </para>
+        /// <para>
+        /// if you want to use fluent API, write <c>using Supremes.Fluent;</c>.
+        /// </para>
+        /// </remarks>
+        /// <value>serialization syntax</value>
         /// <returns>current syntax</returns>
-        public DocumentSyntax Syntax()
+        /// <seealso cref="Supremes.Fluent.FluentUtility">Supremes.Fluent.FluentUtility</seealso>
+        public DocumentSyntax Syntax
         {
-            return syntax;
+            get { return syntax; }
+            set { syntax = value; }
         }
 
         /// <summary>
-        /// Set the document's output syntax.
+        /// Get or Set if pretty printing is enabled.
         /// </summary>
         /// <remarks>
-        /// Either
-        /// <code>html</code>
-        /// , with empty tags and boolean attributes (etc), or
-        /// <code>xml</code>
-        /// , with self-closing tags.
-        /// </remarks>
-        /// <param name="syntax">serialization syntax</param>
-        /// <returns>the document's output settings, for chaining</returns>
-        public DocumentOutputSettings Syntax(DocumentSyntax syntax)
-        {
-            this.syntax = syntax;
-            return this;
-        }
-
-        /// <summary>
-        /// Get if pretty printing is enabled.
-        /// </summary>
-        /// <remarks>
+        /// <para>
         /// Default is true. If disabled, the HTML output methods will not re-format
         /// the output, and the output will generally look like the input.
+        /// </para>
+        /// <para>
+        /// if you want to use fluent API, write <c>using Supremes.Fluent;</c>.
+        /// </para>
         /// </remarks>
+        /// <value>new pretty print setting</value>
         /// <returns>if pretty printing is enabled.</returns>
-        public bool PrettyPrint()
+        /// <seealso cref="Supremes.Fluent.FluentUtility">Supremes.Fluent.FluentUtility</seealso>
+        public bool PrettyPrint
         {
-            return prettyPrint;
+            get { return prettyPrint; }
+            set { prettyPrint = value; }
         }
 
         /// <summary>
-        /// Enable or disable pretty printing.
-        /// </summary>
-        /// <param name="pretty">new pretty print setting</param>
-        /// <returns>this, for chaining</returns>
-        public DocumentOutputSettings PrettyPrint(bool pretty)
-        {
-            prettyPrint = pretty;
-            return this;
-        }
-
-        /// <summary>
-        /// Get if outline mode is enabled.
+        /// Get or Set if outline mode is enabled.
         /// </summary>
         /// <remarks>
-        /// Default is false. If enabled, the HTML output methods will consider
-        /// all tags as block.
+        /// <para>
+        /// Default is false.
+        /// If enabled, the HTML output methods will consider all tags as block.
+        /// </para>
+        /// <para>
+        /// if you want to use fluent API, write <c>using Supremes.Fluent;</c>.
+        /// </para>
         /// </remarks>
-        /// <returns>if outline mode is enabled.</returns>
-        public bool Outline()
+        /// <value>new outline setting</value>
+        /// <returns>true if outline mode is enabled</returns>
+        /// <seealso cref="Supremes.Fluent.FluentUtility">Supremes.Fluent.FluentUtility</seealso>
+        public bool Outline
         {
-            return outline;
+            get { return outline; }
+            set { outline = value; }
         }
 
         /// <summary>
-        /// Enable or disable HTML outline mode.
+        /// Get or Set the current tag indent amount, used when pretty printing.
         /// </summary>
-        /// <param name="outlineMode">new outline setting</param>
-        /// <returns>this, for chaining</returns>
-        public DocumentOutputSettings Outline(bool outlineMode)
-        {
-            outline = outlineMode;
-            return this;
-        }
-
-        /// <summary>
-        /// Get the current tag indent amount, used when pretty printing.
-        /// </summary>
+        /// <para>
+        /// if you want to use fluent API, write <c>using Supremes.Fluent;</c>.
+        /// </para>
+        /// <value>number of spaces to use for indenting each level. Must be &gt;= 0</value>
         /// <returns>the current indent amount</returns>
-        public int IndentAmount()
+        /// <seealso cref="Supremes.Fluent.FluentUtility">Supremes.Fluent.FluentUtility</seealso>
+        public int IndentAmount
         {
-            return indentAmount;
-        }
-
-        /// <summary>
-        /// Set the indent amount for pretty printing
-        /// </summary>
-        /// <param name="indentAmount">number of spaces to use for indenting each level. Must be &gt;= 0.
-        /// </param>
-        /// <returns>this, for chaining</returns>
-        public DocumentOutputSettings IndentAmount(int indentAmount)
-        {
-            Validate.IsTrue(indentAmount >= 0);
-            this.indentAmount = indentAmount;
-            return this;
+            get { return indentAmount; }
+            set
+            {
+                Validate.IsTrue(indentAmount >= 0);
+                indentAmount = value;
+            }
         }
 
         internal DocumentOutputSettings Clone()
         {
             DocumentOutputSettings clone;
             clone = (DocumentOutputSettings)this.MemberwiseClone();
-            clone.Charset(charset);
+            clone.Charset = charset;
             // new charset and charset encoder
             clone.escapeMode = escapeMode;
             // indentAmount, prettyPrint are primitives so object.clone() will handle
@@ -300,75 +273,64 @@ namespace Supremes.Nodes
         /// this will return the final URL from which the document was served from.
         /// </remarks>
         /// <returns>location</returns>
-        public string Location()
+        public string Location
         {
-            return location;
+            get { return location; }
         }
 
         /// <summary>
         /// Accessor to the document's
-        /// <code>head</code>
+        /// <c>head</c>
         /// element.
         /// </summary>
         /// <returns>
-        /// <code>head</code>
+        /// <c>head</c>
         /// </returns>
-        public Element Head()
+        public Element Head
         {
-            return FindFirstElementByTagName("head", this);
+            get { return FindFirstElementByTagName("head", this); }
         }
 
         /// <summary>
-        /// Accessor to the document's
-        /// <code>body</code>
-        /// element.
+        /// Accessor to the document's <c>body</c> element.
         /// </summary>
-        /// <returns>
-        /// 
-        /// <code>body</code>
-        /// </returns>
-        public Element Body()
+        /// <returns><c>body</c></returns>
+        public Element Body
         {
-            return FindFirstElementByTagName("body", this);
+            get { return FindFirstElementByTagName("body", this); }
         }
 
         /// <summary>
-        /// Get the string contents of the document's
-        /// <code>title</code>
-        /// element.
+        /// Get or Set the string contents of the document's <c>title</c> element.
         /// </summary>
+        /// <remarks>
+        /// when set, updates the existing element,
+        /// or adds <c>title</c> to <c>head</c> if not present
+        /// </remarks>
+        /// <value>string to set as title</value>
         /// <returns>Trimmed title, or empty string if none set.</returns>
-        public string Title()
+        public string Title
         {
-            // title is a preserve whitespace tag (for document output), but normalised here
-            Element titleEl = GetElementsByTag("title").First();
-            return titleEl != null ? StringUtil.NormaliseWhitespace(titleEl.Text()).Trim() :
-                string.Empty;
-        }
-
-        /// <summary>
-        /// Set the document's
-        /// <code>title</code>
-        /// element. Updates the existing element, or adds
-        /// <code>title</code>
-        /// to
-        /// <code>head</code>
-        /// if
-        /// not present
-        /// </summary>
-        /// <param name="title">string to set as title</param>
-        public void Title(string title)
-        {
-            Validate.NotNull(title);
-            Element titleEl = GetElementsByTag("title").First();
-            if (titleEl == null)
+            get
             {
-                // add to head
-                Head().AppendElement("title").Text(title);
+                // title is a preserve whitespace tag (for document output), but normalised here
+                Element titleEl = GetElementsByTag("title").First;
+                return titleEl != null ? StringUtil.NormaliseWhitespace(titleEl.Text).Trim() :
+                    string.Empty;
             }
-            else
+            set
             {
-                titleEl.Text(title);
+                Validate.NotNull(value);
+                Element titleEl = GetElementsByTag("title").First;
+                if (titleEl == null)
+                {
+                    // add to head
+                    Head.AppendElement("title").Text = value;
+                }
+                else
+                {
+                    titleEl.Text = value;
+                }
             }
         }
 
@@ -380,14 +342,14 @@ namespace Supremes.Nodes
         /// </remarks>
         /// <param name="tagName">
         /// element tag name (e.g.
-        /// <code>a</code>
+        /// <c>a</c>
         /// )
         /// </param>
         /// <returns>new element</returns>
         public Element CreateElement(string tagName)
         {
             Tag tag = Supremes.Nodes.Tag.ValueOf(tagName);
-            return new Element(tag, this.BaseUri());
+            return new Element(tag, this.BaseUri);
         }
 
         /// <summary>
@@ -405,18 +367,18 @@ namespace Supremes.Nodes
             {
                 htmlEl = AppendElement("html");
             }
-            if (Head() == null)
+            if (Head == null)
             {
                 htmlEl.PrependElement("head");
             }
-            if (Body() == null)
+            if (Body == null)
             {
                 htmlEl.AppendElement("body");
             }
             // pull text nodes out of root, html, and head els, and push into body. non-text nodes are already taken care
             // of. do in inverse order to maintain text order.
-            NormaliseTextNodes((Element)Head());
-            NormaliseTextNodes((Element)htmlEl);
+            NormaliseTextNodes(Head);
+            NormaliseTextNodes(htmlEl);
             NormaliseTextNodes(this);
             NormaliseStructure("head", htmlEl);
             NormaliseStructure("body", htmlEl);
@@ -429,15 +391,15 @@ namespace Supremes.Nodes
         {
             List<Node> toMove = element.childNodes
                 .OfType<TextNode>()
-                .Where(n => !n.IsBlank())
+                .Where(n => !n.IsBlank)
                 .Cast<Node>()
                 .ToList();
             for (int i = toMove.Count - 1; i >= 0; i--)
             {
                 Node node_1 = toMove[i];
                 element.RemoveChild(node_1);
-                Body().PrependChild(new TextNode(" ", string.Empty));
-                Body().PrependChild(node_1);
+                Body.PrependChild(new TextNode(" ", string.Empty));
+                Body.PrependChild(node_1);
             }
         }
 
@@ -446,7 +408,7 @@ namespace Supremes.Nodes
         private void NormaliseStructure(string tag, Element htmlEl)
         {
             Elements elements = this.GetElementsByTag(tag);
-            Element master = elements.First();
+            Element master = elements.First;
             // will always be available as created above if not existent
             if (elements.Count > 1)
             {
@@ -455,7 +417,7 @@ namespace Supremes.Nodes
                 for (int i = 1; i < elements.Count; i++)
                 {
                     Node dupe = elements[i];
-                    foreach (Node node in dupe.ChildNodes())
+                    foreach (Node node in dupe.ChildNodes)
                     {
                         toMove.Add(node);
                     }
@@ -467,7 +429,7 @@ namespace Supremes.Nodes
                 }
             }
             // ensure parented by <html>
-            if (!master.Parent().Equals(htmlEl))
+            if (!master.Parent.Equals(htmlEl))
             {
                 htmlEl.AppendChild(master);
             }
@@ -484,7 +446,7 @@ namespace Supremes.Nodes
             }
             else
             {
-                foreach (Node child in node.ChildNodes())
+                foreach (Node child in node.ChildNodes)
                 {
                     Element found = FindFirstElementByTagName(tag, child);
                     if (found != null)
@@ -500,23 +462,36 @@ namespace Supremes.Nodes
         /// Get the outer HTML of this document.
         /// </summary>
         /// <returns></returns>
-        public sealed override string OuterHtml()
+        public sealed override string OuterHtml
         {
-            return base.Html(); // no outer wrapper tag
+            get { return base.Html; } // no outer wrapper tag
         }
 
         /// <summary>
-        /// Set the text of the
-        /// <code>body</code>
-        /// of this document. Any existing nodes within the body will be cleared.
+        /// Get or Set the combined text of this element and all its children.
         /// </summary>
-        /// <param name="text">unencoded text</param>
-        /// <returns>this document</returns>
-        public override Element Text(string text)
+        /// <remarks>
+        /// <para>
+        /// when get, whitespace is normalized and trimmed.
+        /// <p/>
+        /// For example, given HTML
+        /// <c>&lt;p&gt;Hello  &lt;b&gt;there&lt;/b&gt; now! &lt;/p&gt;</c>,
+        /// <c>p.Text</c> returns <c>"Hello there now!"</c>
+        /// </para>
+        /// <para>
+        /// when set, any existing contents (text or elements) will be cleared.
+        /// </para>
+        /// <para>
+        /// if you want to use fluent API, write <c>using Supremes.Fluent;</c>.
+        /// </para>
+        /// </remarks>
+        /// <value>unencoded text</value>
+        /// <returns>unencoded text, or empty string if none.</returns>
+        /// <seealso cref="Supremes.Fluent.FluentUtility">Supremes.Fluent.FluentUtility</seealso>
+        public override string Text
         {
-            Body().Text(text);
-            // overridden to not nuke doc structure
-            return this;
+            get { return base.Text; }
+            set { Body.Text = value; } // overridden to not nuke doc structure
         }
 
         internal override string NodeName
@@ -537,44 +512,35 @@ namespace Supremes.Nodes
         }
 
         /// <summary>
-        /// Get the document's current output settings.
+        /// Get or Set the document's current output settings.
         /// </summary>
-        /// <returns>the document's current output settings.</returns>
-        public DocumentOutputSettings OutputSettings()
+        /// <remarks>
+        /// if you want to use fluent API, write <c>using Supremes.Fluent;</c>.
+        /// </remarks>
+        /// <value>new output settings</value>
+        /// <returns>the document's current output settings</returns>
+        /// <seealso cref="Supremes.Fluent.FluentUtility">Supremes.Fluent.FluentUtility</seealso>
+        public DocumentOutputSettings OutputSettings
         {
-            return outputSettings;
+            get { return outputSettings; }
+            set
+            {
+                Validate.NotNull(outputSettings);
+                outputSettings = value;
+            }
         }
 
         /// <summary>
-        /// Set the document's output settings.
+        /// Get or Set the document's quirks mode.
         /// </summary>
-        /// <param name="outputSettings">new output settings.</param>
-        /// <returns>this document, for chaining.</returns>
-        public Document OutputSettings(DocumentOutputSettings outputSettings)
+        /// <remarks>
+        /// if you want to use fluent API, write <c>using Supremes.Fluent;</c>.
+        /// </remarks>
+        /// <seealso cref="Supremes.Fluent.FluentUtility">Supremes.Fluent.FluentUtility</seealso>
+        public DocumentQuirksMode QuirksMode
         {
-            Validate.NotNull(outputSettings);
-            this.outputSettings = outputSettings;
-            return this;
-        }
-
-        /// <summary>
-        /// Gets the document's quirks mode.
-        /// </summary>
-        /// <returns></returns>
-        public DocumentQuirksMode QuirksMode()
-        {
-            return quirksMode;
-        }
-
-        /// <summary>
-        /// Sets the document's quirks mode.
-        /// </summary>
-        /// <param name="quirksMode"></param>
-        /// <returns></returns>
-        public Document QuirksMode(DocumentQuirksMode quirksMode)
-        {
-            this.quirksMode = quirksMode;
-            return this;
+            get { return quirksMode; }
+            set { quirksMode = value; }
         }
     }
 }

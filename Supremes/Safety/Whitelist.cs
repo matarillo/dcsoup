@@ -14,19 +14,19 @@ namespace Supremes.Safety
     /// Start with one of the defaults:
     /// <ul>
     /// <li>
-    /// <see cref="None()">None()</see>
+    /// <see cref="None">None</see>
     /// </li>
     /// <li>
-    /// <see cref="SimpleText()">SimpleText()</see>
+    /// <see cref="SimpleText">SimpleText</see>
     /// </li>
     /// <li>
-    /// <see cref="Basic()">Basic()</see>
+    /// <see cref="Basic">Basic</see>
     /// </li>
     /// <li>
-    /// <see cref="BasicWithImages()">BasicWithImages()</see>
+    /// <see cref="BasicWithImages">BasicWithImages</see>
     /// </li>
     /// <li>
-    /// <see cref="Relaxed()">Relaxed()</see>
+    /// <see cref="Relaxed">Relaxed</see>
     /// </li>
     /// </ul>
     /// <p/>
@@ -48,9 +48,9 @@ namespace Supremes.Safety
     /// </li>
     /// </ul>
     /// <p/>
-    /// The cleaner and these whitelists assume that you want to clean a <code>body</code> fragment of HTML (to add user
+    /// The cleaner and these whitelists assume that you want to clean a <c>body</c> fragment of HTML (to add user
     /// supplied HTML into a templated page), and not to clean a full HTML document. If the latter is the case, either wrap the
-    /// document HTML around the cleaned body HTML, or create a whitelist that allows <code>html</code> and <code>head</code>
+    /// document HTML around the cleaned body HTML, or create a whitelist that allows <c>html</c> and <c>head</c>
     /// elements as appropriate.
     /// <p/>
     /// If you are going to extend a whitelist, please be very careful. Make sure you understand what attributes may lead to
@@ -80,104 +80,113 @@ namespace Supremes.Safety
         /// This whitelist allows only text nodes: all HTML will be stripped.
         /// </summary>
         /// <returns>whitelist</returns>
-        public static Whitelist None()
+        public static Whitelist None
         {
-            return new Supremes.Safety.Whitelist();
+            get { return new Supremes.Safety.Whitelist(); }
         }
 
         /// <summary>
-        /// This whitelist allows only simple text formatting: <code>b, em, i, strong, u</code>.
+        /// This whitelist allows only simple text formatting: <c>b, em, i, strong, u</c>.
         /// </summary>
         /// <remarks>
         /// All other HTML (tags and attributes) will be removed.
         /// </remarks>
         /// <returns>whitelist</returns>
-        public static Whitelist SimpleText()
+        public static Whitelist SimpleText
         {
-            return new Supremes.Safety.Whitelist().AddTags("b", "em", "i", "strong", "u");
+            get { return new Supremes.Safety.Whitelist().AddTags("b", "em", "i", "strong", "u"); }
         }
 
         /// <summary>
-        /// This whitelist allows a fuller range of text nodes: <code>a, b, blockquote, br, cite, code, dd, dl, dt, em, i, li,
-        /// ol, p, pre, q, small, span, strike, strong, sub, sup, u, ul</code>, and appropriate attributes.
+        /// This whitelist allows a fuller range of text nodes: <c>a, b, blockquote, br, cite, code, dd, dl, dt, em, i, li,
+        /// ol, p, pre, q, small, span, strike, strong, sub, sup, u, ul</c>, and appropriate attributes.
         /// </summary>
         /// <remarks>
         /// <para>
-        /// Links (<code>a</code> elements) can point to <code>http, https, ftp, mailto</code>, and have an enforced
-        /// <code>rel=nofollow</code> attribute.
+        /// Links (<c>a</c> elements) can point to <c>http, https, ftp, mailto</c>, and have an enforced
+        /// <c>rel=nofollow</c> attribute.
         /// </para>
         /// <para>
         /// Does not allow images.
         /// </para>
         /// </remarks>
         /// <returns>whitelist</returns>
-        public static Whitelist Basic()
+        public static Whitelist Basic
         {
-            return new Supremes.Safety.Whitelist()
-                .AddTags("a", "b", "blockquote", "br", "cite", "code", "dd", "dl", "dt", "em", "i",
-                    "li", "ol", "p", "pre", "q", "small", "span", "strike", "strong", "sub", "sup", "u", "ul")
-                .AddAttributes("a", "href")
-                .AddAttributes("blockquote", "cite")
-                .AddAttributes("q", "cite")
-                .AddProtocols("a", "href", "ftp", "http", "https", "mailto")
-                .AddProtocols("blockquote", "cite", "http", "https")
-                .AddProtocols("cite", "cite", "http", "https")
-                .AddEnforcedAttribute("a", "rel", "nofollow");
+            get
+            {
+                return new Supremes.Safety.Whitelist()
+                    .AddTags("a", "b", "blockquote", "br", "cite", "code", "dd", "dl", "dt", "em", "i",
+                        "li", "ol", "p", "pre", "q", "small", "span", "strike", "strong", "sub", "sup", "u", "ul")
+                    .AddAttributes("a", "href")
+                    .AddAttributes("blockquote", "cite")
+                    .AddAttributes("q", "cite")
+                    .AddProtocols("a", "href", "ftp", "http", "https", "mailto")
+                    .AddProtocols("blockquote", "cite", "http", "https")
+                    .AddProtocols("cite", "cite", "http", "https")
+                    .AddEnforcedAttribute("a", "rel", "nofollow");
+            }
         }
 
         /// <summary>
         /// This whitelist allows the same text tags as
-        /// <see cref="Basic()">Basic()</see>
-        /// , and also allows <code>img</code> tags, with appropriate
-        /// attributes, with <code>src</code> pointing to <code>http</code> or <code>https</code>.
+        /// <see cref="Basic">Basic</see>
+        /// , and also allows <c>img</c> tags, with appropriate
+        /// attributes, with <c>src</c> pointing to <c>http</c> or <c>https</c>.
         /// </summary>
         /// <returns>whitelist</returns>
-        public static Whitelist BasicWithImages()
+        public static Whitelist BasicWithImages
         {
-            return Basic()
-                .AddTags("img")
-                .AddAttributes("img", "align", "alt", "height", "src", "title", "width")
-                .AddProtocols("img", "src", "http", "https");
+            get
+            {
+                return Basic
+                    .AddTags("img")
+                    .AddAttributes("img", "align", "alt", "height", "src", "title", "width")
+                    .AddProtocols("img", "src", "http", "https");
+            }
         }
 
         /// <summary>
-        /// This whitelist allows a full range of text and structural body HTML: <code>a, b, blockquote, br, caption, cite,
+        /// This whitelist allows a full range of text and structural body HTML: <c>a, b, blockquote, br, caption, cite,
         /// code, col, colgroup, dd, div, dl, dt, em, h1, h2, h3, h4, h5, h6, i, img, li, ol, p, pre, q, small, span, strike, strong, sub,
-        /// sup, table, tbody, td, tfoot, th, thead, tr, u, ul</code>
+        /// sup, table, tbody, td, tfoot, th, thead, tr, u, ul</c>
         /// <p/>
-        /// Links do not have an enforced <code>rel=nofollow</code> attribute, but you can add that if desired.
+        /// Links do not have an enforced <c>rel=nofollow</c> attribute, but you can add that if desired.
         /// </summary>
         /// <remarks>
-        /// This whitelist allows a full range of text and structural body HTML: <code>a, b, blockquote, br, caption, cite,
+        /// This whitelist allows a full range of text and structural body HTML: <c>a, b, blockquote, br, caption, cite,
         /// code, col, colgroup, dd, div, dl, dt, em, h1, h2, h3, h4, h5, h6, i, img, li, ol, p, pre, q, small, span, strike, strong, sub,
-        /// sup, table, tbody, td, tfoot, th, thead, tr, u, ul</code>
+        /// sup, table, tbody, td, tfoot, th, thead, tr, u, ul</c>
         /// <p/>
-        /// Links do not have an enforced <code>rel=nofollow</code> attribute, but you can add that if desired.
+        /// Links do not have an enforced <c>rel=nofollow</c> attribute, but you can add that if desired.
         /// </remarks>
         /// <returns>whitelist</returns>
-        public static Whitelist Relaxed()
+        public static Whitelist Relaxed
         {
-            return new Supremes.Safety.Whitelist()
-                .AddTags("a", "b", "blockquote", "br", "caption", "cite", "code", "col", "colgroup",
-                    "dd", "div", "dl", "dt", "em", "h1", "h2", "h3", "h4", "h5", "h6", "i", "img",
-                    "li", "ol", "p", "pre", "q", "small", "span", "strike", "strong", "sub", "sup",
-                    "table", "tbody", "td", "tfoot", "th", "thead", "tr", "u", "ul")
-                .AddAttributes("a", "href", "title")
-                .AddAttributes("blockquote", "cite")
-                .AddAttributes("col", "span", "width")
-                .AddAttributes("colgroup", "span", "width")
-                .AddAttributes("img", "align", "alt", "height", "src", "title", "width")
-                .AddAttributes("ol", "start", "type")
-                .AddAttributes("q", "cite")
-                .AddAttributes("table", "summary", "width")
-                .AddAttributes("td", "abbr", "axis", "colspan", "rowspan", "width")
-                .AddAttributes("th", "abbr", "axis", "colspan", "rowspan", "scope", "width")
-                .AddAttributes("ul", "type")
-                .AddProtocols("a", "href", "ftp", "http", "https", "mailto")
-                .AddProtocols("blockquote", "cite", "http", "https")
-                .AddProtocols("cite", "cite", "http", "https")
-                .AddProtocols("img", "src", "http", "https")
-                .AddProtocols("q", "cite", "http", "https");
+            get
+            {
+                return new Supremes.Safety.Whitelist()
+                    .AddTags("a", "b", "blockquote", "br", "caption", "cite", "code", "col", "colgroup",
+                        "dd", "div", "dl", "dt", "em", "h1", "h2", "h3", "h4", "h5", "h6", "i", "img",
+                        "li", "ol", "p", "pre", "q", "small", "span", "strike", "strong", "sub", "sup",
+                        "table", "tbody", "td", "tfoot", "th", "thead", "tr", "u", "ul")
+                    .AddAttributes("a", "href", "title")
+                    .AddAttributes("blockquote", "cite")
+                    .AddAttributes("col", "span", "width")
+                    .AddAttributes("colgroup", "span", "width")
+                    .AddAttributes("img", "align", "alt", "height", "src", "title", "width")
+                    .AddAttributes("ol", "start", "type")
+                    .AddAttributes("q", "cite")
+                    .AddAttributes("table", "summary", "width")
+                    .AddAttributes("td", "abbr", "axis", "colspan", "rowspan", "width")
+                    .AddAttributes("th", "abbr", "axis", "colspan", "rowspan", "scope", "width")
+                    .AddAttributes("ul", "type")
+                    .AddProtocols("a", "href", "ftp", "http", "https", "mailto")
+                    .AddProtocols("blockquote", "cite", "http", "https")
+                    .AddProtocols("cite", "cite", "http", "https")
+                    .AddProtocols("img", "src", "http", "https")
+                    .AddProtocols("q", "cite", "http", "https");
+            }
         }
 
         /// <summary>
@@ -185,10 +194,10 @@ namespace Supremes.Safety
         /// <remarks>
         /// Generally it will be better to start with a default prepared whitelist instead.
         /// </remarks>
-        /// <seealso cref="Basic()">Basic()</seealso>
-        /// <seealso cref="BasicWithImages()">BasicWithImages()</seealso>
-        /// <seealso cref="SimpleText()">SimpleText()</seealso>
-        /// <seealso cref="Relaxed()">Relaxed()</seealso>
+        /// <seealso cref="Basic">Basic</seealso>
+        /// <seealso cref="BasicWithImages">BasicWithImages</seealso>
+        /// <seealso cref="SimpleText">SimpleText</seealso>
+        /// <seealso cref="Relaxed">Relaxed</seealso>
         public Whitelist()
         {
             tagNames = new HashSet<Whitelist.TagName>();
@@ -222,11 +231,11 @@ namespace Supremes.Safety
         /// <remarks>
         /// (If an attribute is not allowed on an element, it will be removed.)
         /// <p/>
-        /// E.g.: <code>addAttributes("a", "href", "class")</code> allows <code>href</code> and <code>class</code> attributes
-        /// on <code>a</code> tags.
+        /// E.g.: <c>addAttributes("a", "href", "class")</c> allows <c>href</c> and <c>class</c> attributes
+        /// on <c>a</c> tags.
         /// <p/>
-        /// To make an attribute valid for <b>all tags</b>, use the pseudo tag <code>:all</code>, e.g.
-        /// <code>addAttributes(":all", "class")</code>.
+        /// To make an attribute valid for <b>all tags</b>, use the pseudo tag <c>:all</c>, e.g.
+        /// <c>addAttributes(":all", "class")</c>.
         /// </remarks>
         /// <param name="tag">The tag the attributes are for. The tag will be added to the allowed tag list if necessary.
         /// </param>
@@ -268,8 +277,8 @@ namespace Supremes.Safety
         /// An enforced attribute will always be added to the element. If the element
         /// already has the attribute set, it will be overridden.
         /// <p/>
-        /// E.g.: <code>addEnforcedAttribute("a", "rel", "nofollow")</code> will make all <code>a</code> tags output as
-        /// <code>&lt;a href="..." rel="nofollow"&gt;</code>
+        /// E.g.: <c>addEnforcedAttribute("a", "rel", "nofollow")</c> will make all <c>a</c> tags output as
+        /// <c>&lt;a href="..." rel="nofollow"&gt;</c>
         /// </remarks>
         /// <param name="tag">The tag the enforced attribute is for. The tag will be added to the allowed tag list if necessary.
         /// </param>
@@ -309,25 +318,25 @@ namespace Supremes.Safety
         /// Configure this Whitelist to preserve relative links in an element's URL attribute, or convert them to absolute
         /// links. By default, this is <b>false</b>: URLs will be  made absolute (e.g. start with an allowed protocol, like
         /// e.g.
-        /// <code>http://</code>
+        /// <c>http://</c>
         /// .
         /// <p />
         /// Note that when handling relative links, the input document must have an appropriate
-        /// <code>base URI</code>
+        /// <c>base URI</c>
         /// set when
         /// parsing, so that the link's protocol can be confirmed. Regardless of the setting of the
-        /// <code>
+        /// <c>
         /// preserve relative
         /// links
-        /// </code>
+        /// </c>
         /// option, the link must be resolvable against the base URI to an allowed protocol; otherwise the attribute
         /// will be removed.
         /// </remarks>
         /// <param name="preserve">
         /// 
-        /// <code>true</code>
+        /// <c>true</c>
         /// to allow relative links,
-        /// <code>false</code>
+        /// <c>false</c>
         /// (default) to deny
         /// </param>
         /// <returns>this Whitelist, for chaining.</returns>
@@ -346,7 +355,7 @@ namespace Supremes.Safety
         /// This restricts the possible values of the attribute to
         /// URLs with the defined protocol.
         /// <p/>
-        /// E.g.: <code>addProtocols("a", "href", "ftp", "http", "https")</code>
+        /// E.g.: <c>addProtocols("a", "href", "ftp", "http", "https")</c>
         /// </remarks>
         /// <param name="tag">Tag the URL protocol is for</param>
         /// <param name="key">Attribute key</param>

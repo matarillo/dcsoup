@@ -92,13 +92,13 @@ namespace Supremes.Parsers
             Element root = null;
             if (context != null)
             {
-                if (context.OwnerDocument() != null)
+                if (context.OwnerDocument != null)
                 {
                     // quirks setup:
-                    doc.QuirksMode(context.OwnerDocument().QuirksMode());
+                    doc.QuirksMode = context.OwnerDocument.QuirksMode;
                 }
                 // initialise the tokeniser state:
-                string contextTag = context.TagName();
+                string contextTag = context.TagName;
                 if (StringUtil.In(contextTag, "title", "textarea"))
                 {
                     tokeniser.Transition(TokeniserState.Rcdata);
@@ -131,7 +131,7 @@ namespace Supremes.Parsers
                 ResetInsertionMode();
                 // setup form element to nearest form on context (up ancestor chain). ensures form controls are associated
                 // with form correctly
-                Elements contextChain = context.Parents();
+                Elements contextChain = context.Parents;
                 contextChain.Insert(0, context);
                 foreach (Element parent in contextChain)
                 {
@@ -145,11 +145,11 @@ namespace Supremes.Parsers
             RunParser();
             if (context != null)
             {
-                return root.ChildNodes();
+                return root.ChildNodes;
             }
             else
             {
-                return doc.ChildNodes();
+                return doc.ChildNodes;
             }
         }
 
@@ -230,7 +230,7 @@ namespace Supremes.Parsers
 
         internal void Error(HtmlTreeBuilderState state)
         {
-            if (errors.CanAddError())
+            if (errors.CanAddError)
             {
                 errors.Add(new ParseError(reader.Pos(), "Unexpected token [{0}] when in state [{1}]", currentToken.Type(), state.Name()));
             }
@@ -246,7 +246,7 @@ namespace Supremes.Parsers
                 stack.AddLast(el);
                 tokeniser.Transition(TokeniserState.Data);
                 // handles <script />, otherwise needs breakout steps from script data
-                tokeniser.Emit(new Token.EndTag(el.TagName()));
+                tokeniser.Emit(new Token.EndTag(el.TagName));
                 // ensure we get out of whatever state we are in. emitted for yielded processing
                 return el;
             }
@@ -276,9 +276,9 @@ namespace Supremes.Parsers
             InsertNode(el);
             if (startTag.IsSelfClosing())
             {
-                if (tag.IsKnownTag())
+                if (tag.IsKnown)
                 {
-                    if (tag.IsSelfClosing())
+                    if (tag.IsSelfClosing)
                     {
                         tokeniser.AcknowledgeSelfClosingFlag();
                     }
@@ -318,7 +318,7 @@ namespace Supremes.Parsers
         {
             Node node;
             // characters in script and style go in as datanodes, not text nodes
-            string tagName = CurrentElement().TagName();
+            string tagName = CurrentElement().TagName;
             if (tagName.Equals("script") || tagName.Equals("style"))
             {
                 node = new DataNode(characterToken.GetData(), baseUri);
@@ -350,7 +350,7 @@ namespace Supremes.Parsers
                 }
             }
             // connect form controls to their form element
-            if (node is Element && ((Element)node).Tag().IsFormListed())
+            if (node is Element && ((Element)node).Tag.IsFormListed)
             {
                 if (formElement != null)
                 {
@@ -825,7 +825,7 @@ namespace Supremes.Parsers
         private bool IsSameFormattingElement(Element a, Element b)
         {
             // same if: same namespace, tag, and attributes. Element.equals only checks tag, might in future check children
-            return a.NodeName.Equals(b.NodeName) && a.Attributes().Equals(b.Attributes());
+            return a.NodeName.Equals(b.NodeName) && a.Attributes.Equals(b.Attributes);
         }
 
         // a.namespace().equals(b.namespace()) &&
@@ -872,7 +872,7 @@ namespace Supremes.Parsers
                 Element newEl = Insert(entry.NodeName);
                 // todo: avoid fostering here?
                 // newEl.namespace(entry.namespace()); // todo: namespaces
-                newEl.Attributes().SetAll(entry.Attributes());
+                newEl.Attributes.SetAll(entry.Attributes);
                 // 10. replace entry with new entry
                 formattingElements[pos] = newEl;
                 // 11
@@ -955,9 +955,9 @@ namespace Supremes.Parsers
             bool isLastTableParent = false;
             if (lastTable != null)
             {
-                if (lastTable.Parent() != null)
+                if (lastTable.Parent != null)
                 {
-                    fosterParent = lastTable.ParentElement();
+                    fosterParent = lastTable.Parent;
                     isLastTableParent = true;
                 }
                 else

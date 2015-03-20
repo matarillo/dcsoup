@@ -38,17 +38,17 @@ namespace Supremes.Select
             while (node != null)
             {
                 visitor.Head(node, depth);
-                if (node.ChildNodeSize() > 0)
+                if (node.ChildNodeSize > 0)
                 {
                     node = node.ChildNode(0);
                     depth++;
                 }
                 else
                 {
-                    while (node.NextSibling() == null && depth > 0)
+                    while (node.NextSibling == null && depth > 0)
                     {
                         visitor.Tail(node, depth);
-                        node = node.ParentNode();
+                        node = node.Parent;
                         depth--;
                     }
                     visitor.Tail(node, depth);
@@ -56,7 +56,7 @@ namespace Supremes.Select
                     {
                         break;
                     }
-                    node = node.NextSibling();
+                    node = node.NextSibling;
                 }
             }
         }

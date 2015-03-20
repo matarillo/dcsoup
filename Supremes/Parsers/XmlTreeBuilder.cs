@@ -7,11 +7,11 @@ namespace Supremes.Parsers
 {
     /// <summary>
     /// Use the
-    /// <code>XmlTreeBuilder</code>
+    /// <c>XmlTreeBuilder</c>
     /// when you want to parse XML without any of the HTML DOM rules being applied to the
     /// document.
     /// <p>Usage example:
-    /// <code>Document xmlDoc = Nsoup.Parse(html, baseUrl, Parser.XmlParser());</code>
+    /// <c>Document xmlDoc = Nsoup.Parse(html, baseUrl, Parser.XmlParser());</c>
     /// </p>
     /// </summary>
     /// <author>Jonathan Hedley</author>
@@ -22,7 +22,7 @@ namespace Supremes.Parsers
             base.InitialiseParse(input, baseUri, errors);
             stack.AddLast(doc);
             // place the document onto the stack. differs from HtmlTreeBuilder (not on stack)
-            doc.OutputSettings().Syntax(DocumentSyntax.Xml);
+            doc.OutputSettings.Syntax = DocumentSyntax.Xml;
         }
 
         internal override bool Process(Token token)
@@ -89,7 +89,7 @@ namespace Supremes.Parsers
             if (startTag.IsSelfClosing())
             {
                 tokeniser.AcknowledgeSelfClosingFlag();
-                if (!tag.IsKnownTag())
+                if (!tag.IsKnown)
                 {
                     // unknown tag, remember this is self closing for output. see above.
                     tag.SetSelfClosing();
@@ -109,11 +109,11 @@ namespace Supremes.Parsers
             if (commentToken.bogus)
             {
                 // xml declarations are emitted as bogus comments (which is right for html, but not xml)
-                string data = comment.GetData();
+                string data = comment.Data;
                 if (data.Length > 1 && (data.StartsWith("!", StringComparison.Ordinal) || data.StartsWith("?", StringComparison.Ordinal)))
                 {
                     string declaration = data.Substring(1); /*substring*/
-                    insert = new XmlDeclaration(declaration, comment.BaseUri(), data.StartsWith("!", StringComparison.Ordinal));
+                    insert = new XmlDeclaration(declaration, comment.BaseUri, data.StartsWith("!", StringComparison.Ordinal));
                 }
             }
             InsertNode(insert);
@@ -177,7 +177,7 @@ namespace Supremes.Parsers
         {
             InitialiseParse(inputFragment, baseUri, errors);
             RunParser();
-            return doc.ChildNodes();
+            return doc.ChildNodes;
         }
     }
 }

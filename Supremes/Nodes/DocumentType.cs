@@ -4,7 +4,7 @@ namespace Supremes.Nodes
 {
     /// <summary>
     /// A
-    /// <code>&lt;!DOCTYPE&gt;</code>
+    /// <c>&lt;!DOCTYPE&gt;</c>
     /// node.
     /// </summary>
     internal sealed class DocumentType : Node
@@ -30,7 +30,7 @@ namespace Supremes.Nodes
         	get { return "#doctype"; }
         }
 
-        internal override void OuterHtmlHead(StringBuilder accum, int depth, DocumentOutputSettings @out)
+        internal override void AppendOuterHtmlHeadTo(StringBuilder accum, int depth, DocumentOutputSettings @out)
         {
             accum.Append("<!DOCTYPE");
             if (!string.IsNullOrEmpty(Attr("name")))
@@ -48,7 +48,7 @@ namespace Supremes.Nodes
             accum.Append('>');
         }
 
-        internal override void OuterHtmlTail(StringBuilder accum, int depth, DocumentOutputSettings @out)
+        internal override void AppendOuterHtmlTailTo(StringBuilder accum, int depth, DocumentOutputSettings @out)
         {
         }
     }

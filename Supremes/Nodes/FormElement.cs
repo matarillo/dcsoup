@@ -31,9 +31,9 @@ namespace Supremes.Nodes
         /// Get the list of form control elements associated with this form.
         /// </summary>
         /// <returns>form controls associated with this element.</returns>
-        public Elements Elements()
+        public Elements Elements
         {
-            return elements;
+            get { return elements; }
         }
 
         /// <summary>
@@ -61,9 +61,9 @@ namespace Supremes.Nodes
         /// </exception>
         public Task<HttpResponseMessage> SubmitAsync(HttpClient client)
         {
-            string action = HasAttr("action") ? AbsUrl("action") : BaseUri();
+            string action = HasAttr("action") ? AbsUrl("action") : BaseUri;
             Validate.NotEmpty(action, "Could not determine a form action URL for submit. Ensure you set a base URI when parsing.");
-            var data = new FormUrlEncodedContent(this.FormData());
+            var data = new FormUrlEncodedContent(this.FormData);
             if (string.Equals(Attr("method"), "POST", StringComparison.OrdinalIgnoreCase))
             {
                 // POST
@@ -92,9 +92,9 @@ namespace Supremes.Nodes
         /// </exception>
         public Task<HttpResponseMessage> SubmitAsync(HttpClient client, CancellationToken cancellationToken)
         {
-            string action = HasAttr("action") ? AbsUrl("action") : BaseUri();
+            string action = HasAttr("action") ? AbsUrl("action") : BaseUri;
             Validate.NotEmpty(action, "Could not determine a form action URL for submit. Ensure you set a base URI when parsing.");
-            var data = new FormUrlEncodedContent(this.FormData());
+            var data = new FormUrlEncodedContent(this.FormData);
             if (string.Equals(Attr("method"), "POST", StringComparison.OrdinalIgnoreCase))
             {
                 // POST
@@ -117,36 +117,39 @@ namespace Supremes.Nodes
         /// list will not be reflected in the DOM.
         /// </remarks>
         /// <returns>a list of key vals</returns>
-        public IList<KeyValuePair<string, string>> FormData()
+        public IList<KeyValuePair<string, string>> FormData
         {
-            List<KeyValuePair<string, string>> data = new List<KeyValuePair<string, string>>();
-            // iterate the form control elements and accumulate their values
-            foreach (Element el in elements)
+            get
             {
-                if (!el.Tag().IsFormSubmittable())
+                List<KeyValuePair<string, string>> data = new List<KeyValuePair<string, string>>();
+                // iterate the form control elements and accumulate their values
+                foreach (Element el in elements)
                 {
-                    continue;
-                }
-                // contents are form listable, superset of submitable
-                string name = el.Attr("name");
-                if (name.Length == 0)
-                {
-                    continue;
-                }
-                if ("select".Equals(el.TagName()))
-                {
-                    Supremes.Nodes.Elements options = el.Select("option[selected]");
-                    foreach (Element option in options)
+                    if (!el.Tag.IsFormSubmittable)
                     {
-                        data.Add(new KeyValuePair<string, string>(name, option.Val()));
+                        continue;
+                    }
+                    // contents are form listable, superset of submitable
+                    string name = el.Attr("name");
+                    if (name.Length == 0)
+                    {
+                        continue;
+                    }
+                    if ("select".Equals(el.TagName))
+                    {
+                        Supremes.Nodes.Elements options = el.Select("option[selected]");
+                        foreach (Element option in options)
+                        {
+                            data.Add(new KeyValuePair<string, string>(name, option.Val));
+                        }
+                    }
+                    else
+                    {
+                        data.Add(new KeyValuePair<string, string>(name, el.Val));
                     }
                 }
-                else
-                {
-                    data.Add(new KeyValuePair<string, string>(name, el.Val()));
-                }
+                return data;
             }
-            return data;
         }
     }
 }
