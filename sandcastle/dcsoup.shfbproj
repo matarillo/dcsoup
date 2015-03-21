@@ -28,19 +28,25 @@
     <NamespaceGrouping>False</NamespaceGrouping>
     <SyntaxFilters>C#, Visual Basic, F#</SyntaxFilters>
     <SdkLinkTarget>Blank</SdkLinkTarget>
-    <RootNamespaceContainer>False</RootNamespaceContainer>
+    <RootNamespaceContainer>True</RootNamespaceContainer>
     <PresentationStyle>VS2013</PresentationStyle>
-    <Preliminary>False</Preliminary>
+    <Preliminary>True</Preliminary>
     <NamingMethod>Guid</NamingMethod>
     <HelpTitle>dcsoup API documentation</HelpTitle>
     <CopyrightHref>https://github.com/matarillo/dcsoup</CopyrightHref>
     <ContentPlacement>AboveNamespaces</ContentPlacement>
     <DocumentationSources>
       <DocumentationSource sourceFile="..\Supremes\bin\Debug\Supremes.dll" xmlns="" />
-<DocumentationSource sourceFile="..\Supremes\bin\Debug\Supremes.xml" xmlns="" /></DocumentationSources>
+      <DocumentationSource sourceFile="..\Supremes\bin\Debug\Supremes.xml" xmlns="" />
+    </DocumentationSources>
     <BuildLogFile>obj\build.log</BuildLogFile>
     <MissingTags>Summary, Parameter, Returns, AutoDocumentCtors, TypeParameter, AutoDocumentDispose</MissingTags>
     <WorkingPath>obj\</WorkingPath>
+    <ProjectSummary>&amp;lt%3bp&amp;gt%3bdcsoup is a .NET library for working with real-world HTML. It provides a very convenient API for extracting and manipulating data, using the best of DOM, CSS, and jquery-like methods.&amp;lt%3b/p&amp;gt%3b
+&amp;lt%3bp&amp;gt%3bThis library is basically a port of jsoup, a Java HTML parser library. see also: &amp;lt%3ba href=&amp;quot%3bhttp://jsoup.org/&amp;quot%3b&amp;gt%3bhttp://jsoup.org/&amp;lt%3b/a&amp;gt%3b&amp;lt%3b/p&amp;gt%3b</ProjectSummary>
+    <CopyrightText>Copyright &amp;#169%3b 2015 INOMATA Kentaro</CopyrightText>
+    <HeaderText>version 0.2.0</HeaderText>
+    <RootNamespaceTitle>dcsoup API documentation</RootNamespaceTitle>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
 			 the build.  The others are optional common platform types that may appear. -->
