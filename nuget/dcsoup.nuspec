@@ -3,16 +3,19 @@
   <metadata>
     <id>dcsoup</id>
     <title>dcsoup HTML Parser</title>
-    <version>0.1.0</version>
+    <version>0.2.0</version>
     <authors>INOMATA Kentaro</authors>
     <owners>INOMATA Kentaro</owners>
     <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
     <projectUrl>https://github.com/matarillo/dcsoup</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/matarillo/dcsoup/master/nuget/dcsoup_icon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>dcsoup is a .NET library for working with real-world HTML. It provides a very convenient API for extracting and manipulating data, using the best of DOM, CSS, and jquery-like methods.</summary>
     <description>dcsoup is a .NET library for working with real-world HTML. It provides a very convenient API for extracting and manipulating data, using the best of DOM, CSS, and jquery-like methods.
-This library is basically a port of jsoup, a Java HTML parser library. see also: http://jsoup.org/</description>
-    <releaseNotes>v0.1.0: initial release.</releaseNotes>
+This library is basically a port of jsoup, a Java HTML parser library. see also: http://jsoup.org/
+API reference is available at: https://raw.githubusercontent.com/matarillo/dcsoup/master/sandcastle/Help/dcsoup.chm</description>
+    <releaseNotes>v0.2.0: reorganized proeprties and setter/getter methods. (breaking changes)
+v0.1.0: initial release.</releaseNotes>
     <copyright>Copyright © 2015 INOMATA Kentaro</copyright>
     <tags>HTML jsoup jquery parse parser parsing crawl crawler crawling scrape scraper scraping headless xpath agility</tags>
     <dependencies/>
