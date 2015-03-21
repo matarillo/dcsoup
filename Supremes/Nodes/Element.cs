@@ -255,7 +255,7 @@ namespace Supremes.Nodes
         /// empty list.
         /// <p/>
         /// For example, with the input HTML:
-        /// <c><p>One <span>Two</span> Three <br /> Four</p></c>
+        /// <c><![CDATA[<p>One <span>Two</span> Three <br /> Four</p>]]></c>
         /// with the
         /// <c>p</c>
         /// element selected:
@@ -287,31 +287,40 @@ namespace Supremes.Nodes
         /// </li>
         /// </ul>
         /// </returns>
-        internal IReadOnlyList<TextNode> TextNodes()
+        public IReadOnlyList<TextNode> TextNodes
         {
-            List<TextNode> textNodes = childNodes.OfType<TextNode>().ToList();
-            return textNodes.AsReadOnly();
+            get
+            {
+                List<TextNode> textNodes = childNodes.OfType<TextNode>().ToList();
+                return textNodes.AsReadOnly();
+            }
         }
 
         /// <summary>
         /// Get this element's child data nodes.
         /// </summary>
         /// <remarks>
+        /// <para>
         /// The list is unmodifiable but the data nodes may be manipulated.
-        /// <p/>
+        /// </para>
+        /// <para>
         /// This is effectively a filter on
         /// <see cref="Node.ChildNodes">Node.ChildNodes</see>
         /// to get Data nodes.
+        /// </para>
         /// </remarks>
         /// <returns>
         /// child data nodes. If this element has no data nodes, returns an
         /// empty list.
         /// </returns>
         /// <seealso cref="Data">Data</seealso>
-        internal IReadOnlyList<DataNode> DataNodes()
+        public IReadOnlyList<DataNode> DataNodes
         {
-            List<DataNode> dataNodes = childNodes.OfType<DataNode>().ToList();
-            return dataNodes.AsReadOnly();
+            get
+            {
+                List<DataNode> dataNodes = childNodes.OfType<DataNode>().ToList();
+                return dataNodes.AsReadOnly();
+            }
         }
 
         /// <summary>
@@ -322,12 +331,12 @@ namespace Supremes.Nodes
         /// </summary>
         /// <remarks>
         /// This method is generally more powerful to use than the DOM-type
-        /// <c>getElementBy*</c>
+        /// <c>GetElementBy*</c>
         /// methods, because
         /// multiple filters can be combined, e.g.:
         /// <ul>
         /// <li>
-        /// <c>el.select("a[href]")</c>
+        /// <c>el.Select("a[href]")</c>
         /// - finds links (
         /// <c>a</c>
         /// tags with
@@ -335,7 +344,7 @@ namespace Supremes.Nodes
         /// attributes)
         /// </li>
         /// <li>
-        /// <c>el.select("a[href*=example.com]")</c>
+        /// <c>el.Select("a[href*=example.com]")</c>
         /// - finds links pointing to example.com (loosely)
         /// </li>
         /// </ul>
@@ -421,7 +430,7 @@ namespace Supremes.Nodes
         /// </param>
         /// <returns>
         /// the new element, to allow you to add content to it, e.g.:
-        /// <c>parent.appendElement("h1").attr("id", "header").text("Welcome");</c>
+        /// <c>parent.AppendElement("h1").Attr("id", "header").Text("Welcome");</c>
         /// </returns>
         public Element AppendElement(string tagName)
         {
@@ -441,7 +450,7 @@ namespace Supremes.Nodes
         /// </param>
         /// <returns>
         /// the new element, to allow you to add content to it, e.g.:
-        /// <c>parent.prependElement("h1").attr("id", "header").text("Welcome");</c>
+        /// <c>parent.PrependElement("h1").Attr("id", "header").Text("Welcome");</c>
         /// </returns>
         public Element PrependElement(string tagName)
         {
@@ -571,11 +580,11 @@ namespace Supremes.Nodes
         /// </summary>
         /// <param name="html">
         /// HTML to wrap around this element, e.g.
-        /// <c><div class="head"></div></c>
+        /// <c><![CDATA[<div class="head"></div>]]></c>
         /// . Can be arbitrarily deep.
         /// </param>
         /// <returns>this element, for chaining.</returns>
-        internal new Element Wrap(string html)
+        public new Element Wrap(string html)
         {
             return (Element)base.Wrap(html);
         }
@@ -656,7 +665,7 @@ namespace Supremes.Nodes
         /// <c>p</c>
         /// s,
         /// the
-        /// <c>nextElementSibling</c>
+        /// <c>NextElementSibling</c>
         /// of the first
         /// <c>p</c>
         /// is the second
@@ -828,7 +837,7 @@ namespace Supremes.Nodes
         /// <c>&lt;div class="header round first"&gt;</c>
         /// . This method
         /// checks each class, so you can find the above with
-        /// <c>el.getElementsByClass("header");</c>
+        /// <c>el.GetElementsByClass("header");</c>
         /// .
         /// </remarks>
         /// <param name="className">the name of the class to search for.</param>

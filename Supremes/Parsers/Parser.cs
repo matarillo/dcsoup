@@ -90,9 +90,9 @@ namespace Supremes.Parsers
             return this;
         }
 
-        /// <remarks>
+        /// <summary>
         /// Retrieve the parse errors, if any, from the last parse.
-        /// </remarks>
+        /// </summary>
         /// <returns>list of parse errors, up to the size of the maximum errors tracked.</returns>
         public IList<ParseError> Errors
         {

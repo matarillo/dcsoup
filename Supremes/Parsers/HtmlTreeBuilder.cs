@@ -218,7 +218,7 @@ namespace Supremes.Parsers
                 // ignore <base target> etc
                 baseUri = href;
                 baseUriSetFromDoc = true;
-                doc.SetBaseUri(href);
+                doc.BaseUri = href;
             }
         }
 

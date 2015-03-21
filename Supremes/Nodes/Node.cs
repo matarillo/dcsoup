@@ -161,22 +161,19 @@ namespace Supremes.Nodes
         }
 
         /// <summary>
-        /// Get the base URI of this node.
+        /// Get or Set the base URI of this node.
+        /// When set, it updates the base URI of this node and all of its descendants.
         /// </summary>
+        /// <value>base URI to set</value>
         /// <returns>base URI</returns>
         public string BaseUri
         {
             get { return baseUri; }
-        }
-
-        /// <summary>
-        /// Update the base URI of this node and all of its descendants.
-        /// </summary>
-        /// <param name="baseUri">base URI to set</param>
-        public void SetBaseUri(string baseUri)
-        {
-            Validate.NotNull(baseUri);
-            Traverse(new BaseUriVisitor(baseUri));
+            set
+            {
+                Validate.NotNull(value);
+                Traverse(new BaseUriVisitor(value));
+            }
         }
 
         private sealed class BaseUriVisitor : INodeVisitor
@@ -210,7 +207,7 @@ namespace Supremes.Nodes
         /// If the attribute value is already absolute (i.e. it starts with a protocol, like
         /// <c>http://</c> or <c>https://</c> etc), and it successfully parses as a URL, the attribute is
         /// returned directly. Otherwise, it is treated as a URL relative to the element's
-        /// <see cref="baseUri">baseUri</see>
+        /// <see cref="BaseUri">BaseUri</see>
         /// , and made
         /// absolute using that.
         /// </para>
@@ -458,7 +455,7 @@ namespace Supremes.Nodes
         /// </summary>
         /// <param name="html">
         /// HTML to wrap around this element, e.g.
-        /// <c><div class="head"></div></c>
+        /// <c><![CDATA[<div class="head"></div>]]></c>
         /// . Can be arbitrarily deep.
         /// </param>
         /// <returns>this node, for chaining.</returns>
@@ -497,14 +494,14 @@ namespace Supremes.Nodes
         /// This has the effect of dropping the node but keeping its children.
         /// <p/>
         /// For example, with the input html:<br/>
-        /// <c><div>One <span>Two <b>Three</b></span></div></c>
+        /// <c><![CDATA[<div>One <span>Two <b>Three</b></span></div>]]></c>
         /// <br/>
         /// Calling
         /// <c>element.Unwrap()</c>
         /// on the
         /// <c>span</c>
         /// element will result in the html:<br/>
-        /// <c><div>One Two <b>Three</b></div></c>
+        /// <c><![CDATA[<div>One Two <b>Three</b></div>]]></c>
         /// <br/>
         /// and the
         /// <c>"Two "</c>

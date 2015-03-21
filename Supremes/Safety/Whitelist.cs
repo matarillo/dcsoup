@@ -277,7 +277,7 @@ namespace Supremes.Safety
         /// An enforced attribute will always be added to the element. If the element
         /// already has the attribute set, it will be overridden.
         /// <p/>
-        /// E.g.: <c>addEnforcedAttribute("a", "rel", "nofollow")</c> will make all <c>a</c> tags output as
+        /// E.g.: <c>AddEnforcedAttribute("a", "rel", "nofollow")</c> will make all <c>a</c> tags output as
         /// <c>&lt;a href="..." rel="nofollow"&gt;</c>
         /// </remarks>
         /// <param name="tag">The tag the enforced attribute is for. The tag will be added to the allowed tag list if necessary.
@@ -355,7 +355,7 @@ namespace Supremes.Safety
         /// This restricts the possible values of the attribute to
         /// URLs with the defined protocol.
         /// <p/>
-        /// E.g.: <c>addProtocols("a", "href", "ftp", "http", "https")</c>
+        /// E.g.: <c>AddProtocols("a", "href", "ftp", "http", "https")</c>
         /// </remarks>
         /// <param name="tag">Tag the URL protocol is for</param>
         /// <param name="key">Attribute key</param>

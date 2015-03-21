@@ -74,7 +74,7 @@ namespace Supremes.Test.Nodes
         public void TestWithSupplementaryCharacter()
         {
             Document doc = Dcsoup.Parse(char.ConvertFromUtf32(135361));
-            TextNode t = doc.Body.TextNodes()[0];
+            TextNode t = doc.Body.TextNodes[0];
             Assert.AreEqual(char.ConvertFromUtf32(135361), t.OuterHtml.Trim());
         }
     }

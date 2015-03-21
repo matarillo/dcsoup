@@ -17,8 +17,11 @@ namespace Supremes
         /// <summary>
         /// Parse HTML into a Document.
         /// </summary>
-        /// <param name="self"></param>
-        /// <returns></returns>
+        /// <param name="self">
+        /// The input <see cref="HttpResponseMessage"/>,
+        /// which acts as the <b>this</b> instance for the extension method.
+        /// </param>
+        /// <returns>sane HTML document</returns>
         public static Document Parse(this HttpResponseMessage self)
         {
             MediaTypeHeaderValue contentType = self.Content.Headers.ContentType;

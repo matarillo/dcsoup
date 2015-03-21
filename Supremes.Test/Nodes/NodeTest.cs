@@ -36,7 +36,7 @@ namespace Supremes.Test.Nodes
         {
             Document doc = Dcsoup.Parse("<div><p></p></div>");
             string baseUri = "http://jsoup.org";
-            doc.SetBaseUri(baseUri);
+            doc.BaseUri = baseUri;
 
             Assert.AreEqual(baseUri, doc.BaseUri);
             Assert.AreEqual(baseUri, doc.Select("div").First.BaseUri);

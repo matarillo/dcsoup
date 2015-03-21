@@ -466,15 +466,15 @@ namespace Supremes.Nodes
         /// </summary>
         /// <remarks>
         /// For example, with HTML
-        /// <c><p><b>This</b> is <b>Nsoup</b></p></c>
+        /// <c><![CDATA[<p><b>This</b> is <b>Nsoup</b></p>]]></c>
         /// ,
-        /// <c>doc.select("b").wrap("&lt;i&gt;&lt;/i&gt;");</c>
+        /// <c>doc.Select("b").Wrap("&lt;i&gt;&lt;/i&gt;");</c>
         /// becomes
-        /// <c><p><i><b>This</b></i> is <i><b>jsoup</b></i></p></c>
+        /// <c><![CDATA[<p><i><b>This</b></i> is <i><b>jsoup</b></i></p>]]></c>
         /// </remarks>
         /// <param name="html">
         /// HTML to wrap around each element, e.g.
-        /// <c><div class="head"></div></c>
+        /// <c><![CDATA[<div class="head"></div>]]></c>
         /// . Can be arbitrarily deep.
         /// </param>
         /// <returns>this (for chaining)</returns>
@@ -501,12 +501,12 @@ namespace Supremes.Nodes
         /// </para>
         /// <para>
         /// E.g. with HTML:
-        /// <c><div><font>One</font> <font><a href="/">Two</a></font></div></c>
+        /// <c>&lt;div&gt;&lt;font&gt;One&lt;/font&gt; &lt;font&gt;&lt;a href="/"&gt;Two&lt;/a&gt;&lt;/font&gt;&lt;/div&gt;</c>
         /// <br/>
-        /// <c>doc.select("font").unwrap();</c>
+        /// <c>doc.Select("font").Unwrap();</c>
         /// <br/>
         /// HTML =
-        /// <c><div>One <a href="/">Two</a></div></c>
+        /// <c>&lt;div&gt;One &lt;a href="/"&gt;Two&lt;/a&gt;&lt;/div&gt;</c>
         /// </para>
         /// </remarks>
         /// <returns>this (for chaining)</returns>
@@ -529,11 +529,11 @@ namespace Supremes.Nodes
         /// </para>
         /// <para>
         /// E.g. HTML:
-        /// <c><div><p>Hello <b>there</b></p> <p>now</p></div></c>
+        /// <c><![CDATA[<div><p>Hello <b>there</b></p> <p>now</p></div>]]></c>
         /// <br />
-        /// <c>doc.select("p").empty();</c><br />
+        /// <c>doc.Select("p").Empty();</c><br />
         /// HTML =
-        /// <c><div><p></p> <p></p></div></c>
+        /// <c><![CDATA[<div><p></p> <p></p></div>]]></c>
         /// </para>
         /// </remarks>
         /// <returns>this, for chaining</returns>
@@ -557,11 +557,11 @@ namespace Supremes.Nodes
         /// </para>
         /// <para>
         /// E.g. HTML:
-        /// <c><div><p>Hello</p> <p>there</p> <img /></div></c>
+        /// <c><![CDATA[<div><p>Hello</p> <p>there</p> <img /></div>]]></c>
         /// <br />
-        /// <c>doc.select("p").remove();</c><br />
+        /// <c>doc.Select("p").Remove();</c><br />
         /// HTML =
-        /// <c><div> <img /></div></c>
+        /// <c><![CDATA[<div> <img /></div>]]></c>
         /// </para>
         /// <para>
         /// Note that this method should not be used to clean user-submitted HTML; rather, use

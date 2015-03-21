@@ -127,14 +127,16 @@ namespace Supremes.Select
         }
 
         /// <summary>
+        /// The exception that is thrown when a <see cref="Selector"/> parses an invalid query.
         /// </summary>
         [Serializable]
         public class SelectorParseException : InvalidOperationException
         {
             /// <summary>
+            /// Initializes a new instance of the <see cref="SelectorParseException"/> class.
             /// </summary>
-            /// <param name="msg"></param>
-            /// <param name="params"></param>
+            /// <param name="msg">A composite format string.</param>
+            /// <param name="params">An object array that contains zero or more objects to format.</param>
             public SelectorParseException(string msg, params object[] @params)
                 : base(string.Format(msg, @params))
             {
