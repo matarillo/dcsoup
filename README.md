@@ -5,4 +5,4 @@ This library is basically a port of jsoup, a Java HTML parser library. see also:
 
 ## API Reference
 
-Help file is avaiable. download [dcsoup.chm](blob/master/sandcastle/Help/dcsoup.chm).
+Help file is avaiable. download [dcsoup.chm](sandcastle/Help/dcsoup.chm).
