@@ -14,4 +14,4 @@ PM> Install-Package dcsoup
 
 ## API Reference
 
-Help file is avaiable. download [dcsoup.chm](sandcastle/Help/dcsoup.chm).
+Help file is avaiable. download [dcsoup.chm](https://raw.githubusercontent.com/matarillo/dcsoup/master/sandcastle/Help/dcsoup.chm).
