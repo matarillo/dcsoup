@@ -87,12 +87,6 @@
     <Compile Include="TextUtil.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Supremes\Supremes.csproj">
-      <Project>{88D4E55C-3335-46FA-9033-6AF6B6491E96}</Project>
-      <Name>Supremes</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="htmltests\README">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -141,6 +135,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Supremes\Supremes.csproj">
+      <Project>{fbb49547-0618-46c3-8850-c6002b7dd449}</Project>
+      <Name>Supremes</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

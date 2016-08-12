@@ -34,6 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Dcsoup.cs" />
     <Compile Include="Fluent\FluentUtility.cs" />
     <Compile Include="Helper\CharsetEncoder.cs" />
     <Compile Include="Helper\CompatUtil.cs" />
