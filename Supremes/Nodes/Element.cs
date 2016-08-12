@@ -3,6 +3,7 @@ using Supremes.Parsers;
 using Supremes.Select;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -292,7 +293,7 @@ namespace Supremes.Nodes
             get
             {
                 List<TextNode> textNodes = childNodes.OfType<TextNode>().ToList();
-                return textNodes.AsReadOnly();
+                return new ReadOnlyCollection<TextNode>(textNodes);
             }
         }
 
@@ -319,7 +320,7 @@ namespace Supremes.Nodes
             get
             {
                 List<DataNode> dataNodes = childNodes.OfType<DataNode>().ToList();
-                return dataNodes.AsReadOnly();
+                return new ReadOnlyCollection<DataNode>(dataNodes);
             }
         }
 
@@ -984,7 +985,7 @@ namespace Supremes.Nodes
         public Elements GetElementsByAttributeValueMatching(string key, string regex)
         {
             Regex pattern;
-            pattern = new Regex(regex, RegexOptions.Compiled); // may throw an exception
+            pattern = CompatUtil.CreateCompiledRegex(regex); // may throw an exception
             return GetElementsByAttributeValueMatching(key, pattern);
         }
 
@@ -1069,7 +1070,7 @@ namespace Supremes.Nodes
         public Elements GetElementsMatchingText(string regex)
         {
             Regex pattern;
-            pattern = new Regex(regex, RegexOptions.Compiled); // may throw an exception
+            pattern = CompatUtil.CreateCompiledRegex(regex); // may throw an exception
             return GetElementsMatchingText(pattern);
         }
 
@@ -1093,7 +1094,7 @@ namespace Supremes.Nodes
         /// <seealso cref="Element.OwnText">Element.OwnText</seealso>
         public Elements GetElementsMatchingOwnText(string regex)
         {
-            Regex pattern = new Regex(regex, RegexOptions.Compiled); // may throw an exception
+            Regex pattern = CompatUtil.CreateCompiledRegex(regex); // may throw an exception
             return GetElementsMatchingOwnText(pattern);
         }
 

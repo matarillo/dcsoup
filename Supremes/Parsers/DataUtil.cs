@@ -16,7 +16,7 @@ namespace Supremes.Parsers
     /// </summary>
     internal static class DataUtil
     {
-        private static readonly Regex charsetPattern = new Regex("(?i)\\bcharset=\\s*(?:\"|')?([^\\s,;\"']*)", RegexOptions.Compiled);
+        private static readonly Regex charsetPattern = CompatUtil.CreateCompiledRegex("(?i)\\bcharset=\\s*(?:\"|')?([^\\s,;\"']*)");
 
         internal static readonly Encoding defaultCharset = Encoding.UTF8; // string defaultCharset = "UTF-8";
 
@@ -25,6 +25,7 @@ namespace Supremes.Parsers
         // used if not found in header or meta charset
         // ~130K.
 
+#if NET45
         /// <summary>
         /// Loads a file to a Document.
         /// </summary>
@@ -39,6 +40,7 @@ namespace Supremes.Parsers
             Parser parser = Parser.HtmlParser;
             return ParseByteData(byteData, charsetName, baseUri, parser);
         }
+#endif
 
         /// <summary>
         /// Parses a Document from an input steam.
@@ -86,7 +88,7 @@ namespace Supremes.Parsers
             {
                 // determine from meta. safe parse as UTF-8
                 // look for <meta http-equiv="Content-Type" content="text/html;charset=gb2312"> or HTML5 <meta charset="gb2312">
-                docData = defaultCharset.GetString(byteData);
+                docData = defaultCharset.GetString(byteData, 0, byteData.Length);
                 doc = parser.ParseInput(docData, baseUri);
                 Element meta = doc.Select("meta[http-equiv=content-type], meta[charset]").First;
                 if (meta != null)
@@ -110,6 +112,7 @@ namespace Supremes.Parsers
                         // need to re-decode
                         var trimmed = foundCharset
                             .Trim()
+                            .Cast<char>()
                             .Where(c => c != '[' && c != '\"' && c != '\'' && c != ']')
                             .ToArray();
                         charsetName = new string(trimmed);
@@ -126,7 +129,7 @@ namespace Supremes.Parsers
                         {
                             // removed when converting
                             // byteData.Rewind();
-                            docData = supportedEncoding.GetString(byteData);
+                            docData = supportedEncoding.GetString(byteData, 0, byteData.Length);
                             doc = null;
                         }
                     }
@@ -136,14 +139,14 @@ namespace Supremes.Parsers
             {
                 // specified by content type header (or by user on file load)
                 Validate.NotEmpty(charsetName, "Must set charset arg to character set of file to parse. Set to null to attempt to detect from HTML");
-                docData = Encoding.GetEncoding(charsetName).GetString(byteData);
+                docData = Encoding.GetEncoding(charsetName).GetString(byteData, 0, byteData.Length);
             }
             // UTF-8 BOM indicator. takes precedence over everything else. rarely used. re-decodes incase above decoded incorrectly
             if (docData.Length > 0 && docData[0] == 65279)
             {
                 // removed when converting
                 // byteData.Rewind();
-                docData = defaultCharset.GetString(byteData);
+                docData = defaultCharset.GetString(byteData, 0, byteData.Length);
                 docData = docData.Substring(1); /*substring*/
                 charsetName = defaultCharset.WebName;
                 doc = null;
@@ -203,11 +206,13 @@ namespace Supremes.Parsers
             return ReadToByteBuffer(inStream, 0);
         }
 
+#if NET45
         /// <exception cref="System.IO.IOException"></exception>
         internal static byte[] ReadFileToByteBuffer(string file)
         {
             return File.ReadAllBytes(file);
         }
+#endif
 
         /// <summary>
         /// Parse out a charset from a content type header.
@@ -233,7 +238,7 @@ namespace Supremes.Parsers
                     return null;
                 }
                 if (CharsetIsSupported(charset)) return charset;
-                charset = charset.ToUpper(CultureInfo.InvariantCulture);
+                charset = CompatUtil.ToUpperInvariantCulture(charset);
                 if (CharsetIsSupported(charset)) return charset;
             }
             return null;

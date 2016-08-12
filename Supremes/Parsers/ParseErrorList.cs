@@ -8,7 +8,9 @@ namespace Supremes.Parsers
     /// A container for ParseErrors.
     /// </summary>
     /// <author>Jonathan Hedley</author>
-    [Serializable]
+#if NET45
+        [Serializable]
+#endif
     internal class ParseErrorList : List<ParseError>
     {
         private const long serialVersionUID = 1L;

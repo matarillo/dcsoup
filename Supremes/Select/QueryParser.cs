@@ -366,7 +366,7 @@ namespace Supremes.Select
                 }
                 else if (cq.MatchChomp("~="))
                 {
-                    evals.Add(new Evaluator.AttributeWithValueMatching(key, new Regex(cq.Remainder(), RegexOptions.Compiled)));
+                    evals.Add(new Evaluator.AttributeWithValueMatching(key, CompatUtil.CreateCompiledRegex(cq.Remainder())));
                 }
                 else
                 {
@@ -398,9 +398,9 @@ namespace Supremes.Select
 
         //pseudo selectors :first-child, :last-child, :nth-child, ...
         private static readonly Regex NTH_AB
-            = new Regex("((\\+|-)?(\\d+)?)n(\\s*(\\+|-)?\\s*\\d+)?", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            = CompatUtil.CreateCompiledRegex("((\\+|-)?(\\d+)?)n(\\s*(\\+|-)?\\s*\\d+)?", RegexOptions.IgnoreCase);
         private static readonly Regex NTH_B
-            = new Regex("(\\+|-)?(\\d+)", RegexOptions.Compiled);
+            = CompatUtil.CreateCompiledRegex("(\\+|-)?(\\d+)");
 
         private void CssNthChild(bool backwards, bool ofType)
         {
@@ -498,11 +498,11 @@ namespace Supremes.Select
             Validate.NotEmpty(regex, ":matches(regex) query must not be empty");
             if (own)
             {
-                evals.Add(new Evaluator.MatchesOwnText(new Regex(regex, RegexOptions.Compiled)));
+                evals.Add(new Evaluator.MatchesOwnText(CompatUtil.CreateCompiledRegex(regex)));
             }
             else
             {
-                evals.Add(new Evaluator.MatchesText(new Regex(regex, RegexOptions.Compiled)));
+                evals.Add(new Evaluator.MatchesText(CompatUtil.CreateCompiledRegex(regex)));
             }
         }
 

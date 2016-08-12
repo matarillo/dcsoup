@@ -14,7 +14,7 @@ namespace Supremes.Helper
     /// <remarks>
     /// Source: <a href="http://www.w3.org/TR/html5/named-character-references.html#named-character-references">W3C HTML named character references</a>.
     /// </remarks>
-    internal static class Entities
+    internal static partial class Entities
     {
         internal enum EscapeMode
         {
@@ -225,37 +225,10 @@ namespace Supremes.Helper
                 { 0x003C, "lt" },
                 { 0x003E, "gt" },
             };
-            @base = LoadEntities("entities-base.properties"); // most common / default
+            @base = GetBaseProperties(); // most common / default
             baseByVal = ToCharacterKey(@base);
-            full = LoadEntities("entities-full.properties"); // extended and overblown.
+            full = GetFullProperties(); // extended and overblown.
             fullByVal = ToCharacterKey(full);
-        }
-
-        private static IDictionary<string, Utf32> LoadEntities(string filename)
-        {
-            Type thisType = typeof(Supremes.Helper.Entities);
-            string resoucePath = thisType.Namespace + "." + filename;
-            Stream @in = thisType.Assembly.GetManifestResourceStream(resoucePath);
-            if (@in == null)
-            {
-                throw new MissingManifestResourceException("Error loading entities resource: " + filename);
-            }
-            Dictionary<string, Utf32> entities = new Dictionary<string, Utf32>();
-            using (var reader = new StreamReader(@in, Encoding.UTF8))
-            {
-                for (string line = reader.ReadLine(); line != null; line = reader.ReadLine())
-                {
-                    var pos = line.IndexOf('=');
-                    if (pos >= 0)
-                    {
-                        var name = line.Substring(0, pos); /*substring*/
-                        var value = line.Substring(pos + 1); /*substring*/
-                        Utf32 codePoint = Convert.ToInt32(value, 16);
-                        entities[name] = codePoint;
-                    }
-                }
-            }
-            return entities;
         }
 
         private static IDictionary<Utf32, string> ToCharacterKey(IDictionary<string, Utf32> inMap)

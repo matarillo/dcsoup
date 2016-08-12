@@ -1,5 +1,6 @@
 ﻿using Supremes.Helper;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
@@ -152,9 +153,9 @@ namespace Supremes.Nodes
         {
             if (attributes == null)
             {
-                return new List<Attribute>(0).AsReadOnly();
+                return new ReadOnlyCollection<Attribute>(new Attribute[0]);
             }
-            return attributes.Values.ToList().AsReadOnly();
+            return new ReadOnlyCollection<Attribute>(attributes.Values.ToList());
         }
 
         /// <summary>

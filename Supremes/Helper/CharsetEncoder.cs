@@ -9,7 +9,9 @@ namespace Supremes.Helper
         public CharsetEncoder(Encoding enc)
         {
             this.encoder = enc.GetEncoder();
+#if NET45
             this.encoder.Fallback = EncoderFallback.ExceptionFallback;
+#endif
         }
 
         public bool CanEncode(char[] chars)

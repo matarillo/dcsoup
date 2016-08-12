@@ -1,6 +1,7 @@
 ﻿using Supremes.Helper;
 using Supremes.Select;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
@@ -743,7 +744,7 @@ namespace Supremes.Nodes
             get
             {
                 List<FormElement> forms = contents.OfType<FormElement>().ToList();
-                return forms.AsReadOnly();
+                return new ReadOnlyCollection<FormElement>(forms);
             }
         }
 

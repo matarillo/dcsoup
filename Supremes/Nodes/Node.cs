@@ -261,7 +261,7 @@ namespace Supremes.Nodes
         {
             if (Uri.TryCreate(absoluteUri, UriKind.Absolute, out result))
             {
-                if (UriParser.IsKnownScheme(result.Scheme))
+                if (CompatUtil.IsKnownScheme(result.Scheme))
                 {
                     return true;
                 }
@@ -274,7 +274,7 @@ namespace Supremes.Nodes
         {
             if (Uri.TryCreate(baseUri, relativeUri, out result))
             {
-                if (UriParser.IsKnownScheme(result.Scheme))
+                if (CompatUtil.IsKnownScheme(result.Scheme))
                 {
                     return true;
                 }
@@ -648,7 +648,7 @@ namespace Supremes.Nodes
                         siblings.Add(node);
                     }
                 }
-                return siblings.AsReadOnly();
+                return new ReadOnlyCollection<Node>(siblings);
             }
         }
 
