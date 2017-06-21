@@ -1,7 +1,11 @@
 ﻿using NUnit.Framework;
 using Supremes.Nodes;
 
+#if (NETSTANDARD1_3)
 namespace Supremes.Test.Nodes
+#else
+namespace Supremes.Test.net45.Nodes
+#endif
 {
     [TestFixture]
     public class TextNodeTest

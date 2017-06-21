@@ -4,7 +4,11 @@ using System;
 using System.IO;
 using System.Text;
 
+#if (NETSTANDARD1_3)
 namespace Supremes.Test.Integration
+#else
+namespace Supremes.Test.net45.Integration
+#endif
 {
     [TestFixture]
     public class ParseTest

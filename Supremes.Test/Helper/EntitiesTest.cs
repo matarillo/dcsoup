@@ -3,7 +3,11 @@ using Supremes.Helper;
 using Supremes.Nodes;
 using System.Text;
 
-namespace Supremes.Test.Nodes
+#if (NETSTANDARD1_3)
+namespace Supremes.Test.Helper
+#else
+namespace Supremes.Test.net45.Helper
+#endif
 {
     [TestFixture]
     public class EntitiesTest

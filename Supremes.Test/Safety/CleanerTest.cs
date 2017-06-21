@@ -3,7 +3,11 @@ using Supremes.Nodes;
 using Supremes.Safety;
 using System.Text;
 
+#if (NETSTANDARD1_3)
 namespace Supremes.Test.Safety
+#else
+namespace Supremes.Test.net45.Safety
+#endif
 {
     [TestFixture]
     public class CleanerTest

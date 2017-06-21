@@ -3,7 +3,11 @@ using System.Text;
 using NUnit.Framework;
 using Supremes.Nodes;
 
+#if (NETSTANDARD1_3)
 namespace Supremes.Test.Select
+#else
+namespace Supremes.Test.net45.Select
+#endif
 {
     [TestFixture]
     public class CssTest

@@ -233,7 +233,11 @@ namespace Supremes.Parsers
                     return null;
                 }
                 if (CharsetIsSupported(charset)) return charset;
+#if (NETSTANDARD1_3)
+                charset = charset.ToUpperInvariant();
+#else
                 charset = charset.ToUpper(CultureInfo.InvariantCulture);
+#endif
                 if (CharsetIsSupported(charset)) return charset;
             }
             return null;

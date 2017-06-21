@@ -1,7 +1,11 @@
 ﻿using NUnit.Framework;
 using Supremes.Helper;
 
+#if (NETSTANDARD1_3)
 namespace Supremes.Test.Helper
+#else
+namespace Supremes.Test.net45.Helper
+#endif
 {
     [TestFixture]
     public class TokenQueueTest

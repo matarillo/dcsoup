@@ -378,8 +378,13 @@ namespace Supremes.Parsers
         internal bool ContainsIgnoreCase(string seq)
         {
             // used to check presence of </title>, </style>. only finds consistent case.
+#if (NETSTANDARD1_3)
+            string loScan = seq.ToLowerInvariant();
+            string hiScan = seq.ToUpperInvariant();
+#else
             string loScan = seq.ToLower(CultureInfo.InvariantCulture);
             string hiScan = seq.ToUpper(CultureInfo.InvariantCulture);
+#endif
             return (NextIndexOf(loScan) > -1) || (NextIndexOf(hiScan) > -1);
         }
 

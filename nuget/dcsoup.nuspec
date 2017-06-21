@@ -3,7 +3,7 @@
   <metadata>
     <id>dcsoup</id>
     <title>dcsoup HTML Parser</title>
-    <version>0.2.0</version>
+    <version>1.0.0</version>
     <authors>INOMATA Kentaro</authors>
     <owners>INOMATA Kentaro</owners>
     <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
@@ -14,16 +14,19 @@
     <description>dcsoup is a .NET library for working with real-world HTML. It provides a very convenient API for extracting and manipulating data, using the best of DOM, CSS, and jquery-like methods.
 This library is basically a port of jsoup, a Java HTML parser library. see also: http://jsoup.org/
 API reference is available at: https://raw.githubusercontent.com/matarillo/dcsoup/master/sandcastle/Help/dcsoup.chm</description>
-    <releaseNotes>v0.2.0: reorganized proeprties and setter/getter methods. (breaking changes)
+    <releaseNotes>v1.0.0: add support for .NET Standard 1.3.
+v0.2.0: reorganized proeprties and setter/getter methods. (breaking changes)
 v0.1.0: initial release.</releaseNotes>
     <copyright>Copyright © 2015 INOMATA Kentaro</copyright>
     <tags>HTML jsoup jquery parse parser parsing crawl crawler crawling scrape scraper scraping headless xpath agility</tags>
     <dependencies/>
-    <frameworkAssemblies>
-      <frameworkAssembly assemblyName="System.Net.Http" targetFramework="net40" />
-    </frameworkAssemblies>
   </metadata>
   <files>
-    <file src="..\Supremes\bin\Release\Supremes.dll" target="lib\net45" />
+    <file src="..\Supremes\bin\Release\netstandard1.3\Supremes.deps.json" target="lib\netstandard1.3" />
+    <file src="..\Supremes\bin\Release\netstandard1.3\Supremes.dll" target="lib\netstandard1.3" />
+    <file src="..\Supremes\bin\Release\netstandard1.3\Supremes.pdb" target="lib\netstandard1.3" />
+    <file src="..\Supremes.net45\bin\Release\Supremes.dll" target="lib\net45" />
+    <file src="..\Supremes.net45\bin\Release\Supremes.pdb" target="lib\net45" />
+    <file src="..\Supremes.net45\bin\Release\Supremes.xml" target="lib\net45" />
   </files>
 </package>

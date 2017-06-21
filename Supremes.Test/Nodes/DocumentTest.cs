@@ -1,9 +1,17 @@
 ﻿using NUnit.Framework;
 using Supremes.Nodes;
+#if (NETSTANDARD1_3)
 using Supremes.Test.Integration;
+#else
+using Supremes.Test.net45.Integration;
+#endif
 using System.Text;
 
+#if (NETSTANDARD1_3)
 namespace Supremes.Test.Nodes
+#else
+namespace Supremes.Test.net45.Nodes
+#endif
 {
     [TestFixture]
     public class DocumentTest

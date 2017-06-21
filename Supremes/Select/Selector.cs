@@ -129,7 +129,9 @@ namespace Supremes.Select
         /// <summary>
         /// The exception that is thrown when a <see cref="Selector"/> parses an invalid query.
         /// </summary>
+#if (!NETSTANDARD1_3)
         [Serializable]
+#endif
         public class SelectorParseException : InvalidOperationException
         {
             /// <summary>

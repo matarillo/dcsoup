@@ -5,7 +5,11 @@ using NUnit.Framework;
 using Supremes.Nodes;
 using Supremes.Select;
 
+#if (NETSTANDARD1_3)
 namespace Supremes.Test.Nodes
+#else
+namespace Supremes.Test.net45.Nodes
+#endif
 {
     [TestFixture]
     public class ElementsTest

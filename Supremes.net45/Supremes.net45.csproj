@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectGuid>{88D4E55C-3335-46FA-9033-6AF6B6491E96}</ProjectGuid>
+    <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Supremes</RootNamespace>
+    <AssemblyName>Supremes</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <NoWin32Manifest>False</NoWin32Manifest>
+    <SignAssembly>False</SignAssembly>
+    <DelaySign>False</DelaySign>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <NoStdLib>False</NoStdLib>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>False</RunCodeAnalysis>
+    <SourceAnalysisOverrideSettingsFile>C:\Users\kinomata1\Desktop\SharpDevelop\NsoupLib\NsoupLib\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <BaseAddress>4194304</BaseAddress>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <FileAlignment>4096</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+    <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\Supremes.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <DocumentationFile>bin\Release\Supremes.xml</DocumentationFile>
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Supremes\Dcsoup.cs">
+      <Link>Dcsoup.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Fluent\FluentUtility.cs">
+      <Link>Fluent\FluentUtility.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Helper\CharsetEncoder.cs">
+      <Link>Helper\CharsetEncoder.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Helper\DescendableLinkedList.cs">
+      <Link>Helper\DescendableLinkedList.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Helper\Entities.cs">
+      <Link>Helper\Entities.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Helper\LinkedHashMap.cs">
+      <Link>Helper\LinkedHashMap.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Helper\LinkedHashSet.cs">
+      <Link>Helper\LinkedHashSet.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Helper\StringUtil.cs">
+      <Link>Helper\StringUtil.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Helper\TokenQueue.cs">
+      <Link>Helper\TokenQueue.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Helper\Validate.cs">
+      <Link>Helper\Validate.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Nodes\Attribute.cs">
+      <Link>Nodes\Attribute.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Nodes\Attributes.cs">
+      <Link>Nodes\Attributes.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Nodes\Comment.cs">
+      <Link>Nodes\Comment.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Nodes\DataNode.cs">
+      <Link>Nodes\DataNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Nodes\Document.cs">
+      <Link>Nodes\Document.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Nodes\DocumentType.cs">
+      <Link>Nodes\DocumentType.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Nodes\Element.cs">
+      <Link>Nodes\Element.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Nodes\Elements.cs">
+      <Link>Nodes\Elements.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Nodes\FormElement.cs">
+      <Link>Nodes\FormElement.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Nodes\Node.cs">
+      <Link>Nodes\Node.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Nodes\Tag.cs">
+      <Link>Nodes\Tag.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Nodes\TextNode.cs">
+      <Link>Nodes\TextNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Nodes\XmlDeclaration.cs">
+      <Link>Nodes\XmlDeclaration.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Parsers\CharacterReader.cs">
+      <Link>Parsers\CharacterReader.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Parsers\DataUtil.cs">
+      <Link>Parsers\DataUtil.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Parsers\HtmlTreeBuilder.cs">
+      <Link>Parsers\HtmlTreeBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Parsers\HtmlTreeBuilderState.cs">
+      <Link>Parsers\HtmlTreeBuilderState.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Parsers\ParseError.cs">
+      <Link>Parsers\ParseError.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Parsers\ParseErrorList.cs">
+      <Link>Parsers\ParseErrorList.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Parsers\Parser.cs">
+      <Link>Parsers\Parser.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Parsers\Token.cs">
+      <Link>Parsers\Token.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Parsers\Tokeniser.cs">
+      <Link>Parsers\Tokeniser.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Parsers\TokeniserState.cs">
+      <Link>Parsers\TokeniserState.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Parsers\TokenType.cs">
+      <Link>Parsers\TokenType.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Parsers\TreeBuilder.cs">
+      <Link>Parsers\TreeBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Parsers\XmlTreeBuilder.cs">
+      <Link>Parsers\XmlTreeBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Safety\Cleaner.cs">
+      <Link>Safety\Cleaner.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Safety\Whitelist.cs">
+      <Link>Safety\Whitelist.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Select\Collector.cs">
+      <Link>Select\Collector.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Select\CombiningEvaluator.cs">
+      <Link>Select\CombiningEvaluator.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Select\Evaluator.cs">
+      <Link>Select\Evaluator.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Select\INodeVisitor.cs">
+      <Link>Select\INodeVisitor.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Select\NodeTraversor.cs">
+      <Link>Select\NodeTraversor.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Select\QueryParser.cs">
+      <Link>Select\QueryParser.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Select\Selector.cs">
+      <Link>Select\Selector.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes\Select\StructuralEvaluator.cs">
+      <Link>Select\StructuralEvaluator.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\Supremes\Helper\entities-base.properties">
+      <Link>Helper\entities-base.properties</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Supremes\Helper\entities-full.properties">
+      <Link>Helper\entities-full.properties</Link>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

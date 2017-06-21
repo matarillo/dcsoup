@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2B55F178-0425-4CA9-AB34-4674C0A551AB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Supremes.Test</RootNamespace>
+    <AssemblyName>Supremes.Test</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Supremes.Test\Helper\DataUtilTest.cs">
+      <Link>Helper\DataUtilTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes.Test\Helper\EntitiesTest.cs">
+      <Link>Helper\EntitiesTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes.Test\Helper\StringUtilTest.cs">
+      <Link>Helper\StringUtilTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes.Test\Helper\TokenQueueTest.cs">
+      <Link>Helper\TokenQueueTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes.Test\Integration\ParseTest.cs">
+      <Link>Integration\ParseTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes.Test\Nodes\AttributesTest.cs">
+      <Link>Nodes\AttributesTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes.Test\Nodes\AttributeTest.cs">
+      <Link>Nodes\AttributeTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes.Test\Nodes\DocumentTest.cs">
+      <Link>Nodes\DocumentTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes.Test\Nodes\DocumentTypeTest.cs">
+      <Link>Nodes\DocumentTypeTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes.Test\Nodes\ElementsTest.cs">
+      <Link>Nodes\ElementsTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes.Test\Nodes\FormElementTest.cs">
+      <Link>Nodes\FormElementTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes.Test\Nodes\NodeTest.cs">
+      <Link>Nodes\NodeTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes.Test\Nodes\TagTest.cs">
+      <Link>Nodes\TagTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes.Test\Nodes\TextNodeTest.cs">
+      <Link>Nodes\TextNodeTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes.Test\Parsers\AttributeParseTest.cs">
+      <Link>Parsers\AttributeParseTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes.Test\Parsers\CharacterReaderTest.cs">
+      <Link>Parsers\CharacterReaderTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes.Test\Parsers\HtmlParserTest.cs">
+      <Link>Parsers\HtmlParserTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes.Test\Parsers\XmlTreeBuilderTest.cs">
+      <Link>Parsers\XmlTreeBuilderTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes.Test\Safety\CleanerTest.cs">
+      <Link>Safety\CleanerTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes.Test\Select\CssTest.cs">
+      <Link>Select\CssTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes.Test\Select\QueryParserTest.cs">
+      <Link>Select\QueryParserTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes.Test\Select\SelectorTest.cs">
+      <Link>Select\SelectorTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Supremes.Test\TextUtil.cs">
+      <Link>TextUtil.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Supremes.net45\Supremes.net45.csproj">
+      <Project>{88d4e55c-3335-46fa-9033-6af6b6491e96}</Project>
+      <Name>Supremes.net45</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="NUnit">
+      <Version>2.6.4</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Supremes.Test\htmltests\baidu-cn-home.html">
+      <Link>htmltests\baidu-cn-home.html</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Supremes.Test\htmltests\baidu-variant.html">
+      <Link>htmltests\baidu-variant.html</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Supremes.Test\htmltests\google-ipod.html">
+      <Link>htmltests\google-ipod.html</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Supremes.Test\htmltests\meta-charset-1.html">
+      <Link>htmltests\meta-charset-1.html</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Supremes.Test\htmltests\meta-charset-2.html">
+      <Link>htmltests\meta-charset-2.html</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Supremes.Test\htmltests\meta-charset-3.html">
+      <Link>htmltests\meta-charset-3.html</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Supremes.Test\htmltests\news-com-au-home.html">
+      <Link>htmltests\news-com-au-home.html</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Supremes.Test\htmltests\nyt-article-1.html">
+      <Link>htmltests\nyt-article-1.html</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Supremes.Test\htmltests\smh-biz-article-1.html">
+      <Link>htmltests\smh-biz-article-1.html</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Supremes.Test\htmltests\thumb.jpg">
+      <Link>htmltests\thumb.jpg</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Supremes.Test\htmltests\xml-test.xml">
+      <Link>htmltests\xml-test.xml</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Supremes.Test\htmltests\yahoo-article-1.html">
+      <Link>htmltests\yahoo-article-1.html</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Supremes.Test\htmltests\yahoo-jp.html">
+      <Link>htmltests\yahoo-jp.html</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Supremes.Test\htmltests\README">
+      <Link>htmltests\README</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

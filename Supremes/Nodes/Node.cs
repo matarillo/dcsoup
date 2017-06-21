@@ -261,7 +261,11 @@ namespace Supremes.Nodes
         {
             if (Uri.TryCreate(absoluteUri, UriKind.Absolute, out result))
             {
+#if (NETSTANDARD1_3)
+                if (IsKnownScheme(result.Scheme))
+#else
                 if (UriParser.IsKnownScheme(result.Scheme))
+#endif
                 {
                     return true;
                 }
@@ -274,7 +278,11 @@ namespace Supremes.Nodes
         {
             if (Uri.TryCreate(baseUri, relativeUri, out result))
             {
+#if (NETSTANDARD1_3)
+                if (IsKnownScheme(result.Scheme))
+#else
                 if (UriParser.IsKnownScheme(result.Scheme))
+#endif
                 {
                     return true;
                 }
@@ -283,7 +291,33 @@ namespace Supremes.Nodes
             return false;
         }
 
-
+#if (NETSTANDARD1_3)
+        private static bool IsKnownScheme(string scheme)
+        {
+            switch (scheme)
+            {
+                case "http":
+                case "https":
+                case "ws":
+                case "wss":
+                case "ftp":
+                case "file":
+                case "gopher":
+                case "nntp":
+                case "news":
+                case "mailto":
+                case "uuid":
+                case "telnet":
+                case "ldap":
+                case "net.tcp":
+                case "net.pipe":
+                case "vsmacros":
+                    return true;
+                default:
+                    return false;
+            }
+        }
+#endif
 
         /// <summary>
         /// Get a child node by its 0-based index.

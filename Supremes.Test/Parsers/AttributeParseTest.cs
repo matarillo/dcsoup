@@ -1,7 +1,11 @@
 ﻿using NUnit.Framework;
 using Supremes.Nodes;
 
+#if (NETSTANDARD1_3)
 namespace Supremes.Test.Parsers
+#else
+namespace Supremes.Test.net45.Parsers
+#endif
 {
     [TestFixture]
     public class AttributeParseTest

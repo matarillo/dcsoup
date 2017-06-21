@@ -3,7 +3,11 @@ using Supremes.Nodes;
 using System;
 using System.Collections.Generic;
 
+#if (NETSTANDARD1_3)
 namespace Supremes.Test.Nodes
+#else
+namespace Supremes.Test.net45.Nodes
+#endif
 {
     [TestFixture]
     public class FormElementTest
