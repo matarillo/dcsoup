@@ -14,4 +14,6 @@ PM> Install-Package dcsoup
 
 ## API Reference
 
-Help file is avaiable. download [dcsoup.chm](https://raw.githubusercontent.com/matarillo/dcsoup/master/sandcastle/Help/dcsoup.chm).
+You can see the API reference at [fuget](https://fuget.azurewebsites.net/packages/dcsoup).
+
+Help file is also avaiable. download [dcsoup.chm](https://raw.githubusercontent.com/matarillo/dcsoup/master/sandcastle/Help/dcsoup.chm).
